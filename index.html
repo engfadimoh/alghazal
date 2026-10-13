@@ -35,7 +35,7 @@
                 <p class="text-xs text-emerald-800 font-semibold bg-emerald-50 py-1 px-3 rounded-full inline-block">منظومة متابعة النقاط الحرجة وموازنة 2027</p>
             </div>
 
-            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4 text-xs">
+            <form id="loginForm" onsubmit="window.handleLogin(event)" class="space-y-4 text-xs">
                 <div>
                     <label class="block font-semibold text-slate-700 mb-1">اختر الحساب / القسم للدخول</label>
                     <select id="loginRole" class="w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50 outline-none focus:ring-2 focus:ring-emerald-500 font-bold">
@@ -91,13 +91,12 @@
                     </div>
                 </div>
 
-                <!-- زر الإضافة متاح ومفعل لجميع الأقسام دون شروط -->
-                <button id="btnAddNewTask" onclick="openNewTaskModal()" class="bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition shadow-md shadow-emerald-700/20">
+                <button id="btnAddNewTask" onclick="window.openNewTaskModal()" class="bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition shadow-md shadow-emerald-700/20 cursor-pointer">
                     <i data-lucide="plus-circle" class="w-4 h-4 text-amber-300"></i>
                     <span>إضافة مهمة جديدة</span>
                 </button>
 
-                <button onclick="handleLogout()" title="تسجيل الخروج" class="p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl transition border border-rose-100">
+                <button onclick="window.handleLogout()" title="تسجيل الخروج" class="p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl transition border border-rose-100 cursor-pointer">
                     <i data-lucide="log-out" class="w-4 h-4"></i>
                 </button>
             </div>
@@ -107,19 +106,19 @@
     <!-- Main Navigation Tabs -->
     <nav class="bg-white border-b border-emerald-100">
         <div class="max-w-7xl mx-auto px-4 flex gap-6 overflow-x-auto text-sm">
-            <button onclick="switchTab('dashboard')" id="tabBtn-dashboard" class="py-3 px-2 flex items-center gap-2 tab-active transition">
+            <button onclick="window.switchTab('dashboard')" id="tabBtn-dashboard" class="py-3 px-2 flex items-center gap-2 tab-active transition cursor-pointer">
                 <i data-lucide="layout-dashboard" class="w-4 h-4"></i> لوحة المؤشرات الشاملة
             </button>
-            <button onclick="switchTab('tasks')" id="tabBtn-tasks" class="py-3 px-2 flex items-center gap-2 text-slate-600 hover:text-emerald-600 transition">
+            <button onclick="window.switchTab('tasks')" id="tabBtn-tasks" class="py-3 px-2 flex items-center gap-2 text-slate-600 hover:text-emerald-600 transition cursor-pointer">
                 <i data-lucide="list-todo" class="w-4 h-4"></i> سجل المهام والنقاط الحرجة (34)
             </button>
-            <button onclick="switchTab('procurement')" id="tabBtn-procurement" class="py-3 px-2 flex items-center gap-2 text-slate-600 hover:text-emerald-600 transition">
+            <button onclick="window.switchTab('procurement')" id="tabBtn-procurement" class="py-3 px-2 flex items-center gap-2 text-slate-600 hover:text-emerald-600 transition cursor-pointer">
                 <i data-lucide="shopping-bag" class="w-4 h-4"></i> قسم المشتريات ومسار الطلبات
             </button>
-            <button onclick="switchTab('finance')" id="tabBtn-finance" class="py-3 px-2 flex items-center gap-2 text-slate-600 hover:text-emerald-600 transition">
+            <button onclick="window.switchTab('finance')" id="tabBtn-finance" class="py-3 px-2 flex items-center gap-2 text-slate-600 hover:text-emerald-600 transition cursor-pointer">
                 <i data-lucide="wallet" class="w-4 h-4"></i> قسم المالية والمصروفات وموازنة 2027
             </button>
-            <button onclick="switchTab('weekly-report')" id="tabBtn-weekly-report" class="py-3 px-2 flex items-center gap-2 text-slate-600 hover:text-emerald-600 transition">
+            <button onclick="window.switchTab('weekly-report')" id="tabBtn-weekly-report" class="py-3 px-2 flex items-center gap-2 text-slate-600 hover:text-emerald-600 transition cursor-pointer">
                 <i data-lucide="file-text" class="w-4 h-4"></i> التقرير الأسبوعي للاجتماع
             </button>
         </div>
@@ -130,8 +129,6 @@
 
         <!-- TAB 1: DASHBOARD -->
         <section id="view-dashboard" class="space-y-6">
-
-            <!-- 1. مؤشرات الأداء المالية والتكاليف المنفذة والمتوقعة -->
             <div>
                 <h3 class="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <i data-lucide="coins" class="w-4 h-4 text-emerald-600"></i> المؤشرات المالية والمصروفات وعروض الأسعار
@@ -183,7 +180,6 @@
                 </div>
             </div>
 
-            <!-- 2. مؤشرات طلبات الشراء ومسارها -->
             <div>
                 <h3 class="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <i data-lucide="shopping-cart" class="w-4 h-4 text-emerald-600"></i> مؤشرات طلبات الشراء وأين وصلت في الإجراءات
@@ -222,7 +218,6 @@
                 </div>
             </div>
 
-            <!-- 3. مؤشرات حالة البنود العامة -->
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
                 <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
                     <p class="text-xs text-slate-500 font-medium">إجمالي البنود الحرجة</p>
@@ -251,7 +246,6 @@
                 </div>
             </div>
 
-            <!-- Charts Section -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white p-5 rounded-2xl border border-emerald-100 shadow-sm">
                     <h4 class="font-bold text-slate-800 text-sm mb-4 flex items-center gap-2">
@@ -276,8 +270,8 @@
         <section id="view-tasks" class="hidden space-y-4">
             <div class="bg-white p-4 rounded-2xl border border-emerald-100 shadow-sm flex flex-wrap gap-3 items-center justify-between">
                 <div class="flex flex-wrap items-center gap-2 text-xs">
-                    <input type="text" id="taskSearchInput" oninput="renderTasksTable()" placeholder="ابحث باسم البند، المورد، القطع، الإجراء..." class="border border-slate-300 rounded-xl px-3 py-1.5 w-60 focus:ring-2 focus:ring-emerald-500 outline-none">
-                    <select id="filterDept" onchange="renderTasksTable()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-white outline-none">
+                    <input type="text" id="taskSearchInput" oninput="window.renderTasksTable()" placeholder="ابحث باسم البند، المورد، القطع، الإجراء..." class="border border-slate-300 rounded-xl px-3 py-1.5 w-60 focus:ring-2 focus:ring-emerald-500 outline-none">
+                    <select id="filterDept" onchange="window.renderTasksTable()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-white outline-none">
                         <option value="all">كافة الأقسام</option>
                         <option value="الصيانة">الصيانة</option>
                         <option value="الإنتاج">الإنتاج</option>
@@ -285,14 +279,14 @@
                         <option value="الجودة">الجودة</option>
                         <option value="المشتريات">المشتريات</option>
                     </select>
-                    <select id="filterExecutionType" onchange="renderTasksTable()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-white outline-none font-semibold">
+                    <select id="filterExecutionType" onchange="window.renderTasksTable()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-white outline-none font-semibold">
                         <option value="all">كافة أنواع التنفيذ</option>
                         <option value="تنظيم إداري وتوثيق أوراق">تنظيم إداري وتوثيق أوراق</option>
                         <option value="عمالة وتنظيم تشغيلي داخلي">عمالة وتنظيم تشغيلي داخلي</option>
                         <option value="صيانة وتنفيذ فني داخلي">صيانة وتنفيذ فني داخلي</option>
                         <option value="توريد وتركيب خارجي / مقاول">توريد وتركيب خارجي / مقاول</option>
                     </select>
-                    <select id="filterStatus" onchange="renderTasksTable()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-white outline-none">
+                    <select id="filterStatus" onchange="window.renderTasksTable()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-white outline-none">
                         <option value="all">كافة الحالات</option>
                         <option value="مفتوح">مفتوح</option>
                         <option value="تم احتواء الخطر">تم احتواء الخطر</option>
@@ -301,7 +295,7 @@
                         <option value="عالقة لموازنة 2027">عالقة لموازنة 2027</option>
                         <option value="مغلق">مغلق</option>
                     </select>
-                    <select id="filterBudgetYear" onchange="renderTasksTable()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-white outline-none">
+                    <select id="filterBudgetYear" onchange="window.renderTasksTable()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-white outline-none">
                         <option value="all">كافة الموازنات</option>
                         <option value="2026">تشغيلي فوري (2026)</option>
                         <option value="2027">ضمن موازنة 2027</option>
@@ -431,7 +425,7 @@
                             <p class="text-xs text-emerald-800 font-semibold">شركة ومصنع الغزال للمنتجات الغذائية | خطة مدير المصنع وموازنة 2027</p>
                         </div>
                     </div>
-                    <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition">
+                    <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition cursor-pointer">
                         <i data-lucide="printer" class="w-4 h-4"></i> طباعة التقرير
                     </button>
                 </div>
@@ -525,7 +519,7 @@
                     </div>
                     <h3 id="viewTaskTitle" class="text-lg font-extrabold text-slate-900"></h3>
                 </div>
-                <button onclick="closeViewDetailsModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+                <button onclick="window.closeViewDetailsModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg cursor-pointer">
                     <i data-lucide="x" class="w-6 h-6"></i>
                 </button>
             </div>
@@ -642,8 +636,8 @@
             </div>
 
             <div class="flex justify-end gap-2 pt-2 border-t">
-                <button onclick="closeViewDetailsModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition text-xs font-semibold">إغلاق</button>
-                <button id="viewBtnOpenEdit" onclick="" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition text-xs font-bold flex items-center gap-1.5">
+                <button onclick="window.closeViewDetailsModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition text-xs font-semibold cursor-pointer">إغلاق</button>
+                <button id="viewBtnOpenEdit" onclick="" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition text-xs font-bold flex items-center gap-1.5 cursor-pointer">
                     <i data-lucide="edit" class="w-3.5 h-3.5"></i> تعديل هذه المهمة
                 </button>
             </div>
@@ -655,9 +649,9 @@
         <div class="bg-white rounded-3xl shadow-xl max-w-3xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-7 space-y-4 text-right border-2 border-emerald-100">
             <div class="flex justify-between items-center border-b pb-3">
                 <h3 id="modalTitle" class="font-bold text-base text-slate-800">تعديل بيانات المهمة</h3>
-                <button onclick="closeTaskModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
+                <button onclick="window.closeTaskModal()" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
-            <form id="taskForm" onsubmit="saveTaskData(event)" class="space-y-4 text-xs">
+            <form id="taskForm" onsubmit="window.saveTaskData(event)" class="space-y-4 text-xs">
                 <input type="hidden" id="modalTaskId">
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -679,7 +673,7 @@
 
                 <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200">
                     <label class="block font-bold text-slate-800 mb-1">طبيعة التنفيذ ومسار العمل</label>
-                    <select id="modalTaskExecutionType" onchange="toggleExecutionFields(this.value)" class="w-full border border-slate-300 rounded-xl p-2.5 outline-none font-bold bg-white focus:ring-2 focus:ring-emerald-500">
+                    <select id="modalTaskExecutionType" onchange="window.toggleExecutionFields(this.value)" class="w-full border border-slate-300 rounded-xl p-2.5 outline-none font-bold bg-white focus:ring-2 focus:ring-emerald-500">
                         <option value="تنظيم إداري وتوثيق أوراق">📄 تنظيم إداري وتوثيق أوراق ونماذج (جودة / إنتاج - بدون تكلفة شراء)</option>
                         <option value="عمالة وتنظيم تشغيلي داخلي">👥 عمالة وتنظيم تشغيلي داخلي (فرز، ترتيب، تنظيف، فصل مسارات - بدون شراء)</option>
                         <option value="صيانة وتنفيذ فني داخلي">🔧 صيانة وتنفيذ فني داخلي (ورشة المصنع بأيدي الفنيين)</option>
@@ -815,19 +809,18 @@
                 </div>
 
                 <div class="flex justify-end gap-2 pt-3 border-t">
-                    <button type="button" onclick="closeTaskModal()" class="px-4 py-2 border rounded-xl hover:bg-slate-100 transition">إلغاء</button>
-                    <button type="submit" class="px-5 py-2 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white rounded-xl font-bold transition shadow-md shadow-emerald-700/20">حفظ التغييرات سحابياً</button>
+                    <button type="button" onclick="window.closeTaskModal()" class="px-4 py-2 border rounded-xl hover:bg-slate-100 transition cursor-pointer">إلغاء</button>
+                    <button type="submit" class="px-5 py-2 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white rounded-xl font-bold transition shadow-md shadow-emerald-700/20 cursor-pointer">حفظ التغييرات سحابياً</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Firebase SDK & Logic -->
+    <!-- Firebase SDK & Logic (مربوط مباشرة بـ Window لتفادي قيود الـ Scope) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getFirestore, collection, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-        // إتاحة كافة الصلاحيات والإضافة والتعديل لجميع الحسابات
         const ACCOUNTS = {
             admin: { name: "م. فادي محمود", roleName: "Super Admin", pass: "fadi@2026" },
             ceo: { name: "المدير التنفيذي", roleName: "CEO", pass: "ceo@ghazal" },
@@ -840,7 +833,7 @@
             finance: { name: "قسم المالية", roleName: "Finance Dept", pass: "fin@ghazal" }
         };
 
-        let currentUserKey = localStorage.getItem('alghazal_logged_user') || null;
+        let currentUserKey = localStorage.getItem('alghazal_logged_user') || 'admin';
 
         window.checkAuth = function() {
             if (!currentUserKey || !ACCOUNTS[currentUserKey]) {
@@ -865,8 +858,8 @@
                 localStorage.setItem('alghazal_logged_user', role);
                 err.classList.add('hidden');
                 document.getElementById('loginPassword').value = '';
-                checkAuth();
-                renderTasksTable();
+                window.checkAuth();
+                window.renderTasksTable();
             } else {
                 err.classList.remove('hidden');
             }
@@ -875,7 +868,7 @@
         window.handleLogout = function() {
             localStorage.removeItem('alghazal_logged_user');
             currentUserKey = null;
-            checkAuth();
+            window.checkAuth();
         };
 
         const firebaseConfig = {
@@ -893,22 +886,17 @@
         const db = getFirestore(app);
         const tasksCol = collection(db, "alghazal_critical_tasks");
 
-        // البنود الـ 34 بنصوصها الأصلية من خطة مدير المصنع ومصفرة بالكامل
-        const defaultTasks = [
-            { id: 1, title: "أوعية تخزين النشا المبرد", dept: "الإنتاج", severity: "حرجة جداً", problem: "استخدام دلاء بلاستيكية لتخزين النشا المبرد قد ينتج عنه شوائب أو كسور.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "", budgetYear: "2026", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "", partsMech: "دلاء ستانلس أو بلاستيك غذائي معتمد", partsCool: "", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 2, title: "تبريد الباذنجان المطحون", dept: "الإنتاج", severity: "حرجة جداً", problem: "تبريد الباذنجان المطحون بعد السلق يحتاج تحسينًا؛ ظهور عفن على السطح وعدم ثبات المتبل في السوق.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "", budgetYear: "2027", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "", partsMech: "مبادل حراري / نظام تبريد مستمر", partsCool: "وحدة تبريد", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 3, title: "حرارة الزيت ونظافته", dept: "الإنتاج", severity: "حرجة", problem: "حرارة الزيت في مناطق تحضير الحمص والسلطات تحتاج ضبطاً؛ ملاحظة التقرير تشير لحرارة 10–20.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "متابعة قياس الحرارة والنظافة دورياً", budgetYear: "2026", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "ترمومتر معاير", partsMech: "فلاتر تنقية", partsCool: "", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 4, title: "مياه المصنع وماكينات الثلج", dept: "الصيانة", severity: "حرجة جداً", problem: "مياه تحضير المحاليل وتكوين الثلج والسلق تحتاج معالجة مناسبة.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "", budgetYear: "2027", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "", partsMech: "محطة فلاتر ومعالجة مياه", partsCool: "ماكينة ثلج", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 5, title: "قياس مياه طناجر السلق", dept: "الصيانة", severity: "حرجة جداً", problem: "قياس منسوب المياه في طناجر السلق غير دقيق، واختلافه سبب لانحراف رطوبة المادة المحضرة.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "صيانة وتنفيذ فني داخلي", internalNotes: "", budgetYear: "2026", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "عداد تدفق رقمي Flow Meter", partsMech: "صمامات ووصلات", partsCool: "", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 6, title: "التنظيف عند تغيير الأصناف", dept: "الإنتاج", severity: "حرجة", problem: "التبديل بين الأصناف على الخطوط وماكينات التعبئة قد يسبب تلوثاً تقاطعياً.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "تنظيف وفك وتفريغ كامل بين الأصناف", budgetYear: "2026", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "", partsMech: "أدوات فك سريع", partsCool: "", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 7, title: "فصل خلطات ماكينة رقم 1", dept: "الإنتاج", severity: "حرجة", problem: "الفصل الفعلي بين خلطات الحمص على ماكينة رقم 1 غير مضمون بالاعتماد على عدد الصناديق.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "تحديد بداية ونهاية كل وجبة وتوثيقها", budgetYear: "2026", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "", partsMech: "", partsCool: "", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 8, title: "خروج المنتج قبل بلوغ حرارة التوزيع", dept: "المستودعات", severity: "حرجة", problem: "خروج المنتج من المستودع الرئيسي قبل الوصول إلى حرارة التوزيع المطلوبة.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "منع الإفراج قبل فحص وتوثيق الحرارة", budgetYear: "2026", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "مسجلات حرارة Data Logger", partsMech: "", partsCool: "", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 9, title: "ملصقات المواد التحضيرية", dept: "المستودعات", severity: "حرجة", problem: "ملصقات المواد التحضيرية الورقية تتآكل أو تتمزق بسبب رطوبة المستودع.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "", budgetYear: "2026", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "طابعة ملصقات", partsMech: "ملصقات مقاومة للرطوبة", partsCool: "", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 10, title: "حرارة بيئة التحضير والإنتاج", dept: "الصيانة", severity: "حرجة جداً", problem: "ارتفاع حرارة بيئة الإنتاج والتحضير قد يرفع حرارة المنتج خلال التوقف أو التصنيع.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "", budgetYear: "2027", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "لوحة تحكم", partsMech: "مجاري هواء ودكتات", partsCool: "وحدات تكييف وتبريد صالات", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" }
-        ];
-
         const titles = [
-            "", "", "", "", "", "", "", "", "", "",
+            "أوعية تخزين النشا المبرد",
+            "تبريد الباذنجان المطحون",
+            "حرارة الزيت ونظافته",
+            "مياه المصنع وماكينات الثلج",
+            "قياس مياه طناجر السلق",
+            "التنظيف عند تغيير الأصناف",
+            "فصل خلطات ماكينة رقم 1",
+            "خروج المنتج قبل بلوغ حرارة التوزيع",
+            "ملصقات المواد التحضيرية",
+            "حرارة بيئة التحضير والإنتاج",
             "حرارة المنتج وتكاثف العبوات",
             "مواصفات المواد الخام",
             "دراسة التعقيم بالأشعة فوق البنفسجية UV",
@@ -935,26 +923,27 @@
             "أوعية المواد التحضيرية"
         ];
 
-        for (let i = 11; i <= 34; i++) {
-            defaultTasks.push({
+        const defaultTasks = titles.map((title, index) => {
+            const i = index + 1;
+            return {
                 id: i,
-                title: titles[i - 1] || `بند متابعة حرجة #${i}`,
-                dept: [14, 16, 19, 20, 21, 22, 25, 26, 28, 30, 31, 32].includes(i) ? "الصيانة" : ([12, 13, 23].includes(i) ? "الجودة" : ([17, 29].includes(i) ? "المستودعات" : "الإنتاج")),
-                severity: [11, 16, 17, 19, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32].includes(i) ? "حرجة جداً" : "حرجة",
+                title: title,
+                dept: [4, 5, 10, 14, 16, 19, 20, 21, 22, 25, 26, 28, 30, 31, 32].includes(i) ? "الصيانة" : ([12, 13, 23].includes(i) ? "الجودة" : ([8, 9, 17, 29].includes(i) ? "المستودعات" : "الإنتاج")),
+                severity: [1, 2, 4, 5, 10, 11, 16, 17, 19, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32].includes(i) ? "حرجة جداً" : "حرجة",
                 problem: `متابعة تنفيذ متطلبات البند رقم ${i} وفق وثيقة خطة مدير المصنع`,
-                status: [16, 21, 25, 26, 29, 30].includes(i) ? "عالقة لموازنة 2027" : "مفتوح",
+                status: [2, 4, 10, 16, 21, 25, 26, 29, 30].includes(i) ? "عالقة لموازنة 2027" : "مفتوح",
                 progress: 0,
-                contractor: [16, 21, 25, 26, 29, 30].includes(i) ? "خارجي" : "داخلي",
-                executionType: [12, 23].includes(i) ? "تنظيم إداري وتوثيق أوراق" : ([18, 27, 33, 34].includes(i) ? "عمالة وتنظيم تشغيلي داخلي" : ([16, 21, 25, 26, 29, 30].includes(i) ? "توريد وتركيب خارجي / مقاول" : "صيانة وتنفيذ فني داخلي")),
+                contractor: [1, 2, 4, 9, 10, 13, 14, 15, 16, 19, 20, 21, 22, 24, 25, 26, 28, 29, 30, 34].includes(i) ? "خارجي" : "داخلي",
+                executionType: [7, 8, 12, 13, 19, 23, 34].includes(i) ? "تنظيم إداري وتوثيق أوراق" : ([3, 6, 11, 15, 17, 18, 24, 27, 30, 33].includes(i) ? "عمالة وتنظيم تشغيلي داخلي" : ([1, 2, 4, 9, 10, 14, 16, 21, 25, 26, 29].includes(i) ? "توريد وتركيب خارجي / مقاول" : "صيانة وتنفيذ فني داخلي")),
                 internalNotes: "",
-                budgetYear: [16, 21, 25, 26, 29, 30].includes(i) ? "2027" : "2026",
+                budgetYear: [2, 4, 10, 16, 21, 25, 26, 29, 30].includes(i) ? "2027" : "2026",
                 estimatedCost: 0,
                 quotationCost: 0,
                 approvedCost: 0,
                 spent: 0,
                 po: "",
                 supplier: "",
-                supplyStatus: [16, 21, 25, 26, 29, 30].includes(i) ? "قيد استدراج عروض الأسعار" : "غير مطلوب توريد (عمل داخلي)",
+                supplyStatus: [1, 2, 4, 9, 10, 14, 16, 21, 25, 26, 29].includes(i) ? "قيد استدراج عروض الأسعار" : "غير مطلوب توريد (عمل داخلي)",
                 partsElec: "",
                 partsMech: "",
                 partsCool: "",
@@ -963,8 +952,8 @@
                 obstacle: "",
                 lastUpdated: "2026-10-13 10:00",
                 updatedBy: "النظام"
-            });
-        }
+            };
+        });
 
         window.tasks = [];
         let statusChartInstance = null;
@@ -987,6 +976,7 @@
             }
         };
 
+        // الربط المباشر مع Firebase
         onSnapshot(tasksCol, (snapshot) => {
             if (!snapshot.empty) {
                 window.tasks = [];
@@ -998,19 +988,19 @@
                 });
                 window.tasks = [...defaultTasks];
             }
-            renderDashboard();
-            renderTasksTable();
-            renderProcurementTable();
-            renderFinanceTable();
-            renderWeeklyReport();
+            window.renderDashboard();
+            window.renderTasksTable();
+            window.renderProcurementTable();
+            window.renderFinanceTable();
+            window.renderWeeklyReport();
         }, (error) => {
             console.error("Firebase sync error:", error);
             window.tasks = JSON.parse(localStorage.getItem('alghazal_tasks')) || defaultTasks;
-            renderDashboard();
-            renderTasksTable();
-            renderProcurementTable();
-            renderFinanceTable();
-            renderWeeklyReport();
+            window.renderDashboard();
+            window.renderTasksTable();
+            window.renderProcurementTable();
+            window.renderFinanceTable();
+            window.renderWeeklyReport();
         });
 
         window.saveTaskToFirestore = async function(task) {
@@ -1034,10 +1024,10 @@
             activeBtn.classList.add('tab-active');
             activeBtn.classList.remove('text-slate-600');
 
-            if (tabId === 'dashboard') updateCharts();
+            if (tabId === 'dashboard') window.updateCharts();
         };
 
-        function renderDashboard() {
+        window.renderDashboard = function() {
             const tList = window.tasks;
 
             const totalSpent = tList.reduce((sum, t) => sum + (Number(t.spent) || 0), 0);
@@ -1065,9 +1055,9 @@
             document.getElementById('statInProgressTasks').innerText = tList.filter(t => t.status === 'جارٍ التنفيذ').length;
             document.getElementById('statPendingQATasks').innerText = tList.filter(t => t.status === 'بانتظار تحقق الجودة').length;
             document.getElementById('statClosedTasks').innerText = tList.filter(t => t.status === 'مغلق').length;
-        }
+        };
 
-        function updateCharts() {
+        window.updateCharts = function() {
             const tList = window.tasks;
 
             const totalSpent = tList.reduce((sum, t) => sum + (Number(t.spent) || 0), 0);
@@ -1117,7 +1107,7 @@
                 },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
             });
-        }
+        };
 
         window.renderTasksTable = function() {
             const tbody = document.getElementById('tasksTableBody');
@@ -1154,7 +1144,7 @@
                 }
 
                 return `
-                <tr class="hover:bg-emerald-50/50 cursor-pointer transition border-b" onclick="openViewDetailsModal(${t.id})">
+                <tr class="hover:bg-emerald-50/50 cursor-pointer transition border-b" onclick="window.openViewDetailsModal(${t.id})">
                     <td class="p-3 text-center font-bold text-slate-700">${t.id}</td>
                     <td class="p-3">
                         <div class="font-bold text-slate-900">${t.title}</div>
@@ -1192,7 +1182,7 @@
                         <div class="text-[10px] text-emerald-600 font-medium">${t.updatedBy || 'الإدارة'}</div>
                     </td>
                     <td class="p-3 text-center" onclick="event.stopPropagation()">
-                        <button onclick="openEditTaskModal(${t.id})" class="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl transition shadow-sm border border-emerald-200" title="تعديل المهمة">
+                        <button onclick="window.openEditTaskModal(${t.id})" class="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl transition shadow-sm border border-emerald-200 cursor-pointer" title="تعديل المهمة">
                             <i data-lucide="edit-3" class="w-4 h-4"></i>
                         </button>
                     </td>
@@ -1202,7 +1192,7 @@
             lucide.createIcons();
         };
 
-        function renderProcurementTable() {
+        window.renderProcurementTable = function() {
             const tbody = document.getElementById('procurementTableBody');
             const totalQuotes = window.tasks.reduce((sum, t) => sum + (Number(t.quotationCost) || 0), 0);
             document.getElementById('procurementQuotesTotal').innerText = totalQuotes ? totalQuotes.toLocaleString() : '0';
@@ -1224,7 +1214,7 @@
                 else stageBadge = '<span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[10px] font-bold">' + (t.supplyStatus || 'قيد المتابعة') + '</span>';
 
                 return `
-                <tr class="hover:bg-slate-50 transition border-b cursor-pointer" onclick="openViewDetailsModal(${t.id})">
+                <tr class="hover:bg-slate-50 transition border-b cursor-pointer" onclick="window.openViewDetailsModal(${t.id})">
                     <td class="p-3 font-bold text-slate-700">بند ${t.id}</td>
                     <td class="p-3">
                         <div class="font-semibold text-slate-900">${t.title}</div>
@@ -1237,16 +1227,16 @@
                     <td class="p-3 font-bold text-blue-700">${t.quotationCost ? Number(t.quotationCost).toLocaleString() + ' ₪' : 'غير مسعر'}</td>
                     <td class="p-3 text-slate-600 max-w-xs truncate text-[11px]">${partsSummary || 'حسب المواصفات'}</td>
                     <td class="p-3 text-center" onclick="event.stopPropagation()">
-                        <button onclick="openEditTaskModal(${t.id})" class="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl transition shadow-sm border border-emerald-200" title="تعديل المشتريات">
+                        <button onclick="window.openEditTaskModal(${t.id})" class="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl transition shadow-sm border border-emerald-200 cursor-pointer" title="تعديل المشتريات">
                             <i data-lucide="edit-3" class="w-4 h-4"></i>
                         </button>
                     </td>
                 </tr>`;
             }).join('');
             lucide.createIcons();
-        }
+        };
 
-        function renderFinanceTable() {
+        window.renderFinanceTable = function() {
             const tbody = document.getElementById('financeTableBody');
             const totalSpent = window.tasks.reduce((sum, t) => sum + (Number(t.spent) || 0), 0);
             const totalEstimated = window.tasks.reduce((sum, t) => sum + (Number(t.estimatedCost) || 0), 0);
@@ -1269,7 +1259,7 @@
                 }
 
                 return `
-                <tr class="hover:bg-slate-50 transition border-b cursor-pointer" onclick="openViewDetailsModal(${t.id})">
+                <tr class="hover:bg-slate-50 transition border-b cursor-pointer" onclick="window.openViewDetailsModal(${t.id})">
                     <td class="p-3 font-bold text-slate-700">بند ${t.id}</td>
                     <td class="p-3">
                         <div class="font-semibold text-slate-900">${t.title}</div>
@@ -1287,16 +1277,16 @@
                     <td class="p-3 font-black text-rose-600">${spent ? spent.toLocaleString() + ' ₪' : '0 ₪'}</td>
                     <td class="p-3">${paymentStatus}</td>
                     <td class="p-3 text-center" onclick="event.stopPropagation()">
-                        <button onclick="openEditTaskModal(${t.id})" class="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl transition shadow-sm border border-emerald-200" title="تعديل الموازنة">
+                        <button onclick="window.openEditTaskModal(${t.id})" class="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl transition shadow-sm border border-emerald-200 cursor-pointer" title="تعديل الموازنة">
                             <i data-lucide="edit-3" class="w-4 h-4"></i>
                         </button>
                     </td>
                 </tr>`;
             }).join('');
             lucide.createIcons();
-        }
+        };
 
-        function renderWeeklyReport() {
+        window.renderWeeklyReport = function() {
             const tList = window.tasks;
             const closed = tList.filter(t => t.status === 'مغلق').length;
             const contained = tList.filter(t => t.status === 'تم احتواء الخطر').length;
@@ -1346,7 +1336,7 @@
                     </div>
                 `).join('');
             }
-        }
+        };
 
         window.openViewDetailsModal = function(id) {
             const task = window.tasks.find(t => t.id === id);
@@ -1399,8 +1389,8 @@
             document.getElementById('viewTaskUpdatedBy').innerText = task.updatedBy || 'الإدارة';
 
             document.getElementById('viewBtnOpenEdit').onclick = function() {
-                closeViewDetailsModal();
-                openEditTaskModal(task.id);
+                window.closeViewDetailsModal();
+                window.openEditTaskModal(task.id);
             };
 
             document.getElementById('viewDetailsModal').classList.remove('hidden');
@@ -1428,7 +1418,7 @@
             const execType = task.executionType || 'عمالة وتنظيم تشغيلي داخلي';
             document.getElementById('modalTaskExecutionType').value = execType;
             document.getElementById('modalTaskInternalNotes').value = task.internalNotes || '';
-            toggleExecutionFields(execType);
+            window.toggleExecutionFields(execType);
 
             document.getElementById('modalTaskEstimatedCost').value = task.estimatedCost || 0;
             document.getElementById('modalTaskQuotationCost').value = task.quotationCost || 0;
@@ -1462,7 +1452,7 @@
             document.getElementById('modalTaskSpent').value = 0;
             document.getElementById('modalTaskExecutionType').value = "عمالة وتنظيم تشغيلي داخلي";
             document.getElementById('modalTaskSupplyStatus').value = "غير مطلوب توريد (عمل داخلي)";
-            toggleExecutionFields("عمالة وتنظيم تشغيلي داخلي");
+            window.toggleExecutionFields("عمالة وتنظيم تشغيلي داخلي");
             document.getElementById('taskModal').classList.remove('hidden');
             lucide.createIcons();
         };
@@ -1555,7 +1545,7 @@
         };
 
         window.addEventListener('DOMContentLoaded', () => {
-            checkAuth();
+            window.checkAuth();
             lucide.createIcons();
         });
     </script>
