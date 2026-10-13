@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منظومة معالجة النقاط الحرجة | شركة ومصنع الغزال للمنتجات الغذائية</title>
-    <!-- Tailwind CSS -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chart.js -->
+    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -27,11 +27,16 @@
                 <div class="bg-emerald-600 text-white p-2 rounded-lg font-black text-xl shadow">غ</div>
                 <div>
                     <h1 class="font-bold text-base sm:text-lg text-slate-900 leading-tight">شركة ومصنع الغزال للمنتجات الغذائية</h1>
-                    <p class="text-xs text-slate-500">منظومة متابعة ومعالجة النقاط الحرجة وموازنة 2027</p>
+                    <div class="flex items-center gap-2">
+                        <p class="text-xs text-slate-500">منظومة متابعة ومعالجة النقاط الحرجة وموازنة 2027</p>
+                        <span id="syncBadge" class="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> مزامنة سحابية نشطة
+                        </span>
+                    </div>
                 </div>
             </div>
 
-            <!-- Role Selector & Status -->
+            <!-- Role Selector & Actions -->
             <div class="flex items-center gap-3">
                 <div class="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
                     <i data-lucide="user-check" class="w-4 h-4 text-emerald-600"></i>
@@ -79,7 +84,6 @@
 
         <!-- TAB 1: DASHBOARD -->
         <section id="view-dashboard" class="space-y-6">
-            <!-- Summary Stats Cards -->
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <p class="text-xs text-slate-500 font-medium">إجمالي البنود</p>
@@ -113,7 +117,6 @@
                 </div>
             </div>
 
-            <!-- Charts Section -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
                     <h4 class="font-bold text-slate-800 text-sm mb-4 flex items-center gap-2">
@@ -136,7 +139,6 @@
 
         <!-- TAB 2: TASKS REGISTRY -->
         <section id="view-tasks" class="hidden space-y-4">
-            <!-- Filter Bar -->
             <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap gap-3 items-center justify-between">
                 <div class="flex flex-wrap items-center gap-2 text-xs">
                     <input type="text" id="taskSearchInput" oninput="renderTasksTable()" placeholder="ابحث باسم البند أو المشكلة..." class="border border-slate-300 rounded-lg px-3 py-1.5 w-60 focus:ring-1 focus:ring-emerald-500 outline-none">
@@ -166,7 +168,6 @@
                 </div>
             </div>
 
-            <!-- Tasks Table -->
             <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-right text-xs">
@@ -183,7 +184,7 @@
                             </tr>
                         </thead>
                         <tbody id="tasksTableBody" class="divide-y divide-slate-100 font-normal">
-                            <!-- Tasks loaded dynamically -->
+                            <!-- Injected dynamically -->
                         </tbody>
                     </table>
                 </div>
@@ -372,15 +373,37 @@
 
                 <div class="flex justify-end gap-2 pt-3 border-t">
                     <button type="button" onclick="closeTaskModal()" class="px-4 py-2 border rounded-lg hover:bg-slate-100 transition">إلغاء</button>
-                    <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold transition">حفظ التغييرات</button>
+                    <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold transition">حفظ التغييرات سحابياً</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <script>
-        // Data and Core Engine
-        const initialTasks = [
+    <!-- Firebase SDK & Modular App Logic -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+        // إعدادات مشروعك الحقيقية من Firebase Console
+        const firebaseConfig = {
+            apiKey: "AIzaSyCQYoeSNHdvhxA5jSyKsEaszOR0g1gIEeM",
+            authDomain: "fadiaziza-d8fcd.firebaseapp.com",
+            databaseURL: "https://fadiaziza-d8fcd-default-rtdb.firebaseio.com",
+            projectId: "fadiaziza-d8fcd",
+            storageBucket: "fadiaziza-d8fcd.firebasestorage.app",
+            messagingSenderId: "547571922050",
+            appId: "1:547571922050:web:0869584c088b6ea444709b",
+            measurementId: "G-0H602G4C16"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        
+        // مجموعة مخصصة ومعزولة تماماً لمصنع الغزال حتى لا تؤثر على أي مشروع آخر
+        const tasksCol = collection(db, "alghazal_critical_tasks");
+
+        // البنود الـ 34 المعتمدة من خطة مدير المصنع
+        const defaultTasks = [
             { id: 1, title: "أوعية تخزين النشا المبرد", dept: "الإنتاج", severity: "حرجة جداً", problem: "استخدام دلاء بلاستيكية لتخزين النشا المبرد قد ينتج عنه شوائب أو كسور.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
             { id: 2, title: "تبريد الباذنجان المطحون", dept: "الإنتاج", severity: "حرجة جداً", problem: "تبريد الباذنجان المطحون بعد السلق يحتاج تحسينًا؛ ظهور عفن على السطح وعدم ثبات المتبل في السوق.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "" },
             { id: 3, title: "حرارة الزيت ونظافته", dept: "الإنتاج", severity: "حرجة", problem: "حرارة الزيت في مناطق تحضير الحمص والسلطات تحتاج ضبطاً؛ ملاحظة التقرير تشير لحرارة 10–20.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
@@ -417,20 +440,50 @@
             { id: 34, title: "أوعية المواد التحضيرية", dept: "الإنتاج", severity: "متوسطة", problem: "تُستخدم عبوات المنتج النهائي 3 كغم لتعبئة وتخزين مواد تحضيرية مما يهدر العبوات.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" }
         ];
 
-        let tasks = JSON.parse(localStorage.getItem('alghazal_tasks')) || initialTasks;
-        let currentRole = 'admin';
+        window.tasks = [];
         let statusChartInstance = null;
         let deptChartInstance = null;
 
-        function saveToStorage() {
-            localStorage.setItem('alghazal_tasks', JSON.stringify(tasks));
+        // الاستماع التلقائي واللحظي للتعديلات السحابية (Real-time Firestore Listener)
+        onSnapshot(tasksCol, (snapshot) => {
+            if (!snapshot.empty) {
+                window.tasks = [];
+                snapshot.forEach(docSnap => window.tasks.push(docSnap.data()));
+                window.tasks.sort((a, b) => a.id - b.id);
+            } else {
+                // إذا كانت قاعدة بيانات الغزال فارغة أول مرة، يتم رفع البنود الـ 34 تلقائياً
+                defaultTasks.forEach(async (t) => {
+                    await setDoc(doc(db, "alghazal_critical_tasks", String(t.id)), t);
+                });
+                window.tasks = [...defaultTasks];
+            }
             renderDashboard();
             renderTasksTable();
             renderProcurementTable();
             renderWeeklyReport();
-        }
+        }, (error) => {
+            console.error("Firebase sync error:", error);
+            // الرجوع للتخزين المحلي في حال وجود مشكلة اتصال
+            window.tasks = JSON.parse(localStorage.getItem('alghazal_tasks')) || defaultTasks;
+            renderDashboard();
+            renderTasksTable();
+            renderProcurementTable();
+            renderWeeklyReport();
+        });
 
-        function switchTab(tabId) {
+        // دالة الحفظ السحابي
+        window.saveTaskToFirestore = async function(task) {
+            try {
+                await setDoc(doc(db, "alghazal_critical_tasks", String(task.id)), task);
+                localStorage.setItem('alghazal_tasks', JSON.stringify(window.tasks));
+            } catch (err) {
+                console.error("Error saving to Firestore:", err);
+                localStorage.setItem('alghazal_tasks', JSON.stringify(window.tasks));
+            }
+        };
+
+        // وظائف العرض والواجهة
+        window.switchTab = function(tabId) {
             ['dashboard', 'tasks', 'procurement', 'weekly-report'].forEach(t => {
                 document.getElementById(`view-${t}`).classList.add('hidden');
                 document.getElementById(`tabBtn-${t}`).classList.remove('tab-active');
@@ -442,36 +495,37 @@
             activeBtn.classList.remove('text-slate-600');
 
             if (tabId === 'dashboard') updateCharts();
-        }
+        };
 
-        function changeActiveRole(role) {
-            currentRole = role;
+        window.changeActiveRole = function(role) {
             renderTasksTable();
-        }
+        };
 
         function renderDashboard() {
-            document.getElementById('statTotalTasks').innerText = tasks.length;
-            document.getElementById('statContainedTasks').innerText = tasks.filter(t => t.status === 'تم احتواء الخطر').length;
-            document.getElementById('statInProgressTasks').innerText = tasks.filter(t => t.status === 'جارٍ التنفيذ').length;
-            document.getElementById('statPendingQATasks').innerText = tasks.filter(t => t.status === 'بانتظار تحقق الجودة').length;
-            document.getElementById('statClosedTasks').innerText = tasks.filter(t => t.status === 'مغلق').length;
-            document.getElementById('statBudget2027Tasks').innerText = tasks.filter(t => t.budgetYear === '2027').length;
+            const tList = window.tasks;
+            document.getElementById('statTotalTasks').innerText = tList.length;
+            document.getElementById('statContainedTasks').innerText = tList.filter(t => t.status === 'تم احتواء الخطر').length;
+            document.getElementById('statInProgressTasks').innerText = tList.filter(t => t.status === 'جارٍ التنفيذ').length;
+            document.getElementById('statPendingQATasks').innerText = tList.filter(t => t.status === 'بانتظار تحقق الجودة').length;
+            document.getElementById('statClosedTasks').innerText = tList.filter(t => t.status === 'مغلق').length;
+            document.getElementById('statBudget2027Tasks').innerText = tList.filter(t => t.budgetYear === '2027').length;
         }
 
         function updateCharts() {
+            const tList = window.tasks;
             const statusCounts = {
-                'مفتوح': tasks.filter(t => t.status === 'مفتوح').length,
-                'تم احتواء الخطر': tasks.filter(t => t.status === 'تم احتواء الخطر').length,
-                'جارٍ التنفيذ': tasks.filter(t => t.status === 'جارٍ التنفيذ').length,
-                'بانتظار تحقق الجودة': tasks.filter(t => t.status === 'بانتظار تحقق الجودة').length,
-                'مغلق': tasks.filter(t => t.status === 'مغلق').length
+                'مفتوح': tList.filter(t => t.status === 'مفتوح').length,
+                'تم احتواء الخطر': tList.filter(t => t.status === 'تم احتواء الخطر').length,
+                'جارٍ التنفيذ': tList.filter(t => t.status === 'جارٍ التنفيذ').length,
+                'بانتظار تحقق الجودة': tList.filter(t => t.status === 'بانتظار تحقق الجودة').length,
+                'مغلق': tList.filter(t => t.status === 'مغلق').length
             };
 
             const deptCounts = {
-                'الصيانة': tasks.filter(t => t.dept === 'الصيانة').length,
-                'الإنتاج': tasks.filter(t => t.dept === 'الإنتاج').length,
-                'المستودعات': tasks.filter(t => t.dept === 'المستودعات').length,
-                'الجودة': tasks.filter(t => t.dept === 'الجودة').length
+                'الصيانة': tList.filter(t => t.dept === 'الصيانة').length,
+                'الإنتاج': tList.filter(t => t.dept === 'الإنتاج').length,
+                'المستودعات': tList.filter(t => t.dept === 'المستودعات').length,
+                'الجودة': tList.filter(t => t.dept === 'الجودة').length
             };
 
             const ctxStatus = document.getElementById('statusChart').getContext('2d');
@@ -504,14 +558,14 @@
             });
         }
 
-        function renderTasksTable() {
+        window.renderTasksTable = function() {
             const tbody = document.getElementById('tasksTableBody');
-            const search = document.getElementById('taskSearchInput').value.toLowerCase();
+            const search = (document.getElementById('taskSearchInput').value || '').toLowerCase();
             const deptFilter = document.getElementById('filterDept').value;
             const statusFilter = document.getElementById('filterStatus').value;
             const budgetFilter = document.getElementById('filterBudgetYear').value;
 
-            const filtered = tasks.filter(t => {
+            const filtered = window.tasks.filter(t => {
                 const matchSearch = t.title.toLowerCase().includes(search) || t.problem.toLowerCase().includes(search);
                 const matchDept = deptFilter === 'all' || t.dept === deptFilter;
                 const matchStatus = statusFilter === 'all' || t.status === statusFilter;
@@ -567,14 +621,14 @@
             `).join('');
 
             lucide.createIcons();
-        }
+        };
 
         function renderProcurementTable() {
             const tbody = document.getElementById('procurementTableBody');
-            const totalSpent = tasks.reduce((sum, t) => sum + (Number(t.spent) || 0), 0);
+            const totalSpent = window.tasks.reduce((sum, t) => sum + (Number(t.spent) || 0), 0);
             document.getElementById('totalSpentDisplay').innerText = totalSpent.toLocaleString();
 
-            tbody.innerHTML = tasks.map(t => `
+            tbody.innerHTML = window.tasks.map(t => `
                 <tr class="hover:bg-slate-50 transition border-b">
                     <td class="p-3 font-bold text-slate-700">بند ${t.id}</td>
                     <td class="p-3">
@@ -596,12 +650,13 @@
         }
 
         function renderWeeklyReport() {
-            const closed = tasks.filter(t => t.status === 'مغلق').length;
-            const contained = tasks.filter(t => t.status === 'تم احتواء الخطر').length;
-            const pendingQA = tasks.filter(t => t.status === 'بانتظار تحقق الجودة').length;
-            const budget2027 = tasks.filter(t => t.budgetYear === '2027').length;
+            const tList = window.tasks;
+            const closed = tList.filter(t => t.status === 'مغلق').length;
+            const contained = tList.filter(t => t.status === 'تم احتواء الخطر').length;
+            const pendingQA = tList.filter(t => t.status === 'بانتظار تحقق الجودة').length;
+            const budget2027 = tList.filter(t => t.budgetYear === '2027').length;
 
-            const closeRate = Math.round((closed / tasks.length) * 100);
+            const closeRate = tList.length > 0 ? Math.round((closed / tList.length) * 100) : 0;
 
             document.getElementById('reportCloseRate').innerText = `${closeRate}%`;
             document.getElementById('reportContainedCount').innerText = contained;
@@ -609,7 +664,7 @@
             document.getElementById('reportBudgetCount').innerText = budget2027;
             document.getElementById('reportCurrentDate').innerText = `تاريخ التقرير: ${new Date().toLocaleDateString('ar-EG')}`;
 
-            const escalations = tasks.filter(t => t.obstacle || (t.severity === 'حرجة جداً' && t.status === 'مفتوح'));
+            const escalations = tList.filter(t => t.obstacle || (t.severity === 'حرجة جداً' && t.status === 'مفتوح'));
             const escList = document.getElementById('escalationList');
 
             if (escalations.length === 0) {
@@ -624,8 +679,8 @@
             }
         }
 
-        function openEditTaskModal(id) {
-            const task = tasks.find(t => t.id === id);
+        window.openEditTaskModal = function(id) {
+            const task = window.tasks.find(t => t.id === id);
             if (!task) return;
 
             document.getElementById('modalTitle').innerText = `تعديل البند رقم ${task.id}`;
@@ -644,28 +699,29 @@
             document.getElementById('modalTaskObstacle').value = task.obstacle;
 
             document.getElementById('taskModal').classList.remove('hidden');
-        }
+        };
 
-        function openNewTaskModal() {
+        window.openNewTaskModal = function() {
             document.getElementById('modalTitle').innerText = "إضافة مهمة / بند جديد";
             document.getElementById('modalTaskId').value = "new";
             document.getElementById('taskForm').reset();
             document.getElementById('modalTaskProgress').value = 0;
             document.getElementById('modalTaskSpent').value = 0;
             document.getElementById('taskModal').classList.remove('hidden');
-        }
+        };
 
-        function closeTaskModal() {
+        window.closeTaskModal = function() {
             document.getElementById('taskModal').classList.add('hidden');
-        }
+        };
 
-        function saveTaskData(e) {
+        window.saveTaskData = async function(e) {
             e.preventDefault();
             const idVal = document.getElementById('modalTaskId').value;
 
+            let taskToSave = null;
             if (idVal === "new") {
-                const newId = tasks.length > 0 ? Math.max(...tasks.map(t => t.id)) + 1 : 1;
-                const newTask = {
+                const newId = window.tasks.length > 0 ? Math.max(...window.tasks.map(t => t.id)) + 1 : 1;
+                taskToSave = {
                     id: newId,
                     title: document.getElementById('modalTaskTitle').value,
                     dept: document.getElementById('modalTaskDept').value,
@@ -680,33 +736,34 @@
                     evidence: document.getElementById('modalTaskEvidence').value,
                     obstacle: document.getElementById('modalTaskObstacle').value
                 };
-                tasks.push(newTask);
+                window.tasks.push(taskToSave);
             } else {
                 const id = parseInt(idVal);
-                const task = tasks.find(t => t.id === id);
-                if (task) {
-                    task.title = document.getElementById('modalTaskTitle').value;
-                    task.dept = document.getElementById('modalTaskDept').value;
-                    task.problem = document.getElementById('modalTaskProblem').value;
-                    task.severity = document.getElementById('modalTaskSeverity').value;
-                    task.status = document.getElementById('modalTaskStatus').value;
-                    task.progress = Number(document.getElementById('modalTaskProgress').value);
-                    task.contractor = document.getElementById('modalTaskContractor').value;
-                    task.budgetYear = document.getElementById('modalTaskBudgetYear').value;
-                    task.spent = Number(document.getElementById('modalTaskSpent').value);
-                    task.po = document.getElementById('modalTaskPO').value;
-                    task.evidence = document.getElementById('modalTaskEvidence').value;
-                    task.obstacle = document.getElementById('modalTaskObstacle').value;
+                taskToSave = window.tasks.find(t => t.id === id);
+                if (taskToSave) {
+                    taskToSave.title = document.getElementById('modalTaskTitle').value;
+                    taskToSave.dept = document.getElementById('modalTaskDept').value;
+                    taskToSave.problem = document.getElementById('modalTaskProblem').value;
+                    taskToSave.severity = document.getElementById('modalTaskSeverity').value;
+                    taskToSave.status = document.getElementById('modalTaskStatus').value;
+                    taskToSave.progress = Number(document.getElementById('modalTaskProgress').value);
+                    taskToSave.contractor = document.getElementById('modalTaskContractor').value;
+                    taskToSave.budgetYear = document.getElementById('modalTaskBudgetYear').value;
+                    taskToSave.spent = Number(document.getElementById('modalTaskSpent').value);
+                    taskToSave.po = document.getElementById('modalTaskPO').value;
+                    taskToSave.evidence = document.getElementById('modalTaskEvidence').value;
+                    taskToSave.obstacle = document.getElementById('modalTaskObstacle').value;
                 }
             }
 
-            saveToStorage();
-            closeTaskModal();
-        }
+            if (taskToSave) {
+                await window.saveTaskToFirestore(taskToSave);
+            }
+
+            window.closeTaskModal();
+        };
 
         window.addEventListener('DOMContentLoaded', () => {
-            saveToStorage();
-            updateCharts();
             lucide.createIcons();
         });
     </script>
