@@ -20,28 +20,20 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-    <!-- Top Navigation Bar -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-            <div class="flex items-center gap-3">
-                <div class="bg-emerald-600 text-white p-2 rounded-lg font-black text-xl shadow">غ</div>
-                <div>
-                    <h1 class="font-bold text-base sm:text-lg text-slate-900 leading-tight">شركة ومصنع الغزال للمنتجات الغذائية</h1>
-                    <div class="flex items-center gap-2">
-                        <p class="text-xs text-slate-500">منظومة متابعة ومعالجة النقاط الحرجة وموازنة 2027</p>
-                        <span id="syncBadge" class="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> مزامنة سحابية نشطة
-                        </span>
-                    </div>
-                </div>
+    <!-- Login Modal (يظهر إذا لم يسجل المستخدم الدخول) -->
+    <div id="loginOverlay" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-6 text-right border border-slate-100">
+            <div class="text-center space-y-2">
+                <img src="logo1.png" alt="شعار شركة ومصنع الغزال" class="h-20 mx-auto object-contain" onerror="this.style.display='none'; document.getElementById('loginAltLogo').style.display='inline-flex';">
+                <div id="loginAltLogo" class="hidden bg-emerald-600 text-white w-16 h-16 rounded-2xl items-center justify-center font-black text-2xl mx-auto shadow-lg">غ</div>
+                <h2 class="text-xl font-extrabold text-slate-900">مصنع الغزال للمنتجات الغذائية</h2>
+                <p class="text-xs text-slate-500">تسجيل الدخول لمنظومة متابعة النقاط الحرجة وموازنة 2027</p>
             </div>
 
-            <!-- Role Selector & Actions -->
-            <div class="flex items-center gap-3">
-                <div class="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200">
-                    <i data-lucide="user-check" class="w-4 h-4 text-emerald-600"></i>
-                    <span class="text-xs text-slate-600 hidden md:inline font-medium">الحساب النشط:</span>
-                    <select id="userRoleSelect" onchange="changeActiveRole(this.value)" class="bg-transparent text-xs font-bold text-slate-800 outline-none cursor-pointer">
+            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">اختر الحساب / القسم</label>
+                    <select id="loginRole" class="w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50 outline-none focus:ring-2 focus:ring-emerald-500 font-bold">
                         <option value="admin">م. فادي محمود (المصمم / Super Admin)</option>
                         <option value="ceo">المدير التنفيذي (CEO)</option>
                         <option value="plant_manager">مدير المصنع</option>
@@ -53,9 +45,54 @@
                         <option value="finance">قسم المالية</option>
                     </select>
                 </div>
-                <button onclick="openNewTaskModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs sm:text-sm font-semibold px-3 py-2 rounded-lg flex items-center gap-1.5 transition shadow">
+
+                <div>
+                    <label class="block font-semibold text-slate-700 mb-1">كلمة المرور الخاصة بالحساب</label>
+                    <input type="password" id="loginPassword" required placeholder="أدخل كلمة المرور..." class="w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50 outline-none focus:ring-2 focus:ring-emerald-500">
+                    <p id="loginError" class="text-red-600 text-[11px] mt-1 hidden">كلمة المرور غير صحيحة، يرجى المحاولة مجدداً.</p>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                    <i data-lucide="log-in" class="w-4 h-4"></i> دخول للمنظومة
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+            <div class="flex items-center gap-3">
+                <img src="logo1.png" alt="شعار شركة الغزال" class="h-11 object-contain" onerror="this.style.display='none'; document.getElementById('headerAltLogo').style.display='flex';">
+                <div id="headerAltLogo" class="hidden bg-emerald-600 text-white w-10 h-10 rounded-lg items-center justify-center font-black text-xl shadow">غ</div>
+                <div>
+                    <h1 class="font-bold text-sm sm:text-base text-slate-900 leading-tight">شركة ومصنع الغزال للمنتجات الغذائية</h1>
+                    <div class="flex items-center gap-2">
+                        <p class="text-[11px] text-slate-500">منظومة معالجة النقاط الحرجة وموازنة 2027</p>
+                        <span id="syncBadge" class="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> مزامنة Firebase
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active User Profile & Actions -->
+            <div class="flex items-center gap-2 sm:gap-3">
+                <div class="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+                    <div class="text-right">
+                        <div id="userDisplayName" class="text-xs font-bold text-slate-800 leading-none">م. فادي محمود</div>
+                        <div id="userRoleBadge" class="text-[10px] text-slate-500 leading-none mt-0.5">Super Admin</div>
+                    </div>
+                </div>
+
+                <button id="btnAddNewTask" onclick="openNewTaskModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3 py-2 rounded-xl flex items-center gap-1.5 transition shadow">
                     <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                    <span>إضافة مهمة جديدة</span>
+                    <span class="hidden sm:inline">إضافة مهمة جديدة</span>
+                </button>
+
+                <button onclick="handleLogout()" title="تسجيل الخروج" class="p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl transition">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
                 </button>
             </div>
         </div>
@@ -179,7 +216,7 @@
                                 <th class="p-3">القائد / التنفيذ</th>
                                 <th class="p-3">نسبة الإنجاز</th>
                                 <th class="p-3">الحالة والإجراء</th>
-                                <th class="p-3">الموازنة والتكلفة</th>
+                                <th class="p-3">آخر تحديث وتاريخه</th>
                                 <th class="p-3 text-center">إجراءات</th>
                             </tr>
                         </thead>
@@ -230,41 +267,69 @@
 
         <!-- TAB 4: WEEKLY REPORT -->
         <section id="view-weekly-report" class="hidden space-y-6">
-            <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm max-w-4xl mx-auto space-y-6 print:border-none print:shadow-none">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm max-w-4xl mx-auto space-y-6 print:border-none print:shadow-none">
+                <!-- Header with Logo -->
                 <div class="flex justify-between items-center border-b pb-4">
-                    <div>
-                        <h2 class="text-lg font-bold text-slate-900">تقرير المتابعة الأسبوعي - معالجة النقاط الحرجة</h2>
-                        <p class="text-xs text-slate-500">مُعد لاجتماع مدير المصنع الدوري والأطراف المسؤولة</p>
+                    <div class="flex items-center gap-3">
+                        <img src="logo1.png" alt="شعار الغزال" class="h-14 object-contain" onerror="this.style.display='none';">
+                        <div>
+                            <h2 class="text-base sm:text-lg font-extrabold text-slate-900">تقرير المتابعة الأسبوعي - معالجة النقاط الحرجة</h2>
+                            <p class="text-xs text-slate-500">شركة ومصنع الغزال للمنتجات الغذائية | خطة مدير المصنع وموازنة 2027</p>
+                        </div>
                     </div>
-                    <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs px-3 py-2 rounded-lg flex items-center gap-1.5 transition">
+                    <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition">
                         <i data-lucide="printer" class="w-4 h-4"></i> طباعة التقرير
                     </button>
                 </div>
 
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                        <p class="text-[11px] text-slate-500">نسبة الإغلاق الكلية</p>
-                        <h4 id="reportCloseRate" class="text-xl font-bold text-emerald-600 mt-1">0%</h4>
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                        <p class="text-[11px] text-slate-500 font-semibold">نسبة الإغلاق الكلية</p>
+                        <h4 id="reportCloseRate" class="text-xl font-extrabold text-emerald-600 mt-1">0%</h4>
                     </div>
-                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                        <p class="text-[11px] text-slate-500">بنود تم احتواء خطرها</p>
-                        <h4 id="reportContainedCount" class="text-xl font-bold text-amber-600 mt-1">0</h4>
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                        <p class="text-[11px] text-slate-500 font-semibold">بنود تم احتواء خطرها</p>
+                        <h4 id="reportContainedCount" class="text-xl font-extrabold text-amber-600 mt-1">0</h4>
                     </div>
-                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                        <p class="text-[11px] text-slate-500">بنود تنتظر تدقيق الجودة</p>
-                        <h4 id="reportPendingQA" class="text-xl font-bold text-purple-600 mt-1">0</h4>
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                        <p class="text-[11px] text-slate-500 font-semibold">بنود تنتظر تدقيق الجودة</p>
+                        <h4 id="reportPendingQA" class="text-xl font-extrabold text-purple-600 mt-1">0</h4>
                     </div>
-                    <div class="bg-slate-50 p-3 rounded-lg border border-slate-200">
-                        <p class="text-[11px] text-slate-500">مشاريع مرفوعة لموازنة 2027</p>
-                        <h4 id="reportBudgetCount" class="text-xl font-bold text-blue-600 mt-1">0</h4>
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                        <p class="text-[11px] text-slate-500 font-semibold">مشاريع موازنة 2027</p>
+                        <h4 id="reportBudgetCount" class="text-xl font-extrabold text-blue-600 mt-1">0</h4>
                     </div>
                 </div>
 
+                <!-- جدول توثيق توقيت التعديلات ونسب الإنجاز الحديثة -->
+                <div class="space-y-3">
+                    <h4 class="font-bold text-sm text-slate-800 flex items-center gap-2">
+                        <i data-lucide="history" class="w-4 h-4 text-emerald-600"></i> سجل التعديلات ونسب الإنجاز الأخيرة (Audit Log)
+                    </h4>
+                    <div class="border border-slate-200 rounded-xl overflow-hidden">
+                        <table class="w-full text-right text-xs">
+                            <thead class="bg-slate-100 text-slate-700 font-bold">
+                                <tr>
+                                    <th class="p-2.5">رقم البند</th>
+                                    <th class="p-2.5">اسم المهمة</th>
+                                    <th class="p-2.5">نسبة الإنجاز الحالية</th>
+                                    <th class="p-2.5">توقيت وتاريخ التعديل</th>
+                                    <th class="p-2.5">المُعدل</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reportUpdatesLogBody" class="divide-y divide-slate-100 font-normal">
+                                <!-- Injected dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- قائمة التصعيد والعوائق -->
                 <div class="space-y-3">
                     <h4 class="font-bold text-sm text-slate-800 flex items-center gap-2">
                         <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600"></i> بنود تتطلب قرارات عاجلة وتصعيداً من مدير المصنع
                     </h4>
-                    <div id="escalationList" class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-900 space-y-2">
+                    <div id="escalationList" class="bg-amber-50 border border-amber-200 rounded-xl p-3.5 text-xs text-amber-900 space-y-2">
                         <!-- Auto-filled -->
                     </div>
                 </div>
@@ -280,7 +345,7 @@
 
     <!-- Task Edit/Add Modal -->
     <div id="taskModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-4">
+        <div class="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-4 text-right">
             <div class="flex justify-between items-center border-b pb-3">
                 <h3 id="modalTitle" class="font-bold text-base text-slate-800">تعديل بيانات المهمة</h3>
                 <button onclick="closeTaskModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -291,11 +356,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
                         <label class="block font-medium text-slate-700 mb-1">اسم المهمة / البند</label>
-                        <input type="text" id="modalTaskTitle" required class="w-full border rounded-lg p-2 focus:ring-1 focus:ring-emerald-500 outline-none">
+                        <input type="text" id="modalTaskTitle" required class="w-full border rounded-xl p-2.5 focus:ring-1 focus:ring-emerald-500 outline-none">
                     </div>
                     <div>
                         <label class="block font-medium text-slate-700 mb-1">القسم القائد</label>
-                        <select id="modalTaskDept" class="w-full border rounded-lg p-2 outline-none">
+                        <select id="modalTaskDept" class="w-full border rounded-xl p-2.5 outline-none">
                             <option value="الصيانة">الصيانة</option>
                             <option value="الإنتاج">الإنتاج</option>
                             <option value="المستودعات">المستودعات</option>
@@ -306,13 +371,13 @@
 
                 <div>
                     <label class="block font-medium text-slate-700 mb-1">المشكلة المرصودة ومواصفاتها</label>
-                    <textarea id="modalTaskProblem" rows="2" class="w-full border rounded-lg p-2 focus:ring-1 focus:ring-emerald-500 outline-none"></textarea>
+                    <textarea id="modalTaskProblem" rows="2" class="w-full border rounded-xl p-2.5 focus:ring-1 focus:ring-emerald-500 outline-none"></textarea>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div>
                         <label class="block font-medium text-slate-700 mb-1">درجة الحساسية</label>
-                        <select id="modalTaskSeverity" class="w-full border rounded-lg p-2 outline-none">
+                        <select id="modalTaskSeverity" class="w-full border rounded-xl p-2.5 outline-none">
                             <option value="حرجة جداً">حرجة جداً</option>
                             <option value="حرجة">حرجة</option>
                             <option value="متوسطة">متوسطة</option>
@@ -320,7 +385,7 @@
                     </div>
                     <div>
                         <label class="block font-medium text-slate-700 mb-1">حالة المتابعة</label>
-                        <select id="modalTaskStatus" class="w-full border rounded-lg p-2 outline-none">
+                        <select id="modalTaskStatus" class="w-full border rounded-xl p-2.5 outline-none">
                             <option value="مفتوح">مفتوح</option>
                             <option value="تم احتواء الخطر">تم احتواء الخطر</option>
                             <option value="جارٍ التنفيذ">جارٍ التنفيذ</option>
@@ -330,61 +395,120 @@
                     </div>
                     <div>
                         <label class="block font-medium text-slate-700 mb-1">نسبة الإنجاز (%)</label>
-                        <input type="number" id="modalTaskProgress" min="0" max="100" class="w-full border rounded-lg p-2 outline-none font-bold">
+                        <input type="number" id="modalTaskProgress" min="0" max="100" class="w-full border rounded-xl p-2.5 outline-none font-bold">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div>
                         <label class="block font-medium text-slate-700 mb-1">جهة التنفيذ</label>
-                        <select id="modalTaskContractor" class="w-full border rounded-lg p-2 outline-none">
+                        <select id="modalTaskContractor" class="w-full border rounded-xl p-2.5 outline-none">
                             <option value="داخلي">داخلي (فريق المصنع)</option>
                             <option value="خارجي">خارجي (مورد / مقاول)</option>
                         </select>
                     </div>
                     <div>
                         <label class="block font-medium text-slate-700 mb-1">التبويب المالي</label>
-                        <select id="modalTaskBudgetYear" class="w-full border rounded-lg p-2 outline-none">
+                        <select id="modalTaskBudgetYear" class="w-full border rounded-xl p-2.5 outline-none">
                             <option value="2026">تشغيلي فوري (2026)</option>
                             <option value="2027">ضمن موازنة 2027</option>
                         </select>
                     </div>
                     <div>
                         <label class="block font-medium text-slate-700 mb-1">التكلفة المصروفة (₪)</label>
-                        <input type="number" id="modalTaskSpent" min="0" class="w-full border rounded-lg p-2 outline-none">
+                        <input type="number" id="modalTaskSpent" min="0" class="w-full border rounded-xl p-2.5 outline-none">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
                         <label class="block font-medium text-slate-700 mb-1">رقم طلب الشراء / عروض الأسعار</label>
-                        <input type="text" id="modalTaskPO" placeholder="مثال: PR-2026-042 / شركة الشريف" class="w-full border rounded-lg p-2 outline-none">
+                        <input type="text" id="modalTaskPO" placeholder="مثال: PR-2026-042 / شركة الشريف" class="w-full border rounded-xl p-2.5 outline-none">
                     </div>
                     <div>
                         <label class="block font-medium text-slate-700 mb-1">دليل إغلاق الجودة</label>
-                        <input type="text" id="modalTaskEvidence" placeholder="سجل فحص، قراءة حرارة، صورة استلام" class="w-full border rounded-lg p-2 outline-none">
+                        <input type="text" id="modalTaskEvidence" placeholder="سجل فحص، قراءة حرارة، صورة استلام" class="w-full border rounded-xl p-2.5 outline-none">
                     </div>
                 </div>
 
                 <div>
                     <label class="block font-medium text-slate-700 mb-1">الملاحظات والعوائق للتصعيد</label>
-                    <input type="text" id="modalTaskObstacle" placeholder="هل يوجد عائق يحتاج قراراً من مدير المصنع؟" class="w-full border rounded-lg p-2 outline-none">
+                    <input type="text" id="modalTaskObstacle" placeholder="هل يوجد عائق يحتاج قراراً من مدير المصنع؟" class="w-full border rounded-xl p-2.5 outline-none">
                 </div>
 
                 <div class="flex justify-end gap-2 pt-3 border-t">
-                    <button type="button" onclick="closeTaskModal()" class="px-4 py-2 border rounded-lg hover:bg-slate-100 transition">إلغاء</button>
-                    <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold transition">حفظ التغييرات سحابياً</button>
+                    <button type="button" onclick="closeTaskModal()" class="px-4 py-2 border rounded-xl hover:bg-slate-100 transition">إلغاء</button>
+                    <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition">حفظ التغييرات سحابياً</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- Firebase SDK & Modular App Logic -->
+    <!-- Firebase SDK & Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getFirestore, collection, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-        // إعدادات مشروعك الحقيقية من Firebase Console
+        // حسابات الدخول وكلمات المرور والصلاحيات
+        const ACCOUNTS = {
+            admin: { name: "م. فادي محمود", roleName: "Super Admin", pass: "fadi@2026", canEditAll: true, canClose: true, canAdd: true },
+            ceo: { name: "المدير التنفيذي", roleName: "CEO", pass: "ceo@ghazal", canEditAll: false, canClose: true, canAdd: false },
+            plant_manager: { name: "مدير المصنع", roleName: "Plant Manager", pass: "plant@ghazal", canEditAll: true, canClose: true, canAdd: true },
+            qa: { name: "قسم الجودة", roleName: "Quality Assurance", pass: "qa@ghazal", allowedDept: "الجودة", canClose: true, canAdd: true },
+            maintenance: { name: "قسم الصيانة", roleName: "Maintenance Dept", pass: "maint@ghazal", allowedDept: "الصيانة", canClose: false, canAdd: false },
+            production: { name: "قسم الإنتاج", roleName: "Production Dept", pass: "prod@ghazal", allowedDept: "الإنتاج", canClose: false, canAdd: false },
+            warehouse: { name: "قسم المستودعات", roleName: "Warehouse Dept", pass: "wh@ghazal", allowedDept: "المستودعات", canClose: false, canAdd: false },
+            procurement: { name: "قسم المشتريات", roleName: "Procurement Dept", pass: "proc@ghazal", canProcurement: true, canClose: false, canAdd: false },
+            finance: { name: "قسم المالية", roleName: "Finance Dept", pass: "fin@ghazal", canFinance: true, canClose: false, canAdd: false }
+        };
+
+        let currentUserKey = localStorage.getItem('alghazal_logged_user') || null;
+
+        // التحقق من حالة تسجيل الدخول
+        window.checkAuth = function() {
+            if (!currentUserKey || !ACCOUNTS[currentUserKey]) {
+                document.getElementById('loginOverlay').classList.remove('hidden');
+            } else {
+                document.getElementById('loginOverlay').classList.add('hidden');
+                const user = ACCOUNTS[currentUserKey];
+                document.getElementById('userDisplayName').innerText = user.name;
+                document.getElementById('userRoleBadge').innerText = user.roleName;
+
+                // إخفاء زر إضافة مهمة إذا لم يكن يملك الصلاحية
+                const addBtn = document.getElementById('btnAddNewTask');
+                if (user.canAdd || user.canEditAll) {
+                    addBtn.classList.remove('hidden');
+                } else {
+                    addBtn.classList.add('hidden');
+                }
+            }
+        };
+
+        window.handleLogin = function(e) {
+            e.preventDefault();
+            const role = document.getElementById('loginRole').value;
+            const pass = document.getElementById('loginPassword').value;
+            const err = document.getElementById('loginError');
+
+            if (ACCOUNTS[role] && ACCOUNTS[role].pass === pass) {
+                currentUserKey = role;
+                localStorage.setItem('alghazal_logged_user', role);
+                err.classList.add('hidden');
+                document.getElementById('loginPassword').value = '';
+                checkAuth();
+                renderTasksTable();
+            } else {
+                err.classList.remove('hidden');
+            }
+        };
+
+        window.handleLogout = function() {
+            localStorage.removeItem('alghazal_logged_user');
+            currentUserKey = null;
+            checkAuth();
+        };
+
+        // Firebase Setup
         const firebaseConfig = {
             apiKey: "AIzaSyCQYoeSNHdvhxA5jSyKsEaszOR0g1gIEeM",
             authDomain: "fadiaziza-d8fcd.firebaseapp.com",
@@ -398,60 +522,57 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
-        
-        // مجموعة مخصصة ومعزولة تماماً لمصنع الغزال حتى لا تؤثر على أي مشروع آخر
         const tasksCol = collection(db, "alghazal_critical_tasks");
 
-        // البنود الـ 34 المعتمدة من خطة مدير المصنع
+        // البنود الـ 34
         const defaultTasks = [
-            { id: 1, title: "أوعية تخزين النشا المبرد", dept: "الإنتاج", severity: "حرجة جداً", problem: "استخدام دلاء بلاستيكية لتخزين النشا المبرد قد ينتج عنه شوائب أو كسور.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 2, title: "تبريد الباذنجان المطحون", dept: "الإنتاج", severity: "حرجة جداً", problem: "تبريد الباذنجان المطحون بعد السلق يحتاج تحسينًا؛ ظهور عفن على السطح وعدم ثبات المتبل في السوق.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 3, title: "حرارة الزيت ونظافته", dept: "الإنتاج", severity: "حرجة", problem: "حرارة الزيت في مناطق تحضير الحمص والسلطات تحتاج ضبطاً؛ ملاحظة التقرير تشير لحرارة 10–20.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 4, title: "مياه المصنع وماكينات الثلج", dept: "الصيانة", severity: "حرجة جداً", problem: "مياه تحضير المحاليل وتكوين الثلج والسلق تحتاج معالجة مناسبة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 5, title: "قياس مياه طناجر السلق", dept: "الصيانة", severity: "حرجة جداً", problem: "قياس منسوب المياه في طناجر السلق غير دقيق، واختلافه سبب لانحراف رطوبة المادة المحضرة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 6, title: "التنظيف عند تغيير الأصناف", dept: "الإنتاج", severity: "حرجة", problem: "التبديل بين الأصناف على الخطوط وماكينات التعبئة قد يسبب تلوثاً تقاطعياً.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 7, title: "فصل خلطات ماكينة رقم 1", dept: "الإنتاج", severity: "حرجة", problem: "الفصل الفعلي بين خلطات الحمص على ماكينة رقم 1 غير مضمون بالاعتماد على عدد الصناديق.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 8, title: "خروج المنتج قبل بلوغ حرارة التوزيع", dept: "المستودعات", severity: "حرجة", problem: "خروج المنتج من المستودع الرئيسي قبل الوصول إلى حرارة التوزيع المطلوبة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 9, title: "ملصقات المواد التحضيرية", dept: "المستودعات", severity: "حرجة", problem: "ملصقات المواد التحضيرية الورقية تتآكل أو تتمزق بسبب رطوبة المستودع.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 10, title: "حرارة بيئة التحضير والإنتاج", dept: "الصيانة", severity: "حرجة جداً", problem: "ارتفاع حرارة بيئة الإنتاج والتحضير قد يرفع حرارة المنتج خلال التوقف أو التصنيع.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 11, title: "حرارة المنتج وتكاثف العبوات", dept: "الإنتاج", severity: "حرجة جداً", problem: "دخول المنتج غرف التبريد بحرارة مرتفعة نسبيًا فيتكاثف البخار على الأسطح العلوية للعبوات.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 12, title: "مواصفات المواد الخام", dept: "الجودة", severity: "حرجة", problem: "غياب ملف موحد للمواصفات الفنية للمواد الخام يسبب اختلاف الخصائص وتكرار عدم المطابقة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 13, title: "دراسة التعقيم بالأشعة فوق البنفسجية UV", dept: "الجودة", severity: "حرجة", problem: "لم تُحسم الحاجة أو المواقع والفعالية لنظام UV المقترح.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 14, title: "أغطية وإغلاق الماكينات", dept: "الصيانة", severity: "حرجة", problem: "الماكينات مكشوفة نسبيًا؛ تتطلب أغطية وحماية دون إعاقة التشغيل والتنظيف.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 15, title: "الزي الموحد وغسيله", dept: "الإنتاج", severity: "حرجة", problem: "عدم وجود زي موحد مخصص ومتكامل للعاملين مع آلية غسيل وتجفيف وإدارة واضحة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 16, title: "منطقة الجلي وغسيل المعدات", dept: "الصيانة", severity: "حرجة جداً", problem: "منطقة الجلي تحتاج فصلاً وترتيباً ومساحة مناسبة لمنع التزاحم وضمان النظافة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 17, title: "مستودع الكيماويات وأدوات الجلي", dept: "المستودعات", severity: "حرجة جداً", problem: "الموقع الحالي وأرضياته وبنيته لا يضمنان تخزين المواد الكيميائية بأمان وملاءمة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 18, title: "مسار الصناديق النظيفة والمتسخة", dept: "الإنتاج", severity: "حرجة", problem: "تقاطع مسار الصناديق مع منطقة الجلي قد يزيد احتمال انتقال الملوثات.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 19, title: "الطوارئ والإخلاء والسلامة", dept: "الصيانة", severity: "حرجة جداً", problem: "خطط الإخلاء والطوارئ تحتاج تطبيقاً عملياً وتحديد مسؤوليات وتدريباً.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 20, title: "الشفط في مناطق التسخين والسلق", dept: "الصيانة", severity: "حرجة", problem: "ضعف الشفط والتهوية يرفع الحرارة والرطوبة وتكاثف الأبخرة واحتمال العفن.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 21, title: "منطقة السلطات والسقف", dept: "الصيانة", severity: "حرجة جداً", problem: "منطقة السلطات تحتاج توسعة وصيانة للسقف لتناسب ظروف التشغيل والنظافة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 22, title: "أسطح وبلاطات ماكينة الديزاين", dept: "الصيانة", severity: "حرجة جداً", problem: "تآكل أو تلف بلاطات وأسطح ماكينة الديزاين قد يؤدي إلى سقوط شوائب على المنتج.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 23, title: "بطاقات البيان والمواصفات الغذائية", dept: "الجودة", severity: "حرجة", problem: "ملف بطاقات البيان والمواصفات بحاجة لمراجعة وتوحيد بالاستناد لنتائج موثوقة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 24, title: "نقل الكراتين داخل الإنتاج", dept: "الإنتاج", severity: "متوسطة", problem: "استخدام صناديق تداول المواد لحمل وجر الكراتين بدل وسيلة نقل مخصصة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 25, title: "كفاءة وحدات التبريد وخاصة 6 و7", dept: "الصيانة", severity: "حرجة جداً", problem: "وحدات التبريد تحتاج تقييماً وصيانة شاملين، خصوصاً ثلاجتي 6 و7.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 26, title: "بنية مستودعات التبريد", dept: "الصيانة", severity: "حرجة جداً", problem: "أسقف وجدران وأبواب مستودعات التبريد بها تلف وتساقط شوائب واحتمال تسريب.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 27, title: "النفايات ومسار إخراجها", dept: "الإنتاج", severity: "حرجة جداً", problem: "مسار إخراج المخلفات قد يمر عبر مناطق الإنتاج أو المدخل الرئيسي.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 28, title: "استمرارية المياه الساخنة", dept: "الصيانة", severity: "حرجة جداً", problem: "المياه الساخنة لا تتوفر باستمرار مما يعيق أعمال التنظيف والغسيل.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 29, title: "مستودعات المواد الجافة", dept: "المستودعات", severity: "حرجة جداً", problem: "المستودعات لا توفر تهوية وإغلاقاً وضبطاً ملائماً للحرارة والرطوبة للمواد الجافة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 30, title: "الأرضيات والانزلاق عند مدخل الإنتاج", dept: "الصيانة", severity: "حرجة جداً", problem: "مناطق الإنتاج والممرات قد تصبح زلقة بالمياه والزيوت وبعض الأرضيات متآكلة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 31, title: "غسل الأيدي وتجهيز العاملين", dept: "الصيانة", severity: "حرجة جداً", problem: "جاهزية وحدة غسل وتعقيم الأيدي تحتاج صيانة وتعزيز تجهيز العاملين قبل الدخول.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 32, title: "إنذار أبواب غرف التبريد", dept: "الصيانة", severity: "حرجة جداً", problem: "لا يوجد إنذار ينبه عند بقاء أبواب غرف ومستودعات التبريد مفتوحة لفترات طويلة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 33, title: "فرز الأوعية والمعدات البلاستيكية", dept: "الإنتاج", severity: "حرجة", problem: "بعض الأوعية والمعدات البلاستيكية متشققة وتطلق شوائب ويصعب تنظيفها.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" },
-            { id: 34, title: "أوعية المواد التحضيرية", dept: "الإنتاج", severity: "متوسطة", problem: "تُستخدم عبوات المنتج النهائي 3 كغم لتعبئة وتخزين مواد تحضيرية مما يهدر العبوات.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "" }
+            { id: 1, title: "أوعية تخزين النشا المبرد", dept: "الإنتاج", severity: "حرجة جداً", problem: "استخدام دلاء بلاستيكية لتخزين النشا المبرد قد ينتج عنه شوائب أو كسور.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 2, title: "تبريد الباذنجان المطحون", dept: "الإنتاج", severity: "حرجة جداً", problem: "تبريد الباذنجان المطحون بعد السلق يحتاج تحسينًا؛ ظهور عفن على السطح وعدم ثبات المتبل في السوق.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 3, title: "حرارة الزيت ونظافته", dept: "الإنتاج", severity: "حرجة", problem: "حرارة الزيت في مناطق تحضير الحمص والسلطات تحتاج ضبطاً؛ ملاحظة التقرير تشير لحرارة 10–20.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 4, title: "مياه المصنع وماكينات الثلج", dept: "الصيانة", severity: "حرجة جداً", problem: "مياه تحضير المحاليل وتكوين الثلج والسلق تحتاج معالجة مناسبة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 5, title: "قياس مياه طناجر السلق", dept: "الصيانة", severity: "حرجة جداً", problem: "قياس منسوب المياه في طناجر السلق غير دقيق، واختلافه سبب لانحراف رطوبة المادة المحضرة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 6, title: "التنظيف عند تغيير الأصناف", dept: "الإنتاج", severity: "حرجة", problem: "التبديل بين الأصناف على الخطوط وماكينات التعبئة قد يسبب تلوثاً تقاطعياً.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 7, title: "فصل خلطات ماكينة رقم 1", dept: "الإنتاج", severity: "حرجة", problem: "الفصل الفعلي بين خلطات الحمص على ماكينة رقم 1 غير مضمون بالاعتماد على عدد الصناديق.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 8, title: "خروج المنتج قبل بلوغ حرارة التوزيع", dept: "المستودعات", severity: "حرجة", problem: "خروج المنتج من المستودع الرئيسي قبل الوصول إلى حرارة التوزيع المطلوبة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 9, title: "ملصقات المواد التحضيرية", dept: "المستودعات", severity: "حرجة", problem: "ملصقات المواد التحضيرية الورقية تتآكل أو تتمزق بسبب رطوبة المستودع.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 10, title: "حرارة بيئة التحضير والإنتاج", dept: "الصيانة", severity: "حرجة جداً", problem: "ارتفاع حرارة بيئة الإنتاج والتحضير قد يرفع حرارة المنتج خلال التوقف أو التصنيع.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 11, title: "حرارة المنتج وتكاثف العبوات", dept: "الإنتاج", severity: "حرجة جداً", problem: "دخول المنتج غرف التبريد بحرارة مرتفعة نسبيًا فيتكاثف البخار على الأسطح العلوية للعبوات.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 12, title: "مواصفات المواد الخام", dept: "الجودة", severity: "حرجة", problem: "غياب ملف موحد للمواصفات الفنية للمواد الخام يسبب اختلاف الخصائص وتكرار عدم المطابقة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 13, title: "دراسة التعقيم بالأشعة فوق البنفسجية UV", dept: "الجودة", severity: "حرجة", problem: "لم تُحسم الحاجة أو المواقع والفعالية لنظام UV المقترح.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 14, title: "أغطية وإغلاق الماكينات", dept: "الصيانة", severity: "حرجة", problem: "الماكينات مكشوفة نسبيًا؛ تتطلب أغطية وحماية دون إعاقة التشغيل والتنظيف.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 15, title: "الزي الموحد وغسيله", dept: "الإنتاج", severity: "حرجة", problem: "عدم وجود زي موحد مخصص ومتكامل للعاملين مع آلية غسيل وتجفيف وإدارة واضحة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 16, title: "منطقة الجلي وغسيل المعدات", dept: "الصيانة", severity: "حرجة جداً", problem: "منطقة الجلي تحتاج فصلاً وترتيباً ومساحة مناسبة لمنع التزاحم وضمان النظافة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 17, title: "مستودع الكيماويات وأدوات الجلي", dept: "المستودعات", severity: "حرجة جداً", problem: "الموقع الحالي وأرضياته وبنيته لا يضمنان تخزين المواد الكيميائية بأمان وملاءمة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 18, title: "مسار الصناديق النظيفة والمتسخة", dept: "الإنتاج", severity: "حرجة", problem: "تقاطع مسار الصناديق مع منطقة الجلي قد يزيد احتمال انتقال الملوثات.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 19, title: "الطوارئ والإخلاء والسلامة", dept: "الصيانة", severity: "حرجة جداً", problem: "خطط الإخلاء والطوارئ تحتاج تطبيقاً عملياً وتحديد مسؤوليات وتدريباً.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 20, title: "الشفط في مناطق التسخين والسلق", dept: "الصيانة", severity: "حرجة", problem: "ضعف الشفط والتهوية يرفع الحرارة والرطوبة وتكاثف الأبخرة واحتمال العفن.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 21, title: "منطقة السلطات والسقف", dept: "الصيانة", severity: "حرجة جداً", problem: "منطقة السلطات تحتاج توسعة وصيانة للسقف لتناسب ظروف التشغيل والنظافة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 22, title: "أسطح وبلاطات ماكينة الديزاين", dept: "الصيانة", severity: "حرجة جداً", problem: "تآكل أو تلف بلاطات وأسطح ماكينة الديزاين قد يؤدي إلى سقوط شوائب على المنتج.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 23, title: "بطاقات البيان والمواصفات الغذائية", dept: "الجودة", severity: "حرجة", problem: "ملف بطاقات البيان والمواصفات بحاجة لمراجعة وتوحيد بالاستناد لنتائج موثوقة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 24, title: "نقل الكراتين داخل الإنتاج", dept: "الإنتاج", severity: "متوسطة", problem: "استخدام صناديق تداول المواد لحمل وجر الكراتين بدل وسيلة نقل مخصصة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 25, title: "كفاءة وحدات التبريد وخاصة 6 و7", dept: "الصيانة", severity: "حرجة جداً", problem: "وحدات التبريد تحتاج تقييماً وصيانة شاملين، خصوصاً ثلاجتي 6 و7.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 26, title: "بنية مستودعات التبريد", dept: "الصيانة", severity: "حرجة جداً", problem: "أسقف وجدران وأبواب مستودعات التبريد بها تلف وتساقط شوائب واحتمال تسريب.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 27, title: "النفايات ومسار إخراجها", dept: "الإنتاج", severity: "حرجة جداً", problem: "مسار إخراج المخلفات قد يمر عبر مناطق الإنتاج أو المدخل الرئيسي.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 28, title: "استمرارية المياه الساخنة", dept: "الصيانة", severity: "حرجة جداً", problem: "المياه الساخنة لا تتوفر باستمرار مما يعيق أعمال التنظيف والغسيل.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 29, title: "مستودعات المواد الجافة", dept: "المستودعات", severity: "حرجة جداً", problem: "المستودعات لا توفر تهوية وإغلاقاً وضبطاً ملائماً للحرارة والرطوبة للمواد الجافة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 30, title: "الأرضيات والانزلاق عند مدخل الإنتاج", dept: "الصيانة", severity: "حرجة جداً", problem: "مناطق الإنتاج والممرات قد تصبح زلقة بالمياه والزيوت وبعض الأرضيات متآكلة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 31, title: "غسل الأيدي وتجهيز العاملين", dept: "الصيانة", severity: "حرجة جداً", problem: "جاهزية وحدة غسل وتعقيم الأيدي تحتاج صيانة وتعزيز تجهيز العاملين قبل الدخول.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 32, title: "إنذار أبواب غرف التبريد", dept: "الصيانة", severity: "حرجة جداً", problem: "لا يوجد إنذار ينبه عند بقاء أبواب غرف ومستودعات التبريد مفتوحة لفترات طويلة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 33, title: "فرز الأوعية والمعدات البلاستيكية", dept: "الإنتاج", severity: "حرجة", problem: "بعض الأوعية والمعدات البلاستيكية متشققة وتطلق شوائب ويصعب تنظيفها.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 34, title: "أوعية المواد التحضيرية", dept: "الإنتاج", severity: "متوسطة", problem: "تُستخدم عبوات المنتج النهائي 3 كغم لتعبئة وتخزين مواد تحضيرية مما يهدر العبوات.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" }
         ];
 
         window.tasks = [];
         let statusChartInstance = null;
         let deptChartInstance = null;
 
-        // الاستماع التلقائي واللحظي للتعديلات السحابية (Real-time Firestore Listener)
+        // مزامنة Firestore اللحظية
         onSnapshot(tasksCol, (snapshot) => {
             if (!snapshot.empty) {
                 window.tasks = [];
                 snapshot.forEach(docSnap => window.tasks.push(docSnap.data()));
                 window.tasks.sort((a, b) => a.id - b.id);
             } else {
-                // إذا كانت قاعدة بيانات الغزال فارغة أول مرة، يتم رفع البنود الـ 34 تلقائياً
                 defaultTasks.forEach(async (t) => {
                     await setDoc(doc(db, "alghazal_critical_tasks", String(t.id)), t);
                 });
@@ -463,7 +584,6 @@
             renderWeeklyReport();
         }, (error) => {
             console.error("Firebase sync error:", error);
-            // الرجوع للتخزين المحلي في حال وجود مشكلة اتصال
             window.tasks = JSON.parse(localStorage.getItem('alghazal_tasks')) || defaultTasks;
             renderDashboard();
             renderTasksTable();
@@ -471,7 +591,6 @@
             renderWeeklyReport();
         });
 
-        // دالة الحفظ السحابي
         window.saveTaskToFirestore = async function(task) {
             try {
                 await setDoc(doc(db, "alghazal_critical_tasks", String(task.id)), task);
@@ -482,7 +601,6 @@
             }
         };
 
-        // وظائف العرض والواجهة
         window.switchTab = function(tabId) {
             ['dashboard', 'tasks', 'procurement', 'weekly-report'].forEach(t => {
                 document.getElementById(`view-${t}`).classList.add('hidden');
@@ -495,10 +613,6 @@
             activeBtn.classList.remove('text-slate-600');
 
             if (tabId === 'dashboard') updateCharts();
-        };
-
-        window.changeActiveRole = function(role) {
-            renderTasksTable();
         };
 
         function renderDashboard() {
@@ -565,6 +679,8 @@
             const statusFilter = document.getElementById('filterStatus').value;
             const budgetFilter = document.getElementById('filterBudgetYear').value;
 
+            const user = ACCOUNTS[currentUserKey] || {};
+
             const filtered = window.tasks.filter(t => {
                 const matchSearch = t.title.toLowerCase().includes(search) || t.problem.toLowerCase().includes(search);
                 const matchDept = deptFilter === 'all' || t.dept === deptFilter;
@@ -575,7 +691,14 @@
 
             document.getElementById('tasksCountDisplay').innerText = filtered.length;
 
-            tbody.innerHTML = filtered.map(t => `
+            tbody.innerHTML = filtered.map(t => {
+                // فحص صلاحية تعديل هذا البند للحساب النشط
+                let canEdit = false;
+                if (user.canEditAll) canEdit = true;
+                else if (user.allowedDept && user.allowedDept === t.dept) canEdit = true;
+                else if (user.canProcurement || user.canFinance) canEdit = true;
+
+                return `
                 <tr class="hover:bg-slate-50 transition border-b">
                     <td class="p-3 text-center font-bold text-slate-700">${t.id}</td>
                     <td class="p-3">
@@ -609,16 +732,18 @@
                         }">${t.status}</span>
                     </td>
                     <td class="p-3">
-                        <div class="font-medium text-slate-700">${t.budgetYear === '2027' ? 'موازنة 2027' : 'تشغيلي 2026'}</div>
-                        <div class="text-[10px] text-slate-400">${t.spent > 0 ? t.spent + ' ₪' : 'غير مسعر'}</div>
+                        <div class="font-semibold text-slate-700 text-[11px]">${t.lastUpdated || 'منذ الانطلاق'}</div>
+                        <div class="text-[10px] text-emerald-600 font-medium">بواسطة: ${t.updatedBy || 'الإدارة'}</div>
                     </td>
                     <td class="p-3 text-center">
-                        <button onclick="openEditTaskModal(${t.id})" class="p-1.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg text-slate-600 transition">
+                        ${canEdit ? `
+                        <button onclick="openEditTaskModal(${t.id})" class="p-1.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg text-slate-600 transition" title="تعديل">
                             <i data-lucide="edit-3" class="w-4 h-4"></i>
-                        </button>
+                        </button>` : `
+                        <span class="text-[10px] text-slate-400 italic">للمعاينة</span>`}
                     </td>
-                </tr>
-            `).join('');
+                </tr>`;
+            }).join('');
 
             lucide.createIcons();
         };
@@ -664,6 +789,20 @@
             document.getElementById('reportBudgetCount').innerText = budget2027;
             document.getElementById('reportCurrentDate').innerText = `تاريخ التقرير: ${new Date().toLocaleDateString('ar-EG')}`;
 
+            // سجل آخر التعديلات
+            const updatedTasks = [...tList].filter(t => t.lastUpdated).sort((a,b) => (b.lastUpdated || '').localeCompare(a.lastUpdated || '')).slice(0, 8);
+            const reportLogBody = document.getElementById('reportUpdatesLogBody');
+            reportLogBody.innerHTML = updatedTasks.map(t => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-2.5 font-bold text-slate-800">بند ${t.id}</td>
+                    <td class="p-2.5">${t.title}</td>
+                    <td class="p-2.5 font-bold text-emerald-600">${t.progress}%</td>
+                    <td class="p-2.5 text-slate-600">${t.lastUpdated}</td>
+                    <td class="p-2.5 text-slate-700 font-medium">${t.updatedBy || 'مجهول'}</td>
+                </tr>
+            `).join('');
+
+            // العوائق
             const escalations = tList.filter(t => t.obstacle || (t.severity === 'حرجة جداً' && t.status === 'مفتوح'));
             const escList = document.getElementById('escalationList');
 
@@ -683,7 +822,9 @@
             const task = window.tasks.find(t => t.id === id);
             if (!task) return;
 
-            document.getElementById('modalTitle').innerText = `تعديل البند رقم ${task.id}`;
+            const user = ACCOUNTS[currentUserKey] || {};
+
+            document.getElementById('modalTitle').innerText = `تعديل البند رقم ${task.id} (${task.title})`;
             document.getElementById('modalTaskId').value = task.id;
             document.getElementById('modalTaskTitle').value = task.title;
             document.getElementById('modalTaskDept').value = task.dept;
@@ -697,6 +838,17 @@
             document.getElementById('modalTaskPO').value = task.po;
             document.getElementById('modalTaskEvidence').value = task.evidence;
             document.getElementById('modalTaskObstacle').value = task.obstacle;
+
+            // ضبط قيود الحقول حسب الصلاحيات
+            const statusSelect = document.getElementById('modalTaskStatus');
+            if (!user.canClose && !user.canEditAll) {
+                // الأقسام الفنية لا تغلق المهمة بنفسها إلا بموافقة الجودة
+                for (let option of statusSelect.options) {
+                    if (option.value === 'مغلق') option.disabled = true;
+                }
+            } else {
+                for (let option of statusSelect.options) option.disabled = false;
+            }
 
             document.getElementById('taskModal').classList.remove('hidden');
         };
@@ -717,6 +869,11 @@
         window.saveTaskData = async function(e) {
             e.preventDefault();
             const idVal = document.getElementById('modalTaskId').value;
+            const user = ACCOUNTS[currentUserKey] || { name: "مستخدم غير معرف" };
+
+            // وقت وتاريخ التعديل الآن
+            const now = new Date();
+            const timeStamp = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
             let taskToSave = null;
             if (idVal === "new") {
@@ -734,7 +891,9 @@
                     spent: Number(document.getElementById('modalTaskSpent').value),
                     po: document.getElementById('modalTaskPO').value,
                     evidence: document.getElementById('modalTaskEvidence').value,
-                    obstacle: document.getElementById('modalTaskObstacle').value
+                    obstacle: document.getElementById('modalTaskObstacle').value,
+                    lastUpdated: timeStamp,
+                    updatedBy: user.name
                 };
                 window.tasks.push(taskToSave);
             } else {
@@ -753,6 +912,8 @@
                     taskToSave.po = document.getElementById('modalTaskPO').value;
                     taskToSave.evidence = document.getElementById('modalTaskEvidence').value;
                     taskToSave.obstacle = document.getElementById('modalTaskObstacle').value;
+                    taskToSave.lastUpdated = timeStamp;
+                    taskToSave.updatedBy = user.name;
                 }
             }
 
@@ -764,6 +925,7 @@
         };
 
         window.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
             lucide.createIcons();
         });
     </script>
