@@ -108,10 +108,7 @@
                 <i data-lucide="list-todo" class="w-4 h-4"></i> سجل المهام والنقاط الحرجة (34)
             </button>
             <button onclick="switchTab('procurement')" id="tabBtn-procurement" class="py-3 px-2 flex items-center gap-2 text-slate-600 hover:text-emerald-600 transition">
-                <i data-lucide="shopping-bag" class="w-4 h-4"></i> قسم المشتريات ومسار الطلبات
-            </button>
-            <button onclick="switchTab('finance')" id="tabBtn-finance" class="py-3 px-2 flex items-center gap-2 text-slate-600 hover:text-emerald-600 transition">
-                <i data-lucide="wallet" class="w-4 h-4"></i> قسم المالية والمصروفات وموازنة 2027
+                <i data-lucide="shopping-cart" class="w-4 h-4"></i> المشتريات وموازنة 2027
             </button>
             <button onclick="switchTab('weekly-report')" id="tabBtn-weekly-report" class="py-3 px-2 flex items-center gap-2 text-slate-600 hover:text-emerald-600 transition">
                 <i data-lucide="file-text" class="w-4 h-4"></i> التقرير الأسبوعي للاجتماع
@@ -124,104 +121,16 @@
 
         <!-- TAB 1: DASHBOARD -->
         <section id="view-dashboard" class="space-y-6">
-
-            <!-- 1. مؤشرات الأداء المالية والتكاليف -->
-            <div>
-                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                    <i data-lucide="coins" class="w-4 h-4 text-emerald-600"></i> المؤشرات المالية والمصروفات وعروض الأسعار
-                </h3>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-xs text-slate-500 font-semibold">المصروف الفعلي حتى الآن</p>
-                                <h3 id="statTotalSpent" class="text-2xl font-black text-rose-600 mt-1">0 ₪</h3>
-                            </div>
-                            <div class="p-2.5 bg-rose-50 rounded-xl text-rose-600"><i data-lucide="credit-card" class="w-5 h-5"></i></div>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mt-2">مبالغ مسددة ومصروفة فعلياً</p>
-                    </div>
-
-                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-xs text-slate-500 font-semibold">قيمة عروض الأسعار المسجلة</p>
-                                <h3 id="statTotalQuotes" class="text-2xl font-black text-blue-600 mt-1">0 ₪</h3>
-                            </div>
-                            <div class="p-2.5 bg-blue-50 rounded-xl text-blue-600"><i data-lucide="file-spreadsheet" class="w-5 h-5"></i></div>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mt-2">عروض واردة قيد المقارنة أو التعميد</p>
-                    </div>
-
-                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-xs text-slate-500 font-semibold">التكلفة الإجمالية المتوقعة</p>
-                                <h3 id="statTotalEstimated" class="text-2xl font-black text-slate-800 mt-1">0 ₪</h3>
-                            </div>
-                            <div class="p-2.5 bg-slate-100 rounded-xl text-slate-700"><i data-lucide="calculator" class="w-5 h-5"></i></div>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mt-2">التقدير المالي الأولي للبنود</p>
-                    </div>
-
-                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <p class="text-xs text-slate-500 font-semibold">مخصصات موازنة 2027</p>
-                                <h3 id="statBudget2027Value" class="text-2xl font-black text-cyan-700 mt-1">0 ₪</h3>
-                            </div>
-                            <div class="p-2.5 bg-cyan-50 rounded-xl text-cyan-700"><i data-lucide="calendar-clock" class="w-5 h-5"></i></div>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mt-2"><span id="statBudget2027Count">0</span> بنود مرحلة كاستثمار رأسمالي</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 2. مؤشرات طلبات الشراء ومسارها -->
-            <div>
-                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                    <i data-lucide="shopping-cart" class="w-4 h-4 text-emerald-600"></i> مؤشرات طلبات الشراء وأين وصلت في الإجراءات
-                </h3>
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
-                        <p class="text-[11px] text-slate-500 font-medium">إجمالي طلبات الشراء</p>
-                        <h4 id="statPRTotal" class="text-xl font-bold text-slate-900 mt-0.5">0</h4>
-                        <span class="text-[10px] text-slate-400">تتطلب مشتريات</span>
-                    </div>
-                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
-                        <p class="text-[11px] text-amber-600 font-medium">قيد استدراج العروض</p>
-                        <h4 id="statPRInQuotation" class="text-xl font-bold text-amber-600 mt-0.5">0</h4>
-                        <span class="text-[10px] text-slate-400">مقارنة فنية ومالية</span>
-                    </div>
-                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
-                        <p class="text-[11px] text-indigo-600 font-medium">تم اعتماد المورد</p>
-                        <h4 id="statPRAwarded" class="text-xl font-bold text-indigo-600 mt-0.5">0</h4>
-                        <span class="text-[10px] text-slate-400">تم إصدار التعميد</span>
-                    </div>
-                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
-                        <p class="text-[11px] text-blue-600 font-medium">بانتظار الشحن</p>
-                        <h4 id="statPRShipping" class="text-xl font-bold text-blue-600 mt-0.5">0</h4>
-                        <span class="text-[10px] text-slate-400">متابعة التوريد</span>
-                    </div>
-                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
-                        <p class="text-[11px] text-emerald-600 font-medium">تم التوريد للمصنع</p>
-                        <h4 id="statPRDelivered" class="text-xl font-bold text-emerald-600 mt-0.5">0</h4>
-                        <span class="text-[10px] text-slate-400">جاهز للتركيب</span>
-                    </div>
-                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
-                        <p class="text-[11px] text-teal-600 font-medium">عمل داخلي / تنظيم</p>
-                        <h4 id="statInternalOnly" class="text-xl font-bold text-teal-600 mt-0.5">0</h4>
-                        <span class="text-[10px] text-slate-400">بدون طلب شراء</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. مؤشرات حالة البنود العامة -->
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <p class="text-xs text-slate-500 font-medium">إجمالي البنود الحرجة</p>
+                    <p class="text-xs text-slate-500 font-medium">إجمالي البنود</p>
                     <h3 id="statTotalTasks" class="text-2xl font-bold text-slate-800 mt-1">34</h3>
                     <p class="text-[11px] text-slate-400 mt-1">خطة مدير المصنع</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <p class="text-xs text-teal-600 font-medium">تنظيم وعمالة داخلية</p>
+                    <h3 id="statInternalTasks" class="text-2xl font-bold text-teal-600 mt-1">0</h3>
+                    <p class="text-[11px] text-slate-400 mt-1">بدون شراء / إجراء داخلي</p>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <p class="text-xs text-amber-600 font-medium">تم احتواء الخطر</p>
@@ -229,7 +138,7 @@
                     <p class="text-[11px] text-slate-400 mt-1">إجراء عاجل</p>
                 </div>
                 <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
-                    <p class="text-xs text-blue-600 font-medium">جارٍ التنفيذ الميداني</p>
+                    <p class="text-xs text-blue-600 font-medium">جارٍ التنفيذ</p>
                     <h3 id="statInProgressTasks" class="text-2xl font-bold text-blue-600 mt-1">0</h3>
                     <p class="text-[11px] text-slate-400 mt-1">أعمال ميدانية</p>
                 </div>
@@ -245,22 +154,21 @@
                 </div>
             </div>
 
-            <!-- Charts Section -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
-                    <h4 class="font-bold text-slate-800 text-sm mb-4 flex items-center gap-2">
-                        <i data-lucide="bar-chart-4" class="w-4 h-4 text-emerald-600"></i> المقارنة المالية: المتوقع مقابل العروض مقابل المصروف
-                    </h4>
-                    <div class="h-64 flex justify-center">
-                        <canvas id="financeComparisonChart"></canvas>
-                    </div>
-                </div>
                 <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
                     <h4 class="font-bold text-slate-800 text-sm mb-4 flex items-center gap-2">
                         <i data-lucide="pie-chart" class="w-4 h-4 text-emerald-600"></i> توزيع المهام حسب حالة المتابعة
                     </h4>
                     <div class="h-64 flex justify-center">
                         <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <h4 class="font-bold text-slate-800 text-sm mb-4 flex items-center gap-2">
+                        <i data-lucide="bar-chart-3" class="w-4 h-4 text-emerald-600"></i> توزيع المهام على الأقسام المنفذة
+                    </h4>
+                    <div class="h-64 flex justify-center">
+                        <canvas id="deptChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -302,7 +210,7 @@
                 </div>
                 <div class="text-xs text-slate-500">
                     العدد المعروض: <span id="tasksCountDisplay" class="font-bold text-slate-800">34</span> بنداً
-                    <span class="text-emerald-600 mr-2 font-medium">(انقر على أي سطر لعرض كامل التفاصيل)</span>
+                    <span class="text-emerald-600 mr-2 font-medium">(انقر على أي سطر لعرض كامل التفاصيل والقطع)</span>
                 </div>
             </div>
 
@@ -329,18 +237,16 @@
             </div>
         </section>
 
-        <!-- TAB 3: PROCUREMENT DEPARTMENT (قسم المشتريات ومسار الطلبات) -->
-        <section id="view-procurement" class="hidden space-y-4">
+        <!-- TAB 3: PROCUREMENT & BUDGET 2027 -->
+        <section id="view-procurement" class="hidden space-y-6">
             <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between md:items-center gap-4">
                 <div>
-                    <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                        <i data-lucide="shopping-bag" class="w-5 h-5 text-emerald-600"></i> منظومة قسم المشتريات: تتبع طلبات الشراء ومسار التوريد
-                    </h3>
-                    <p class="text-xs text-slate-500 mt-1">متابعة طلبات الشراء (PR)، عروض الأسعار المسجلة، أسماء الموردين، والقطع المطلوبة</p>
+                    <h3 class="text-base font-bold text-slate-800">سجل طلبات الشراء، الموردين ومشاريع موازنة 2027 والقطع</h3>
+                    <p class="text-xs text-slate-500 mt-1">تتبع عروض الأسعار، والموردين المنفذين، والقطع اللازمة (كهرباء/ميكانيك/تبريد)، والموازنة المخصصة</p>
                 </div>
                 <div class="flex items-center gap-3">
-                    <div class="bg-blue-50 text-blue-800 px-3 py-2 rounded-lg border border-blue-200 text-xs font-semibold">
-                        إجمالي عروض الأسعار: <span id="procurementQuotesTotal">0</span> ₪
+                    <div class="bg-emerald-50 text-emerald-800 px-3 py-2 rounded-lg border border-emerald-200 text-xs font-semibold">
+                        إجمالي التكلفة المصروفة: <span id="totalSpentDisplay">0</span> ₪
                     </div>
                 </div>
             </div>
@@ -351,13 +257,13 @@
                         <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
                             <tr>
                                 <th class="p-3">رقم البند</th>
-                                <th class="p-3">المهمة والاحتياج</th>
-                                <th class="p-3">رقم طلب الشراء (PR)</th>
+                                <th class="p-3">وصف الاحتياج / المشروع</th>
+                                <th class="p-3">طبيعة التنفيذ</th>
                                 <th class="p-3">اسم المورد المعتمد</th>
-                                <th class="p-3">أين وصل إجراء الشراء والتوريد</th>
-                                <th class="p-3">قيمة عرض السعر</th>
-                                <th class="p-3">القطع اللازمة للتركيب</th>
-                                <th class="p-3 text-center">إجراءات</th>
+                                <th class="p-3">وضع التوريد</th>
+                                <th class="p-3">القطع اللازمة (كهرباء / ميكانيك / تبريد)</th>
+                                <th class="p-3">التبويب المالي</th>
+                                <th class="p-3">المصروف فعلياً</th>
                             </tr>
                         </thead>
                         <tbody id="procurementTableBody" class="divide-y divide-slate-100">
@@ -368,50 +274,7 @@
             </div>
         </section>
 
-        <!-- TAB 4: FINANCE DEPARTMENT (قسم المالية والمصروفات وموازنة 2027) -->
-        <section id="view-finance" class="hidden space-y-4">
-            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between md:items-center gap-4">
-                <div>
-                    <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                        <i data-lucide="wallet" class="w-5 h-5 text-rose-600"></i> منظومة قسم المالية: التدقيق المالي والمصروفات وموازنة 2027
-                    </h3>
-                    <p class="text-xs text-slate-500 mt-1">وضوح تام في المصاريف المدفوعة، التكاليف المتوقعة، وفروقات عروض الأسعار</p>
-                </div>
-                <div class="flex flex-wrap items-center gap-3">
-                    <div class="bg-rose-50 text-rose-800 px-3.5 py-2 rounded-lg border border-rose-200 text-xs font-bold">
-                        المدفوع فعلياً: <span id="financeSpentTotal">0</span> ₪
-                    </div>
-                    <div class="bg-slate-100 text-slate-800 px-3.5 py-2 rounded-lg border border-slate-300 text-xs font-bold">
-                        التكلفة المتوقعة: <span id="financeEstimatedTotal">0</span> ₪
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-                <div class="overflow-x-auto">
-                    <table class="w-full text-right text-xs">
-                        <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
-                            <tr>
-                                <th class="p-3">رقم البند</th>
-                                <th class="p-3">المهمة / المشروع</th>
-                                <th class="p-3">التبويب المالي</th>
-                                <th class="p-3">التكلفة التقديرية</th>
-                                <th class="p-3">قيمة عرض السعر</th>
-                                <th class="p-3">التكلفة المعتمدة</th>
-                                <th class="p-3">المصروف فعلياً</th>
-                                <th class="p-3">حالة الصرف المالي</th>
-                                <th class="p-3 text-center">إجراءات</th>
-                            </tr>
-                        </thead>
-                        <tbody id="financeTableBody" class="divide-y divide-slate-100">
-                            <!-- Injected dynamically -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </section>
-
-        <!-- TAB 5: WEEKLY REPORT -->
+        <!-- TAB 4: WEEKLY REPORT -->
         <section id="view-weekly-report" class="hidden space-y-6">
             <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm max-w-4xl mx-auto space-y-6 print:border-none print:shadow-none">
                 <div class="flex justify-between items-center border-b pb-4">
@@ -427,37 +290,22 @@
                     </button>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
-                    <div>
-                        <span class="text-[11px] text-slate-500 block">إجمالي المصروف الفعلي</span>
-                        <strong id="repSpentVal" class="text-rose-600 font-extrabold text-lg">0 ₪</strong>
-                    </div>
-                    <div>
-                        <span class="text-[11px] text-slate-500 block">إجمالي عروض الأسعار</span>
-                        <strong id="repQuotesVal" class="text-blue-600 font-extrabold text-lg">0 ₪</strong>
-                    </div>
-                    <div>
-                        <span class="text-[11px] text-slate-500 block">طلبات الشراء النشطة</span>
-                        <strong id="repPRCount" class="text-slate-800 font-extrabold text-lg">0 طلب</strong>
-                    </div>
-                    <div>
-                        <span class="text-[11px] text-slate-500 block">مشاريع موازنة 2027</span>
-                        <strong id="reportBudgetCount" class="text-cyan-700 font-extrabold text-lg">0 بند</strong>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-center">
-                    <div class="bg-white p-3 rounded-xl border border-slate-200">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
                         <p class="text-[11px] text-slate-500 font-semibold">نسبة الإغلاق الكلية</p>
-                        <h4 id="reportCloseRate" class="text-lg font-extrabold text-emerald-600 mt-1">0%</h4>
+                        <h4 id="reportCloseRate" class="text-xl font-extrabold text-emerald-600 mt-1">0%</h4>
                     </div>
-                    <div class="bg-white p-3 rounded-xl border border-slate-200">
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
                         <p class="text-[11px] text-slate-500 font-semibold">بنود تنظيم وعمالة داخلية</p>
-                        <h4 id="reportInternalCount" class="text-lg font-extrabold text-teal-600 mt-1">0</h4>
+                        <h4 id="reportInternalCount" class="text-xl font-extrabold text-teal-600 mt-1">0</h4>
                     </div>
-                    <div class="bg-white p-3 rounded-xl border border-slate-200">
-                        <p class="text-[11px] text-slate-500 font-semibold">تم احتواء الخطر</p>
-                        <h4 id="reportContainedCount" class="text-lg font-extrabold text-amber-600 mt-1">0</h4>
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                        <p class="text-[11px] text-slate-500 font-semibold">بنود تم احتواء خطرها</p>
+                        <h4 id="reportContainedCount" class="text-xl font-extrabold text-amber-600 mt-1">0</h4>
+                    </div>
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                        <p class="text-[11px] text-slate-500 font-semibold">عالقة لموازنة 2027</p>
+                        <h4 id="reportBudgetCount" class="text-xl font-extrabold text-cyan-700 mt-1">0</h4>
                     </div>
                 </div>
 
@@ -471,7 +319,7 @@
                                 <tr>
                                     <th class="p-2.5">رقم البند</th>
                                     <th class="p-2.5">اسم المهمة</th>
-                                    <th class="p-2.5">المصروف (₪)</th>
+                                    <th class="p-2.5">طبيعة التنفيذ</th>
                                     <th class="p-2.5">نسبة الإنجاز</th>
                                     <th class="p-2.5">حالة المتابعة</th>
                                     <th class="p-2.5">توقيت التعديل</th>
@@ -521,6 +369,7 @@
                 </button>
             </div>
 
+            <!-- بطاقات ملخصة للوضع الراهن -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs">
                 <div>
                     <span class="text-slate-400 block text-[10px]">نسبة الإنجاز:</span>
@@ -540,26 +389,6 @@
                 </div>
             </div>
 
-            <!-- ملخص التكاليف المالية للبند -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-100/70 p-3 rounded-xl text-xs border border-slate-200">
-                <div>
-                    <span class="text-slate-500 block text-[10px]">التكلفة التقديرية:</span>
-                    <span id="viewTaskEstimated" class="font-bold text-slate-800">0 ₪</span>
-                </div>
-                <div>
-                    <span class="text-slate-500 block text-[10px]">قيمة عرض السعر:</span>
-                    <span id="viewTaskQuoteVal" class="font-bold text-blue-700">0 ₪</span>
-                </div>
-                <div>
-                    <span class="text-slate-500 block text-[10px]">التكلفة المعتمدة:</span>
-                    <span id="viewTaskApproved" class="font-bold text-slate-800">0 ₪</span>
-                </div>
-                <div>
-                    <span class="text-slate-500 block text-[10px]">المصروف الفعلي:</span>
-                    <span id="viewTaskSpent" class="font-extrabold text-rose-600">0 ₪</span>
-                </div>
-            </div>
-
             <div class="space-y-4 text-xs">
                 <div>
                     <h4 class="font-bold text-slate-700 mb-1 flex items-center gap-1.5">
@@ -575,6 +404,7 @@
                     <p id="viewTaskActionSteps" class="text-slate-800 leading-relaxed font-medium"></p>
                 </div>
 
+                <!-- قسم توضيح متطلبات التنظيم والعمالة الداخلية والأوراق -->
                 <div id="viewInternalContainer" class="bg-teal-50/70 p-3.5 rounded-xl border border-teal-200 space-y-1.5">
                     <h4 class="font-bold text-teal-900 flex items-center gap-1.5">
                         <i data-lucide="file-check-2" class="w-4 h-4 text-teal-600"></i> متطلبات العمل الداخلي (ترتيب أوراق ونماذج / عمالة وتنظيم):
@@ -582,6 +412,7 @@
                     <p id="viewTaskInternalNotes" class="text-teal-950 leading-relaxed font-medium"></p>
                 </div>
 
+                <!-- القطع اللازمة مفصلة حسب التخصص -->
                 <div id="viewPartsContainer" class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
                     <h4 class="font-bold text-slate-900 flex items-center gap-1.5 text-xs">
                         <i data-lucide="wrench" class="w-4 h-4 text-emerald-600"></i> القطع والمستلزمات اللازمة للتنفيذ والتركيب (إن وجدت):
@@ -614,8 +445,8 @@
                             <i data-lucide="truck" class="w-4 h-4 text-blue-600"></i> المشتريات والتوريد:
                         </h4>
                         <div><strong class="text-slate-500">اسم المورد:</strong> <span id="viewTaskSupplier"></span></div>
-                        <div><strong class="text-slate-500">طلب الشراء (PR):</strong> <span id="viewTaskPO"></span></div>
-                        <div><strong class="text-slate-500">وضع التوريد:</strong> <span id="viewTaskSupplyStatusDetailed"></span></div>
+                        <div><strong class="text-slate-500">طلب الشراء / العرض:</strong> <span id="viewTaskPO"></span></div>
+                        <div><strong class="text-slate-500">المبلغ المصروف:</strong> <span id="viewTaskSpent" class="font-bold text-emerald-700"></span></div>
                     </div>
 
                     <div class="bg-purple-50/50 p-3.5 rounded-xl border border-purple-200/60 space-y-1.5">
@@ -668,6 +499,7 @@
                     </div>
                 </div>
 
+                <!-- طبيعة التنفيذ وجهة العمل بوضوح تام -->
                 <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
                     <label class="block font-bold text-slate-800 mb-1">طبيعة التنفيذ ومسار العمل</label>
                     <select id="modalTaskExecutionType" onchange="toggleExecutionFields(this.value)" class="w-full border border-slate-300 rounded-xl p-2.5 outline-none font-bold bg-white focus:ring-1 focus:ring-emerald-500">
@@ -678,9 +510,10 @@
                     </select>
                 </div>
 
+                <!-- حقل تفاصيل التنظيم الداخلي والعمالة والأوراق -->
                 <div id="internalWorkSection" class="bg-teal-50/60 p-3 rounded-xl border border-teal-200">
                     <label class="block font-bold text-teal-900 mb-1">تفاصيل العمل الداخلي (الأوراق، النماذج، خطة العمالة والتنظيم)</label>
-                    <textarea id="modalTaskInternalNotes" rows="2" placeholder="اكتب النماذج المعتمدة، السجلات، الإجراءات الورقية، أو العمالة الداخلية المخصصة..." class="w-full border border-teal-300 rounded-xl p-2 outline-none bg-white"></textarea>
+                    <textarea id="modalTaskInternalNotes" rows="2" placeholder="اكتب النماذج المعتمدة، السجلات، الإجراءات الورقية، أو العمالة الداخلية المخصصة لتنفيذ هذا البند..." class="w-full border border-teal-300 rounded-xl p-2 outline-none bg-white"></textarea>
                 </div>
 
                 <div>
@@ -688,6 +521,7 @@
                     <textarea id="modalTaskProblem" rows="2" class="w-full border rounded-xl p-2.5 focus:ring-1 focus:ring-emerald-500 outline-none"></textarea>
                 </div>
 
+                <!-- حقل الإجراءات المتخذة وأين وصلت -->
                 <div class="bg-emerald-50/40 p-3 rounded-xl border border-emerald-200/60">
                     <label class="block font-bold text-emerald-900 mb-1">الإجراءات المتخذة ميدانياً وأين وصلت المهمة بالتفصيل</label>
                     <textarea id="modalTaskActionSteps" rows="2" placeholder="اكتب بالتفصيل: أين وصل الإجراء؟ ما الذي تم تنفيذه حتى الآن؟ وما هي الخطوة القادمة؟" class="w-full border border-emerald-300 rounded-xl p-2.5 focus:ring-1 focus:ring-emerald-500 outline-none bg-white"></textarea>
@@ -719,31 +553,6 @@
                     </div>
                 </div>
 
-                <!-- قسم التفاصيل المالية (Finance & Costs) -->
-                <div class="p-3.5 bg-slate-100 rounded-xl border border-slate-200 space-y-3">
-                    <h4 class="font-bold text-slate-800 text-[11px] flex items-center gap-1.5">
-                        <i data-lucide="calculator" class="w-3.5 h-3.5 text-emerald-600"></i> البيانات المالية والتكاليف (بالشيقل ₪):
-                    </h4>
-                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                        <div>
-                            <label class="block font-medium text-slate-700 mb-1">التكلفة التقديرية (₪)</label>
-                            <input type="number" id="modalTaskEstimatedCost" min="0" placeholder="0" class="w-full border rounded-xl p-2 outline-none bg-white">
-                        </div>
-                        <div>
-                            <label class="block font-medium text-blue-700 mb-1">قيمة عرض السعر (₪)</label>
-                            <input type="number" id="modalTaskQuotationCost" min="0" placeholder="0" class="w-full border rounded-xl p-2 outline-none bg-white font-bold text-blue-800">
-                        </div>
-                        <div>
-                            <label class="block font-medium text-slate-700 mb-1">التكلفة المعتمدة (₪)</label>
-                            <input type="number" id="modalTaskApprovedCost" min="0" placeholder="0" class="w-full border rounded-xl p-2 outline-none bg-white">
-                        </div>
-                        <div>
-                            <label class="block font-medium text-rose-700 mb-1">المصروف الفعلي (₪)</label>
-                            <input type="number" id="modalTaskSpent" min="0" placeholder="0" class="w-full border rounded-xl p-2 outline-none bg-white font-bold text-rose-600">
-                        </div>
-                    </div>
-                </div>
-
                 <!-- قسم القطع والمشتريات -->
                 <div id="purchasingSection" class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
                     <h4 class="font-bold text-slate-800 text-[11px] flex items-center gap-1.5">
@@ -764,17 +573,13 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-2">
-                        <div>
-                            <label class="block font-medium text-slate-700 mb-1">رقم طلب الشراء (PR)</label>
-                            <input type="text" id="modalTaskPO" placeholder="مثال: PR-2026-042" class="w-full border rounded-xl p-2 outline-none bg-white">
-                        </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
                         <div>
                             <label class="block font-medium text-slate-700 mb-1">اسم المورد / المقاول</label>
-                            <input type="text" id="modalTaskSupplier" placeholder="مثال: شركة القدس للتبريد" class="w-full border rounded-xl p-2 outline-none bg-white">
+                            <input type="text" id="modalTaskSupplier" placeholder="مثال: شركة القدس للتبريد / فني معتمد" class="w-full border rounded-xl p-2 outline-none bg-white">
                         </div>
                         <div>
-                            <label class="block font-medium text-slate-700 mb-1">وضع التوريد وأين وصل</label>
+                            <label class="block font-medium text-slate-700 mb-1">وضع التوريد</label>
                             <select id="modalTaskSupplyStatus" class="w-full border rounded-xl p-2 outline-none bg-white">
                                 <option value="غير مطلوب توريد (عمل داخلي)">غير مطلوب توريد (عمل داخلي / تنظيم)</option>
                                 <option value="قيد استدراج عروض الأسعار">قيد استدراج عروض الأسعار</option>
@@ -786,13 +591,31 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">جهة التنفيذ</label>
+                        <select id="modalTaskContractor" class="w-full border rounded-xl p-2.5 outline-none">
+                            <option value="داخلي">داخلي (فريق المصنع)</option>
+                            <option value="خارجي">خارجي (مورد / مقاول)</option>
+                        </select>
+                    </div>
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">التبويب المالي</label>
                         <select id="modalTaskBudgetYear" class="w-full border rounded-xl p-2.5 outline-none font-bold">
                             <option value="2026">تشغيلي فوري (2026)</option>
                             <option value="2027">ضمن موازنة 2027 (عالقة / استثمارية)</option>
                         </select>
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">التكلفة المصروفة (₪)</label>
+                        <input type="number" id="modalTaskSpent" min="0" class="w-full border rounded-xl p-2.5 outline-none">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-700 mb-1">رقم طلب الشراء / عروض الأسعار</label>
+                        <input type="text" id="modalTaskPO" placeholder="مثال: PR-2026-042 (أو اتركه فارغاً إن كان داخلياً)" class="w-full border rounded-xl p-2.5 outline-none">
                     </div>
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">دليل إغلاق الجودة</label>
@@ -889,57 +712,52 @@
         const db = getFirestore(app);
         const tasksCol = collection(db, "alghazal_critical_tasks");
 
-        // البنود الـ 34 مع الحقول المالية والتوريدية المجهزة مسبقاً
+        // البنود الـ 34 مع تصنيف طبيعة التنفيذ بدقة (داخلي، أوراق، عمالة، أو توريد)
         const defaultTasks = [
-            { id: 1, title: "أوعية تخزين النشا المبرد", dept: "الإنتاج", severity: "حرجة جداً", problem: "استخدام دلاء بلاستيكية لتخزين النشا المبرد قد ينتج عنه شوائب أو كسور.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "حصر عمالة فرز الدلاء التالفة", budgetYear: "2026", estimatedCost: 4500, quotationCost: 4200, approvedCost: 4200, spent: 0, po: "PR-2026-001", supplier: "شركة الأوعية الصحية", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "", partsMech: "دلاء ستانلس 304 أو بلاستيك بولي بروبيلين غذائي معتمد", partsCool: "", actionSteps: "تم استبعاد التالف وبانتظار اعتماد البديل الصحي", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 2, title: "تبريد الباذنجان المطحون", dept: "الإنتاج", severity: "حرجة جداً", problem: "تبريد الباذنجان المطحون بعد السلق يحتاج تحسينًا؛ ظهور عفن على السطح وعدم ثبات المتبل في السوق.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "متابعة جداول التسجيل الحراري اليدوي لحين تركيب النظام", budgetYear: "2027", estimatedCost: 65000, quotationCost: 62000, approvedCost: 0, spent: 0, po: "PR-2027-002", supplier: "الشركة الهندسية للتبريد", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "لوحة تحكم مع حساسات PT100", partsMech: "مبادل حراري سكرابير Scraped Surface ومضخة فصوص", partsCool: "وحدة شيلر تبريد مياه مثلجة Glycol Chiller", actionSteps: "متابعة دراسة الحموضة المؤقتة وبحث الحل الهندسي لموازنة 2027", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 3, title: "حرارة الزيت ونظافته", dept: "الإنتاج", severity: "حرجة", problem: "حرارة الزيت في مناطق تحضير الحمص والسلطات تحتاج ضبطاً؛ ملاحظة التقرير تشير لحرارة 10–20.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "تخصيص عامل لمتابعة قياس الحرارة والتنظيف الدوري مع سجل ورقي يومي", budgetYear: "2026", estimatedCost: 600, quotationCost: 0, approvedCost: 600, spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "ترمومتر غرس رقمي معاير", partsMech: "فلاتر تنقية زيت استانلس ستيل", partsCool: "", actionSteps: "تطبيق فحص النظافة اليدوي اليومي", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 4, title: "مياه المصنع وماكينات الثلج", dept: "الصيانة", severity: "حرجة جداً", problem: "مياه تحضير المحاليل وتكوين الثلج والسلق تحتاج معالجة مناسبة.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "تنظيم غسيل وتنظيف دوري لماكينات الثلج الحالية بعمالة داخلية", budgetYear: "2027", estimatedCost: 48000, quotationCost: 45000, approvedCost: 0, spent: 0, po: "PR-2027-004", supplier: "محطات القدس لتنقية المياه", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "لوحة تحكم RO مع حساسات ضغط", partsMech: "فلاتر رملية وكربونية ومضخات ضغط عالي", partsCool: "ماكينة ثلج مجروش Flake Ice Machine صناعية", actionSteps: "فحص العينات المخبرية وتحديد السعات المطلوبة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 5, title: "قياس مياه طناجر السلق", dept: "الصيانة", severity: "حرجة جداً", problem: "قياس منسوب المياه في طناجر السلق غير دقيق، واختلافه سبب لانحراف رطوبة المادة المحضرة.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "صيانة وتنفيذ فني داخلي", internalNotes: "معايرة مساطر القياس الحالية كإجراء تنظيمي فوري", budgetYear: "2026", estimatedCost: 2800, quotationCost: 2500, approvedCost: 2500, spent: 0, po: "PR-2026-005", supplier: "التجهيزات الهندسية", supplyStatus: "تم اعتماد المورد والتعميد", partsElec: "عداد تدفق رقمي Flow Meter ومحبس كهرومغناطيسي", partsMech: "وصلات ستانلس 316 وصمام عدم رجوع", partsCool: "", actionSteps: "معايرة القياس الميكانيكي كحل مؤقت", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 6, title: "التنظيف عند تغيير الأصناف", dept: "الإنتاج", severity: "حرجة", problem: "التبديل بين الأصناف على الخطوط وماكينات التعبئة قد يسبب تلوثاً تقاطعياً.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "تخصيص عمالة نظافة دائمة مع ورقة فحص (Checklist) توقع قبل تشغيل الصنف التالي", budgetYear: "2026", estimatedCost: 1200, quotationCost: 0, approvedCost: 1200, spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "", partsMech: "قطع فك سريع Tri-clamp ورشاشات غسيل دوارة", partsCool: "", actionSteps: "اعتماد إجراء الفك والتنظيف الإجباري بين الأصناف", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 7, title: "فصل خلطات ماكينة رقم 1", dept: "الإنتاج", severity: "حرجة", problem: "الفصل الفعلي بين خلطات الحمص على ماكينة رقم 1 غير مضمون بالاعتماد على عدد الصناديق.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "اعتماد نموذج تتبع لكل وجبة وبطاقة ملونة توضع على آخر صندوق في الخلطة", budgetYear: "2026", estimatedCost: 350, quotationCost: 0, approvedCost: 350, spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "حساس فوتوسيل وقاطع عداد رقمي", partsMech: "بوابة فصل هوائية بستم نيوماتيك", partsCool: "", actionSteps: "تطبيق الترقيم اليدوي لكل وجبة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 8, title: "خروج المنتج قبل بلوغ حرارة التوزيع", dept: "المستودعات", severity: "حرجة", problem: "خروج المنتج من المستودع الرئيسي قبل الوصول إلى حرارة التوزيع المطلوبة.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "إصدار أمر إداري ملزم بمنع التحميل إلا بتوقيع فحص الحرارة على إذن التسليم", budgetYear: "2026", estimatedCost: 1500, quotationCost: 1200, approvedCost: 1200, spent: 0, po: "PR-2026-008", supplier: "مستلزمات القياس", supplyStatus: "بانتظار الشحن والتسليم", partsElec: "أجهزة تسجيل حرارة لاسلكية Data Loggers", partsMech: "", partsCool: "", actionSteps: "منع الإفراج دون توقيع استلام الحرارة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 9, title: "ملصقات المواد التحضيرية", dept: "المستودعات", severity: "حرجة", problem: "ملصقات المواد التحضيرية الورقية تتآكل أو تتمزق بسبب رطوبة المستودع.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "تغليف الملصقات مؤقتاً بالنايلون لحين توريد الفينيل", budgetYear: "2026", estimatedCost: 3200, quotationCost: 2900, approvedCost: 2900, spent: 0, po: "PR-2026-009", supplier: "مطبعة الإتقان للرولات", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "طابعة حرارية صناعية للباركود", partsMech: "رولات ملصقات بولي بروبيلين مقاومة للرطوبة", partsCool: "", actionSteps: "تجربة عينات ملصقات مقاومة للماء", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 10, title: "حرارة بيئة التحضير والإنتاج", dept: "الصيانة", severity: "حرجة جداً", problem: "ارتفاع حرارة بيئة الإنتاج والتحضير قد يرفع حرارة المنتج خلال التوقف أو التصنيع.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "تسجيل قراءات الحرارة في مختلف أوقات الوردية لتحديد الذروة", budgetYear: "2027", estimatedCost: 75000, quotationCost: 72000, approvedCost: 0, spent: 0, po: "PR-2027-010", supplier: "الرواد للتكييف المركزي", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "لوحة تحكم مركزية وقواطع هوائية 100A", partsMech: "مجاري هواء دكتات صاج معزولة ومخارج هواء ناشرة", partsCool: "وحدات تكييف مركزي باكيج Package Units تبريد صناعي", actionSteps: "حساب الأحمال الحرارية للصالة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" }
+            { id: 1, title: "أوعية تخزين النشا المبرد", dept: "الإنتاج", severity: "حرجة جداً", problem: "استخدام دلاء بلاستيكية لتخزين النشا المبرد قد ينتج عنه شوائب أو كسور.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "حصر عمالة فرز الدلاء التالفة", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "", partsMech: "دلاء ستانلس 304 أو بلاستيك بولي بروبيلين غذائي معتمد", partsCool: "", actionSteps: "تم استبعاد التالف وبانتظار اعتماد البديل الصحي", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 2, title: "تبريد الباذنجان المطحون", dept: "الإنتاج", severity: "حرجة جداً", problem: "تبريد الباذنجان المطحون بعد السلق يحتاج تحسينًا؛ ظهور عفن على السطح وعدم ثبات المتبل في السوق.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "متابعة جداول التسجيل الحراري اليدوي لحين تركيب النظام", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "لوحة تحكم مع حساسات PT100", partsMech: "مبادل حراري سكرابير Scraped Surface ومضخة فصوص", partsCool: "وحدة شيلر تبريد مياه مثلجة Glycol Chiller", actionSteps: "متابعة دراسة الحموضة المؤقتة وبحث الحل الهندسي لموازنة 2027", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 3, title: "حرارة الزيت ونظافته", dept: "الإنتاج", severity: "حرجة", problem: "حرارة الزيت في مناطق تحضير الحمص والسلطات تحتاج ضبطاً؛ ملاحظة التقرير تشير لحرارة 10–20.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "تخصيص عامل لمتابعة قياس الحرارة والتنظيف الدوري مع سجل ورقي يومي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "ترمومتر غرس رقمي معاير", partsMech: "فلاتر تنقية زيت استانلس ستيل", partsCool: "", actionSteps: "تطبيق فحص النظافة اليدوي اليومي", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 4, title: "مياه المصنع وماكينات الثلج", dept: "الصيانة", severity: "حرجة جداً", problem: "مياه تحضير المحاليل وتكوين الثلج والسلق تحتاج معالجة مناسبة.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "تنظيم غسيل وتنظيف دوري لماكينات الثلج الحالية بعمالة داخلية", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "لوحة تحكم RO مع حساسات ضغط", partsMech: "فلاتر رملية وكربونية ومضخات ضغط عالي", partsCool: "ماكينة ثلج مجروش Flake Ice Machine صناعية", actionSteps: "فحص العينات المخبرية وتحديد السعات المطلوبة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 5, title: "قياس مياه طناجر السلق", dept: "الصيانة", severity: "حرجة جداً", problem: "قياس منسوب المياه في طناجر السلق غير دقيق، واختلافه سبب لانحراف رطوبة المادة المحضرة.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "صيانة وتنفيذ فني داخلي", internalNotes: "معايرة مساطر القياس الحالية كإجراء تنظيمي فوري", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "عداد تدفق رقمي Flow Meter ومحبس كهرومغناطيسي", partsMech: "وصلات ستانلس 316 وصمام عدم رجوع", partsCool: "", actionSteps: "معايرة القياس الميكانيكي كحل مؤقت", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 6, title: "التنظيف عند تغيير الأصناف", dept: "الإنتاج", severity: "حرجة", problem: "التبديل بين الأصناف على الخطوط وماكينات التعبئة قد يسبب تلوثاً تقاطعياً.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "تخصيص عمالة نظافة دائمة مع ورقة فحص (Checklist) توقع قبل تشغيل الصنف التالي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "", partsMech: "قطع فك سريع Tri-clamp ورشاشات غسيل دوارة", partsCool: "", actionSteps: "اعتماد إجراء الفك والتنظيف الإجباري بين الأصناف", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 7, title: "فصل خلطات ماكينة رقم 1", dept: "الإنتاج", severity: "حرجة", problem: "الفصل الفعلي بين خلطات الحمص على ماكينة رقم 1 غير مضمون بالاعتماد على عدد الصناديق.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "اعتماد نموذج تتبع لكل وجبة وبطاقة ملونة توضع على آخر صندوق في الخلطة", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "حساس فوتوسيل وقاطع عداد رقمي", partsMech: "بوابة فصل هوائية بستم نيوماتيك", partsCool: "", actionSteps: "تطبيق الترقيم اليدوي لكل وجبة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 8, title: "خروج المنتج قبل بلوغ حرارة التوزيع", dept: "المستودعات", severity: "حرجة", problem: "خروج المنتج من المستودع الرئيسي قبل الوصول إلى حرارة التوزيع المطلوبة.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "إصدار أمر إداري ملزم بمنع التحميل إلا بتوقيع فحص الحرارة على إذن التسليم", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "أجهزة تسجيل حرارة لاسلكية Data Loggers", partsMech: "", partsCool: "", actionSteps: "منع الإفراج دون توقيع استلام الحرارة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 9, title: "ملصقات المواد التحضيرية", dept: "المستودعات", severity: "حرجة", problem: "ملصقات المواد التحضيرية الورقية تتآكل أو تتمزق بسبب رطوبة المستودع.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "تغليف الملصقات مؤقتاً بالنايلون لحين توريد الفينيل", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "طابعة حرارية صناعية للباركود", partsMech: "رولات ملصقات بولي بروبيلين مقاومة للرطوبة والتمزق", partsCool: "", actionSteps: "تجربة عينات ملصقات مقاومة للماء", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 10, title: "حرارة بيئة التحضير والإنتاج", dept: "الصيانة", severity: "حرجة جداً", problem: "ارتفاع حرارة بيئة الإنتاج والتحضير قد يرفع حرارة المنتج خلال التوقف أو التصنيع.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "تسجيل قراءات الحرارة في مختلف أوقات الوردية لتحديد الذروة", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "لوحة تحكم مركزية وقواطع هوائية 100A", partsMech: "مجاري هواء دكتات صاج معزولة ومخارج هواء ناشرة", partsCool: "وحدات تكييف مركزي باكيج Package Units تبريد صناعي", actionSteps: "حساب الأحمال الحرارية للصالة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 11, title: "حرارة المنتج وتكاثف العبوات", dept: "الإنتاج", severity: "حرجة جداً", problem: "دخول المنتج غرف التبريد بحرارة مرتفعة نسبيًا فيتكاثف البخار على الأسطح العلوية للعبوات.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "تنظيم وقت المكوث قبل إحكام الإغلاق وتوفير عمالة لترتيب العبوات لتهويتها", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "مفاتيح تشغيل مراوح إضافية", partsMech: "سير ناقل شبكي ستانلس لتبريد العبوات", partsCool: "مراوح تهوية وتبريد هوائي سريع", actionSteps: "تسجيل الحرارة قبل الإغلاق ومراقبة الرطوبة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 12, title: "مواصفات المواد الخام", dept: "الجودة", severity: "حرجة", problem: "غياب ملف موحد للمواصفات الفنية للمواد الخام يسبب اختلاف الخصائص وتكرار عدم المطابقة.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "عمل أرشفة مكتبية كاملة وإعداد نماذج استلام المواد المعتمدة دون الحاجة لأي شراء", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "", partsMech: "", partsCool: "", actionSteps: "إعداد مواصفات المواد الأعلى استخداماً", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 13, title: "دراسة التعقيم بالأشعة فوق البنفسجية UV", dept: "الجودة", severity: "حرجة", problem: "لم تُحسم الحاجة أو المواقع والفعالية لنظام UV المقترح.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "إعداد دراسة جدوى وتقييم مخاطر مكتوب وموقع من إدارة الجودة", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "لمبات UV-C صناعية مع بالاست إلكتروني", partsMech: "هيكل تثبيت ستانلس فوق خط الإنتاج", partsCool: "", actionSteps: "إعداد تقييم الجدوى والسلامة قبل اتخاذ القرار", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 14, title: "أغطية وإغلاق الماكينات", dept: "الصيانة", severity: "حرجة", problem: "الماكينات مكشوفة نسبيًا؛ تتطلب أغطية وحماية دون إعاقة التشغيل والتنظيف.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "تأمين عزل مؤقت للمناطق المكشوفة لحين التصنيع", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "حساسات أمان مغناطيسية Safety Interlock", partsMech: "ألواح بلكسي غلاس 8 ملم وهيكل ستانلس ومفصلات سريعة", partsCool: "", actionSteps: "رفع قياسات الماكينات وتصميم الأغطية", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 15, title: "الزي الموحد وغسيله", dept: "الإنتاج", severity: "حرجة", problem: "عدم وجود زي موحد مخصص ومتكامل للعاملين مع آلية غسيل وتجفيف وإدارة واضحة.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "حصر كشوفات العمال والمقاسات مع تنظيم آلية تسليم واستلام الملابس", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "تغذية كهربائية 3 فاز للغسالة والمجفف", partsMech: "بدلات عمل + غسالة ومجفف صناعي وخزانات", partsCool: "", actionSteps: "حصر مقاسات العمال وإعداد عروض التوريد", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 16, title: "منطقة الجلي وغسيل المعدات", dept: "الصيانة", severity: "حرجة جداً", problem: "منطقة الجلي تحتاج فصلاً وترتيباً ومساحة مناسبة لمنع التزاحم وضمان النظافة.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "تنظيم ترتيب الأدوات النظيفة والمتسخة بالوضع القائم", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "إنارة مقاومة للرطوبة IP65 ومفاتيح مانعة للماء", partsMech: "أحواض ستانلس مزدوجة عميقة ومسدسات ماء ضغط عالي", partsCool: "شفاطات بخار مخصصة", actionSteps: "تنظيم المسار المؤقت وإعداد مخطط التوسعة لموازنة 2027", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 17, title: "مستودع الكيماويات وأدوات الجلي", dept: "المستودعات", severity: "حرجة جداً", problem: "الموقع الحالي وأرضياته وبنيته لا يضمنان تخزين المواد الكيميائية بأمان وملاءمة.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "فرز ونقل فوري لمواد التنظيف وتسميتها وترتيبها على رفوف مخصصة بعمالة المستودع", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "شفاط تهوية مستمرة ضد الانفجار", partsMech: "رفوف مقاومة للأحماض وأحواض تجميع انسكاب", partsCool: "", actionSteps: "فصل المواد الكيميائية فورياً عن الأدوات", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 18, title: "مسار الصناديق النظيفة والمتسخة", dept: "الإنتاج", severity: "حرجة", problem: "تقاطع مسار الصناديق مع منطقة الجلي قد يزيد احتمال انتقال الملوثات.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "إعادة توزيع حركة العمال وتحديد مسار أرضي إجباري لحركة الصناديق", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "", partsMech: "حواجز وقواطع مادية وخطوط مسارات أرضية ملونة", partsCool: "", actionSteps: "تنظيم الفصل الزمني المؤقت لحركة الصناديق", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 19, title: "الطوارئ والإخلاء والسلامة", dept: "الصيانة", severity: "حرجة جداً", problem: "خطط الإخلاء والطوارئ تحتاج تطبيقاً عملياً وتحديد مسؤوليات وتدريباً.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "توزيع أدوار الإخلاء وعقد تدريب نظري وتوثيق كشوفات الحضور", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "كشافات طوارئ شحن، أزرار إنذار كاسرة", partsMech: "طفايات بودرة وCO2، خراطيم حريق، أبواب طوارئ", partsCool: "", actionSteps: "فحص أجهزة الإنذار وإزالة عوائق المخارج", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 20, title: "الشفط في مناطق التسخين والسلق", dept: "الصيانة", severity: "حرجة", problem: "ضعف الشفط والتهوية يرفع الحرارة والرطوبة وتكاثف الأبخرة واحتمال العفن.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "صيانة وتنفيذ فني داخلي", internalNotes: "تنظيف فلاتر ومراوح الشفط المتاحة دورياً بأيدي الصيانة", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "محرك شفاط 3 فاز مع إنفرتر", partsMech: "هودات شفط ستانلس ستيل ومداخن ومصائد شحوم", partsCool: "", actionSteps: "صيانة الشفاطات القائمة وقياس شدة السحب", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 21, title: "منطقة السلطات والسقف", dept: "الصيانة", severity: "حرجة جداً", problem: "منطقة السلطات تحتاج توسعة وصيانة للسقف لتناسب ظروف التشغيل والنظافة.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "تنظيف دوري وعزل موضعي مباشر للسقف", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "إنارة ليد مدمجة بالسقف IP65", partsMech: "ألواح ساندوتش بانل معالجة مضادة للبكتيريا وجسور تثبيت", partsCool: "", actionSteps: "عزل أماكن التساقط المؤقتة وإدراج التوسعة في موازنة 2027", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 22, title: "أسطح وبلاطات ماكينة الديزاين", dept: "الصيانة", severity: "حرجة جداً", problem: "تآكل أو تلف بلاطات وأسطح ماكينة الديزاين قد يؤدي إلى سقوط شوائب على المنتج.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "صيانة وتنفيذ فني داخلي", internalNotes: "فحص وتنعيم الحواف والتأكد من عدم وجود رايش قبل بدء الوردية", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "", partsMech: "بلاطات بولي إيثيلين غذائي أبيض ومسامير ستانلس", partsCool: "", actionSteps: "حصر الأجزاء المتآكلة واستبعاد التالف منها", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 23, title: "بطاقات البيان والمواصفات الغذائية", dept: "الجودة", severity: "حرجة", problem: "ملف بطاقات البيان والمواصفات بحاجة لمراجعة وتوحيد بالاستناد لنتائج موثوقة.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "مراجعة واعتماد الملفات المطبوعة وتحديث سجل تاريخ الصلاحية وجدول القيم الغذائية بدون تكلفة شراء", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "", partsMech: "", partsCool: "", actionSteps: "مطابقة البطاقات الحالية مع نتائج المختبر", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 24, title: "نقل الكراتين داخل الإنتاج", dept: "الإنتاج", severity: "متوسطة", problem: "استخدام صناديق تداول المواد لحمل وجر الكراتين بدل وسيلة نقل مخصصة.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "التنبيه الإداري على العمال بوقف جر الصناديق الغذائية وتخصيص مسار لحملها", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "", partsMech: "عربات وتروليات نقل كراتين ستانلس بعجلات نايلون", partsCool: "", actionSteps: "وقف جر الصناديق على الأرض فوراً", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 25, title: "كفاءة وحدات التبريد وخاصة 6 و7", dept: "الصيانة", severity: "حرجة جداً", problem: "وحدات التبريد تحتاج تقييماً وصيانة شاملين، خصوصاً ثلاجتي 6 و7.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "تنظيف كوندنسرات الثلاجات بأيدي فنيي الصيانة لتحسين الأداء الفوري", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "ثيرموستات ديجيتال Dixell وقواطع وحساسات Defrost", partsMech: "صمامات تمدد دانفوس وفلاتر دراير", partsCool: "كمبروسورات نصف مغلقة بيتزر ومبخرات تبريد مزدوجة", actionSteps: "إجراء صيانة عاجلة للضواغط وإدراج الاستبدال بموازنة 2027", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 26, title: "بنية مستودعات التبريد", dept: "الصيانة", severity: "حرجة جداً", problem: "أسقف وجدران وأبواب مستودعات التبريد بها تلف وتساقط شوائب واحتمال تسريب.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "تنظيف وعزل مؤقت لمواقع الصدأ بأيدي عمال الصيانة", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "سخانات حواشي الأبواب Heater Gasket", partsMech: "أبواب سحاب صناعية محكمة ومصدات تصادم مطاطية", partsCool: "بانيلات بولي يوريثان 100 ملم عازلة", actionSteps: "عزل أماكن الصدأ والتسريب مؤقتاً وترحيل التأهيل الكامل لـ 2027", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 27, title: "النفايات ومسار إخراجها", dept: "الإنتاج", severity: "حرجة جداً", problem: "مسار إخراج المخلفات قد يمر عبر مناطق الإنتاج أو المدخل الرئيسي.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "تخصيص وردية وعمال محددين لإخراج النفايات في نهاية العمل عبر البوابة الخلفية", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "", partsMech: "حاويات مخلفات ستانلس بدواسة قدم وأغطية محكمة", partsCool: "", actionSteps: "تحديد مواعيد إخراج النفايات خارج أوقات التشغيل", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 28, title: "استمرارية المياه الساخنة", dept: "الصيانة", severity: "حرجة جداً", problem: "المياه الساخنة لا تتوفر باستمرار مما يعيق أعمال التنظيف والغسيل.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "صيانة وتنفيذ فني داخلي", internalNotes: "تنظيم أوقات استخدام المياه الساخنة وتوزيع الأحمال", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "لوحة تحكم حرارية وثيرموستات أمان هيتر", partsMech: "بويلر صناعي ومضخة تدوير مياه ومواسير معزولة", partsCool: "", actionSteps: "صيانة خطوط المياه الساخنة المتاحة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 29, title: "مستودعات المواد الجافة", dept: "المستودعات", severity: "حرجة جداً", problem: "المستودعات لا توفر تهوية وإغلاقاً وضبطاً ملائماً للحرارة والرطوبة للمواد الجافة.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "إعادة ترتيب البضائع بعيداً عن الجدران ورفعها على طبالي بلاستيكية بعمالة المستودع", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "جهاز قياس وتسجيل رطوبة وحرارة رقمي", partsMech: "أبواب معزولة سريعة الفتح ومصدات غبار", partsCool: "وحدات تكييف وسحب رطوبة صناعية", actionSteps: "تنظيم الرص على طبالي وإصلاح الفتحات مؤقتاً", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 30, title: "الأرضيات والانزلاق عند مدخل الإنتاج", dept: "الصيانة", severity: "حرجة جداً", problem: "مناطق الإنتاج والممرات قد تصبح زلقة بالمياه والزيوت وبعض الأرضيات متآكلة.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "تكثيف مسح وسحب المياه دورياً وتوفير لوحات تحذيرية ومفارش مطاطية", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "", partsMech: "قنوات تصريف ستانلس وإيبوكسي خشن مانع للانزلاق", partsCool: "", actionSteps: "معالجة مصادر التسريب ووضع مفارش مانعة للانزلاق مؤقتاً", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 31, title: "غسل الأيدي وتجهيز العاملين", dept: "الصيانة", severity: "حرجة جداً", problem: "جاهزية وحدة غسل وتعقيم الأيدي تحتاج صيانة وتعزيز تجهيز العاملين قبل الدخول.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "صيانة وتنفيذ فني داخلي", internalNotes: "تكليف مشرف الوردية بفحص توفر الصابون والمعقم عند بداية كل وردية", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "حساسات إنفراريد لصرف الصابون ومجفف أيدي نفاث", partsMech: "محطة تعقيم أيدي متكاملة من الستانلس ستيل", partsCool: "", actionSteps: "صيانة وحدة غسل اليدين فورياً ومتابعة توفر المعقمات", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 32, title: "إنذار أبواب غرف التبريد", dept: "الصيانة", severity: "حرجة جداً", problem: "لا يوجد إنذار ينبه عند بقاء أبواب غرف ومستودعات التبريد مفتوحة لفترات طويلة.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "صيانة وتنفيذ فني داخلي", internalNotes: "التشديد على عمال المستودع بإغلاق الباب فوراً لحين تركيب الإنذار", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "مفاتيح ميكروسويتش صناعية، مؤقت زمني Timer، سارينة إنذار", partsMech: "براكيت تثبيت ستانلس للحساس على حلق الباب", partsCool: "", actionSteps: "ضبط توقيتات إغلاق الأبواب وتركيب حساس تجريبي", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 33, title: "فرز الأوعية والمعدات البلاستيكية", dept: "الإنتاج", severity: "حرجة", problem: "بعض الأوعية والمعدات البلاستيكية متشققة وتطلق شوائب ويصعب تنظيفها.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "تخصيص ساعتين لعمالة الإنتاج لفرز وعزل وتمييز الأوعية الصالحة من المشروخة", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "", partsMech: "براميل وحاويات بلاستيكية غذائية معتمدة", partsCool: "", actionSteps: "فرز البراميل واستبعاد المشروخ منها", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 34, title: "أوعية المواد التحضيرية", dept: "الإنتاج", severity: "متوسطة", problem: "تُستخدم عبوات المنتج النهائي 3 كغم لتعبئة وتخزين مواد تحضيرية مما يهدر العبوات.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "تعميم قرار خطي بمنع استخدام عبوات البيع النهائي لغير التعبئة المعتمدة", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "", partsMech: "أوعية تخزين طعام بلاستيكية معيارية متعددة الاستخدام", partsCool: "", actionSteps: "حصر الكميات اللازمة لمنع استخدام عبوات البيع النهائي", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" }
         ];
-
-        for (let i = 11; i <= 34; i++) {
-            defaultTasks.push({
-                id: i,
-                title: `بند متابعة حرجة #${i}`,
-                dept: i % 2 === 0 ? "الصيانة" : "الإنتاج",
-                severity: i % 3 === 0 ? "حرجة جداً" : "حرجة",
-                problem: `إجراء تصحيحي ومتابعة فنية للبند رقم ${i}`,
-                status: "مفتوح",
-                progress: 0,
-                contractor: "داخلي",
-                executionType: "صيانة وتنفيذ فني داخلي",
-                internalNotes: "متابعة التنفيذ الميداني الداخلي",
-                budgetYear: i > 25 ? "2027" : "2026",
-                estimatedCost: 2000,
-                quotationCost: 0,
-                approvedCost: 0,
-                spent: 0,
-                po: "",
-                supplier: "",
-                supplyStatus: "غير مطلوب توريد (عمل داخلي)",
-                partsElec: "",
-                partsMech: "",
-                partsCool: "",
-                actionSteps: "قيد البدء",
-                evidence: "",
-                obstacle: "",
-                lastUpdated: "2026-10-13 10:00",
-                updatedBy: "النظام"
-            });
-        }
 
         window.tasks = [];
         let statusChartInstance = null;
-        let financeChartInstance = null;
+        let deptChartInstance = null;
 
+        // دالة تبديل الحقول بناءً على نوع التنفيذ
         window.toggleExecutionFields = function(val) {
             const internalSec = document.getElementById('internalWorkSection');
+            const purSec = document.getElementById('purchasingSection');
             const supplyStatus = document.getElementById('modalTaskSupplyStatus');
             const contractor = document.getElementById('modalTaskContractor');
 
@@ -955,6 +773,7 @@
             }
         };
 
+        // مزامنة Firestore اللحظية
         onSnapshot(tasksCol, (snapshot) => {
             if (!snapshot.empty) {
                 window.tasks = [];
@@ -969,7 +788,6 @@
             renderDashboard();
             renderTasksTable();
             renderProcurementTable();
-            renderFinanceTable();
             renderWeeklyReport();
         }, (error) => {
             console.error("Firebase sync error:", error);
@@ -977,7 +795,6 @@
             renderDashboard();
             renderTasksTable();
             renderProcurementTable();
-            renderFinanceTable();
             renderWeeklyReport();
         });
 
@@ -992,7 +809,7 @@
         };
 
         window.switchTab = function(tabId) {
-            ['dashboard', 'tasks', 'procurement', 'finance', 'weekly-report'].forEach(t => {
+            ['dashboard', 'tasks', 'procurement', 'weekly-report'].forEach(t => {
                 document.getElementById(`view-${t}`).classList.add('hidden');
                 document.getElementById(`tabBtn-${t}`).classList.remove('tab-active');
                 document.getElementById(`tabBtn-${t}`).classList.add('text-slate-600');
@@ -1007,28 +824,8 @@
 
         function renderDashboard() {
             const tList = window.tasks;
-
-            const totalSpent = tList.reduce((sum, t) => sum + (Number(t.spent) || 0), 0);
-            const totalQuotes = tList.reduce((sum, t) => sum + (Number(t.quotationCost) || 0), 0);
-            const totalEstimated = tList.reduce((sum, t) => sum + (Number(t.estimatedCost) || 0), 0);
-            const budget2027Tasks = tList.filter(t => t.budgetYear === '2027' || t.status === 'عالقة لموازنة 2027');
-            const budget2027Val = budget2027Tasks.reduce((sum, t) => sum + (Number(t.estimatedCost) || Number(t.quotationCost) || 0), 0);
-
-            document.getElementById('statTotalSpent').innerText = totalSpent.toLocaleString() + ' ₪';
-            document.getElementById('statTotalQuotes').innerText = totalQuotes.toLocaleString() + ' ₪';
-            document.getElementById('statTotalEstimated').innerText = totalEstimated.toLocaleString() + ' ₪';
-            document.getElementById('statBudget2027Value').innerText = budget2027Val.toLocaleString() + ' ₪';
-            document.getElementById('statBudget2027Count').innerText = budget2027Tasks.length;
-
-            const prTasks = tList.filter(t => t.po || (t.supplyStatus && !t.supplyStatus.includes('عمل داخلي')));
-            document.getElementById('statPRTotal').innerText = prTasks.length;
-            document.getElementById('statPRInQuotation').innerText = tList.filter(t => t.supplyStatus === 'قيد استدراج عروض الأسعار').length;
-            document.getElementById('statPRAwarded').innerText = tList.filter(t => t.supplyStatus === 'تم اعتماد المورد والتعميد').length;
-            document.getElementById('statPRShipping').innerText = tList.filter(t => t.supplyStatus === 'بانتظار الشحن والتسليم').length;
-            document.getElementById('statPRDelivered').innerText = tList.filter(t => t.supplyStatus === 'تم التوريد للمصنع وجاهز للتركيب').length;
-            document.getElementById('statInternalOnly').innerText = tList.filter(t => !t.supplyStatus || t.supplyStatus.includes('عمل داخلي')).length;
-
             document.getElementById('statTotalTasks').innerText = tList.length;
+            document.getElementById('statInternalTasks').innerText = tList.filter(t => t.executionType && t.executionType.includes('داخلي')).length;
             document.getElementById('statContainedTasks').innerText = tList.filter(t => t.status === 'تم احتواء الخطر').length;
             document.getElementById('statInProgressTasks').innerText = tList.filter(t => t.status === 'جارٍ التنفيذ').length;
             document.getElementById('statPendingQATasks').innerText = tList.filter(t => t.status === 'بانتظار تحقق الجودة').length;
@@ -1037,32 +834,6 @@
 
         function updateCharts() {
             const tList = window.tasks;
-
-            const totalSpent = tList.reduce((sum, t) => sum + (Number(t.spent) || 0), 0);
-            const totalQuotes = tList.reduce((sum, t) => sum + (Number(t.quotationCost) || 0), 0);
-            const totalEstimated = tList.reduce((sum, t) => sum + (Number(t.estimatedCost) || 0), 0);
-
-            const ctxFin = document.getElementById('financeComparisonChart').getContext('2d');
-            if (financeChartInstance) financeChartInstance.destroy();
-            financeChartInstance = new Chart(ctxFin, {
-                type: 'bar',
-                data: {
-                    labels: ['التكلفة المتوقعة', 'عروض الأسعار', 'المصروف الفعلي'],
-                    datasets: [{
-                        label: 'المبلغ الإجمالي (₪)',
-                        data: [totalEstimated, totalQuotes, totalSpent],
-                        backgroundColor: ['#64748b', '#2563eb', '#e11d48'],
-                        borderRadius: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { y: { beginAtZero: true } }
-                }
-            });
-
             const statusCounts = {
                 'مفتوح': tList.filter(t => t.status === 'مفتوح').length,
                 'تم احتواء الخطر': tList.filter(t => t.status === 'تم احتواء الخطر').length,
@@ -1070,6 +841,13 @@
                 'بانتظار تحقق الجودة': tList.filter(t => t.status === 'بانتظار تحقق الجودة').length,
                 'عالقة لموازنة 2027': tList.filter(t => t.status === 'عالقة لموازنة 2027').length,
                 'مغلق': tList.filter(t => t.status === 'مغلق').length
+            };
+
+            const deptCounts = {
+                'الصيانة': tList.filter(t => t.dept === 'الصيانة').length,
+                'الإنتاج': tList.filter(t => t.dept === 'الإنتاج').length,
+                'المستودعات': tList.filter(t => t.dept === 'المستودعات').length,
+                'الجودة': tList.filter(t => t.dept === 'الجودة').length
             };
 
             const ctxStatus = document.getElementById('statusChart').getContext('2d');
@@ -1084,6 +862,21 @@
                     }]
                 },
                 options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } } }
+            });
+
+            const ctxDept = document.getElementById('deptChart').getContext('2d');
+            if (deptChartInstance) deptChartInstance.destroy();
+            deptChartInstance = new Chart(ctxDept, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(deptCounts),
+                    datasets: [{
+                        label: 'عدد المهام',
+                        data: Object.values(deptCounts),
+                        backgroundColor: '#10b981'
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
         }
 
@@ -1117,15 +910,16 @@
                 else if (user.allowedDept && user.allowedDept === t.dept) canEdit = true;
                 else if (user.canProcurement || user.canFinance) canEdit = true;
 
+                // لون وتسمية شارة نوع التنفيذ
                 let execBadge = '';
                 if (t.executionType === 'تنظيم إداري وتوثيق أوراق') {
-                    execBadge = `<span class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded text-[10px] font-bold">📄 أوراق ونماذج</span>`;
+                    execBadge = `<span class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded text-[10px] font-bold">📄 أوراق ونماذج داخلية</span>`;
                 } else if (t.executionType === 'عمالة وتنظيم تشغيلي داخلي') {
-                    execBadge = `<span class="bg-teal-50 text-teal-700 border border-teal-200 px-2 py-0.5 rounded text-[10px] font-bold">👥 عمالة وتنظيم</span>`;
+                    execBadge = `<span class="bg-teal-50 text-teal-700 border border-teal-200 px-2 py-0.5 rounded text-[10px] font-bold">👥 عمالة وتنظيم داخلي</span>`;
                 } else if (t.executionType === 'صيانة وتنفيذ فني داخلي') {
                     execBadge = `<span class="bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded text-[10px] font-bold">🔧 صيانة داخلية</span>`;
                 } else {
-                    execBadge = `<span class="bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded text-[10px] font-bold">🚚 توريد ومقاول</span>`;
+                    execBadge = `<span class="bg-blue-50 text-blue-700 border border-blue-200 px-2 py-0.5 rounded text-[10px] font-bold">🚚 توريد ومقاول خارجي</span>`;
                 }
 
                 return `
@@ -1183,24 +977,17 @@
 
         function renderProcurementTable() {
             const tbody = document.getElementById('procurementTableBody');
-            const totalQuotes = window.tasks.reduce((sum, t) => sum + (Number(t.quotationCost) || 0), 0);
-            document.getElementById('procurementQuotesTotal').innerText = totalQuotes.toLocaleString();
+            const totalSpent = window.tasks.reduce((sum, t) => sum + (Number(t.spent) || 0), 0);
+            document.getElementById('totalSpentDisplay').innerText = totalSpent.toLocaleString();
 
-            const prTasks = window.tasks.filter(t => t.executionType && t.executionType.includes('خارجي') || t.po || (t.supplyStatus && !t.supplyStatus.includes('عمل داخلي')));
-
-            tbody.innerHTML = prTasks.map(t => {
+            tbody.innerHTML = window.tasks.map(t => {
                 const partsSummary = [
                     t.partsElec ? `[كهرباء: ${t.partsElec}]` : '',
                     t.partsMech ? `[ميكانيك: ${t.partsMech}]` : '',
                     t.partsCool ? `[تبريد: ${t.partsCool}]` : ''
                 ].filter(Boolean).join(' ');
 
-                let stageBadge = '';
-                if (t.supplyStatus === 'قيد استدراج عروض الأسعار') stageBadge = '<span class="bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 rounded text-[10px] font-bold">1. استدراج عروض الأسعار</span>';
-                else if (t.supplyStatus === 'تم اعتماد المورد والتعميد') stageBadge = '<span class="bg-indigo-50 text-indigo-800 border border-indigo-200 px-2 py-0.5 rounded text-[10px] font-bold">2. تم التعميد والموافقة</span>';
-                else if (t.supplyStatus === 'بانتظار الشحن والتسليم') stageBadge = '<span class="bg-blue-50 text-blue-800 border border-blue-200 px-2 py-0.5 rounded text-[10px] font-bold">3. قيد الشحن والتوريد</span>';
-                else if (t.supplyStatus === 'تم التوريد للمصنع وجاهز للتركيب') stageBadge = '<span class="bg-emerald-50 text-emerald-800 border border-emerald-200 px-2 py-0.5 rounded text-[10px] font-bold">4. تم التوريد للمصنع</span>';
-                else stageBadge = '<span class="bg-slate-100 text-slate-700 px-2 py-0.5 rounded text-[10px] font-bold">' + (t.supplyStatus || 'قيد المتابعة') + '</span>';
+                const isInternal = t.executionType && t.executionType.includes('داخلي');
 
                 return `
                 <tr class="hover:bg-slate-50 transition border-b cursor-pointer" onclick="openViewDetailsModal(${t.id})">
@@ -1209,91 +996,42 @@
                         <div class="font-semibold text-slate-900">${t.title}</div>
                         <div class="text-[10px] text-slate-400">القسم: ${t.dept}</div>
                     </td>
-                    <td class="p-3 font-mono font-bold text-emerald-800">${t.po || 'غير محدد'}</td>
-                    <td class="p-3 font-semibold text-slate-800">${t.supplier || 'بانتظار العروض'}</td>
-                    <td class="p-3">${stageBadge}</td>
-                    <td class="p-3 font-bold text-blue-700">${t.quotationCost ? Number(t.quotationCost).toLocaleString() + ' ₪' : 'بانتظار السعر'}</td>
-                    <td class="p-3 text-slate-600 max-w-xs truncate text-[11px]">${partsSummary || 'حسب المواصفات'}</td>
-                    <td class="p-3 text-center" onclick="event.stopPropagation()">
-                        <button onclick="openEditTaskModal(${t.id})" class="p-1.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg text-slate-600 transition" title="تعديل المشتريات">
-                            <i data-lucide="edit-3" class="w-4 h-4"></i>
-                        </button>
-                    </td>
-                </tr>`;
-            }).join('');
-            lucide.createIcons();
-        }
-
-        function renderFinanceTable() {
-            const tbody = document.getElementById('financeTableBody');
-            const totalSpent = window.tasks.reduce((sum, t) => sum + (Number(t.spent) || 0), 0);
-            const totalEstimated = window.tasks.reduce((sum, t) => sum + (Number(t.estimatedCost) || 0), 0);
-            document.getElementById('financeSpentTotal').innerText = totalSpent.toLocaleString();
-            document.getElementById('financeEstimatedTotal').innerText = totalEstimated.toLocaleString();
-
-            tbody.innerHTML = window.tasks.map(t => {
-                const spent = Number(t.spent) || 0;
-                const est = Number(t.estimatedCost) || 0;
-                const quote = Number(t.quotationCost) || 0;
-                const approved = Number(t.approvedCost) || 0;
-
-                let paymentStatus = '';
-                if (spent > 0 && spent >= (approved || quote || est)) {
-                    paymentStatus = '<span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded text-[10px] font-bold">مسدد بالكامل</span>';
-                } else if (spent > 0) {
-                    paymentStatus = '<span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded text-[10px] font-bold">دفعة جزئية</span>';
-                } else {
-                    paymentStatus = '<span class="bg-slate-100 text-slate-600 px-2 py-0.5 rounded text-[10px] font-medium">لم يصرف بعد</span>';
-                }
-
-                return `
-                <tr class="hover:bg-slate-50 transition border-b cursor-pointer" onclick="openViewDetailsModal(${t.id})">
-                    <td class="p-3 font-bold text-slate-700">بند ${t.id}</td>
                     <td class="p-3">
-                        <div class="font-semibold text-slate-900">${t.title}</div>
-                        <div class="text-[10px] text-slate-400">القسم: ${t.dept}</div>
+                        <span class="text-[10px] font-bold ${isInternal ? 'text-teal-700 bg-teal-50' : 'text-blue-700 bg-blue-50'} px-2 py-0.5 rounded">
+                            ${t.executionType || 'داخلي'}
+                        </span>
                     </td>
+                    <td class="p-3 font-semibold text-slate-800">${isInternal ? 'تنفيذ داخلي' : (t.supplier || 'بانتظار التحديد')}</td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-semibold ${isInternal ? 'bg-slate-100 text-slate-600' : 'bg-blue-50 text-blue-800 border border-blue-200'}">
+                            ${isInternal ? 'غير مطلوب شراء' : (t.supplyStatus || 'قيد الاستدراج')}
+                        </span>
+                    </td>
+                    <td class="p-3 text-slate-600 max-w-xs truncate text-[11px]">${isInternal ? (t.internalNotes || 'تنظيم وتوثيق') : (partsSummary || 'لم تسجل قطع')}</td>
                     <td class="p-3">
                         <span class="px-2 py-0.5 rounded text-[10px] font-bold ${t.budgetYear === '2027' || t.status === 'عالقة لموازنة 2027' ? 'bg-cyan-100 text-cyan-800' : 'bg-slate-100 text-slate-700'}">
                             ${t.budgetYear === '2027' || t.status === 'عالقة لموازنة 2027' ? 'موازنة 2027' : 'تشغيلي 2026'}
                         </span>
                     </td>
-                    <td class="p-3 font-medium text-slate-600">${est ? est.toLocaleString() + ' ₪' : '0 ₪'}</td>
-                    <td class="p-3 font-bold text-blue-700">${quote ? quote.toLocaleString() + ' ₪' : '0 ₪'}</td>
-                    <td class="p-3 font-bold text-slate-800">${approved ? approved.toLocaleString() + ' ₪' : '0 ₪'}</td>
-                    <td class="p-3 font-black text-rose-600">${spent ? spent.toLocaleString() + ' ₪' : '0 ₪'}</td>
-                    <td class="p-3">${paymentStatus}</td>
-                    <td class="p-3 text-center" onclick="event.stopPropagation()">
-                        <button onclick="openEditTaskModal(${t.id})" class="p-1.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg text-slate-600 transition" title="تعديل الموازنة">
-                            <i data-lucide="edit-3" class="w-4 h-4"></i>
-                        </button>
-                    </td>
+                    <td class="p-3 font-bold text-emerald-700">${t.spent ? t.spent + ' ₪' : '0 ₪'}</td>
                 </tr>`;
             }).join('');
-            lucide.createIcons();
         }
 
         function renderWeeklyReport() {
             const tList = window.tasks;
             const closed = tList.filter(t => t.status === 'مغلق').length;
             const contained = tList.filter(t => t.status === 'تم احتواء الخطر').length;
+            const pendingQA = tList.filter(t => t.status === 'بانتظار تحقق الجودة').length;
             const internalCount = tList.filter(t => t.executionType && t.executionType.includes('داخلي')).length;
             const budget2027 = tList.filter(t => t.status === 'عالقة لموازنة 2027' || t.budgetYear === '2027').length;
-
-            const totalSpent = tList.reduce((sum, t) => sum + (Number(t.spent) || 0), 0);
-            const totalQuotes = tList.reduce((sum, t) => sum + (Number(t.quotationCost) || 0), 0);
-            const prCount = tList.filter(t => t.po || (t.supplyStatus && !t.supplyStatus.includes('عمل داخلي'))).length;
 
             const closeRate = tList.length > 0 ? Math.round((closed / tList.length) * 100) : 0;
 
             document.getElementById('reportCloseRate').innerText = `${closeRate}%`;
             document.getElementById('reportInternalCount').innerText = internalCount;
             document.getElementById('reportContainedCount').innerText = contained;
-            document.getElementById('reportBudgetCount').innerText = `${budget2027} بند`;
-
-            document.getElementById('repSpentVal').innerText = totalSpent.toLocaleString() + ' ₪';
-            document.getElementById('repQuotesVal').innerText = totalQuotes.toLocaleString() + ' ₪';
-            document.getElementById('repPRCount').innerText = `${prCount} طلب`;
+            document.getElementById('reportBudgetCount').innerText = budget2027;
             document.getElementById('reportCurrentDate').innerText = `تاريخ التقرير: ${new Date().toLocaleDateString('ar-EG')}`;
 
             const updatedTasks = [...tList].filter(t => t.lastUpdated).sort((a,b) => (b.lastUpdated || '').localeCompare(a.lastUpdated || '')).slice(0, 10);
@@ -1302,7 +1040,7 @@
                 <tr class="hover:bg-slate-50">
                     <td class="p-2.5 font-bold text-slate-800">بند ${t.id}</td>
                     <td class="p-2.5">${t.title}</td>
-                    <td class="p-2.5 font-bold text-rose-600">${t.spent ? Number(t.spent).toLocaleString() + ' ₪' : '0 ₪'}</td>
+                    <td class="p-2.5 text-[11px] font-semibold text-teal-800">${t.executionType || 'داخلي'}</td>
                     <td class="p-2.5 font-bold text-emerald-600">${t.progress}%</td>
                     <td class="p-2.5 text-slate-700 font-semibold text-[11px]">${t.status}</td>
                     <td class="p-2.5 text-slate-500">${t.lastUpdated}</td>
@@ -1325,6 +1063,7 @@
             }
         }
 
+        // --- دوال عرض التفاصيل الشاملة للمهمة (View Modal) ---
         window.openViewDetailsModal = function(id) {
             const task = window.tasks.find(t => t.id === id);
             if (!task) return;
@@ -1351,23 +1090,20 @@
             document.getElementById('viewTaskSupplyStatus').innerText = task.supplyStatus || 'غير محدد';
             document.getElementById('viewTaskBudget').innerText = task.budgetYear === '2027' || task.status === 'عالقة لموازنة 2027' ? 'ضمن موازنة 2027' : 'تشغيلي 2026';
 
-            document.getElementById('viewTaskEstimated').innerText = `${Number(task.estimatedCost || 0).toLocaleString()} ₪`;
-            document.getElementById('viewTaskQuoteVal').innerText = `${Number(task.quotationCost || 0).toLocaleString()} ₪`;
-            document.getElementById('viewTaskApproved').innerText = `${Number(task.approvedCost || 0).toLocaleString()} ₪`;
-            document.getElementById('viewTaskSpent').innerText = `${Number(task.spent || 0).toLocaleString()} ₪`;
-
             document.getElementById('viewTaskProblem').innerText = task.problem || 'لا توجد مشكلة مدونة.';
             document.getElementById('viewTaskActionSteps').innerText = task.actionSteps || 'لم يتم تدوين خطوات الإجراء الميداني بعد.';
 
+            // قسم العمل الداخلي والأوراق
             document.getElementById('viewTaskInternalNotes').innerText = task.internalNotes || 'لم تدون تفاصيل أوراق أو عمالة داخلية مخصصة لهذا البند.';
 
+            // عرض القطع
             document.getElementById('viewTaskPartsElectrical').innerText = task.partsElec || 'لا توجد قطع كهربائية مطلوبة.';
             document.getElementById('viewTaskPartsMechanical').innerText = task.partsMech || 'لا توجد قطع ميكانيكية مطلوبة.';
             document.getElementById('viewTaskPartsCooling').innerText = task.partsCool || 'لا توجد قطع تبريد مطلوبة.';
 
             document.getElementById('viewTaskSupplier').innerText = task.supplier || 'لا يتطلب مورد (عمل داخلي)';
             document.getElementById('viewTaskPO').innerText = task.po || 'لا يوجد طلب شراء';
-            document.getElementById('viewTaskSupplyStatusDetailed').innerText = task.supplyStatus || 'قيد المتابعة';
+            document.getElementById('viewTaskSpent').innerText = `${task.spent || 0} ₪`;
 
             document.getElementById('viewTaskEvidence').innerText = task.evidence || 'بانتظار استكمال الإجراء ورفع دليل الجودة.';
             document.getElementById('viewTaskObstacle').innerText = task.obstacle || 'لا توجد معوقات أو تصعيدات مسجلة.';
@@ -1388,6 +1124,7 @@
             document.getElementById('viewDetailsModal').classList.add('hidden');
         };
 
+        // --- دوال تعديل وإضافة المهمة (Edit Modal) ---
         window.openEditTaskModal = function(id) {
             const task = window.tasks.find(t => t.id === id);
             if (!task) return;
@@ -1404,27 +1141,26 @@
             document.getElementById('modalTaskStatus').value = task.status;
             document.getElementById('modalTaskProgress').value = task.progress;
 
+            // نوع التنفيذ وتفاصيل العمل الداخلي
             const execType = task.executionType || 'عمالة وتنظيم تشغيلي داخلي';
             document.getElementById('modalTaskExecutionType').value = execType;
             document.getElementById('modalTaskInternalNotes').value = task.internalNotes || '';
             toggleExecutionFields(execType);
 
-            document.getElementById('modalTaskEstimatedCost').value = task.estimatedCost || 0;
-            document.getElementById('modalTaskQuotationCost').value = task.quotationCost || 0;
-            document.getElementById('modalTaskApprovedCost').value = task.approvedCost || 0;
-            document.getElementById('modalTaskSpent').value = task.spent || 0;
-
+            // تفاصيل القطع والمورد
             document.getElementById('modalTaskPartsElectrical').value = task.partsElec || '';
             document.getElementById('modalTaskPartsMechanical').value = task.partsMech || '';
             document.getElementById('modalTaskPartsCooling').value = task.partsCool || '';
 
             document.getElementById('modalTaskSupplier').value = task.supplier || '';
             document.getElementById('modalTaskSupplyStatus').value = task.supplyStatus || 'غير مطلوب توريد (عمل داخلي)';
-            document.getElementById('modalTaskPO').value = task.po || '';
 
-            document.getElementById('modalTaskBudgetYear').value = task.budgetYear || '2026';
-            document.getElementById('modalTaskEvidence').value = task.evidence || '';
-            document.getElementById('modalTaskObstacle').value = task.obstacle || '';
+            document.getElementById('modalTaskContractor').value = task.contractor;
+            document.getElementById('modalTaskBudgetYear').value = task.budgetYear;
+            document.getElementById('modalTaskSpent').value = task.spent;
+            document.getElementById('modalTaskPO').value = task.po;
+            document.getElementById('modalTaskEvidence').value = task.evidence;
+            document.getElementById('modalTaskObstacle').value = task.obstacle;
 
             const statusSelect = document.getElementById('modalTaskStatus');
             if (!user.canClose && !user.canEditAll) {
@@ -1444,9 +1180,6 @@
             document.getElementById('modalTaskId').value = "new";
             document.getElementById('taskForm').reset();
             document.getElementById('modalTaskProgress').value = 0;
-            document.getElementById('modalTaskEstimatedCost').value = 0;
-            document.getElementById('modalTaskQuotationCost').value = 0;
-            document.getElementById('modalTaskApprovedCost').value = 0;
             document.getElementById('modalTaskSpent').value = 0;
             document.getElementById('modalTaskExecutionType').value = "عمالة وتنظيم تشغيلي داخلي";
             document.getElementById('modalTaskSupplyStatus').value = "غير مطلوب توريد (عمل داخلي)";
@@ -1487,17 +1220,15 @@
                     severity: document.getElementById('modalTaskSeverity').value,
                     status: chosenStatus,
                     progress: Number(document.getElementById('modalTaskProgress').value),
-                    estimatedCost: Number(document.getElementById('modalTaskEstimatedCost').value),
-                    quotationCost: Number(document.getElementById('modalTaskQuotationCost').value),
-                    approvedCost: Number(document.getElementById('modalTaskApprovedCost').value),
-                    spent: Number(document.getElementById('modalTaskSpent').value),
                     partsElec: document.getElementById('modalTaskPartsElectrical').value,
                     partsMech: document.getElementById('modalTaskPartsMechanical').value,
                     partsCool: document.getElementById('modalTaskPartsCooling').value,
                     supplier: document.getElementById('modalTaskSupplier').value,
                     supplyStatus: document.getElementById('modalTaskSupplyStatus').value,
-                    po: document.getElementById('modalTaskPO').value,
+                    contractor: document.getElementById('modalTaskContractor').value,
                     budgetYear: budgetYearVal,
+                    spent: Number(document.getElementById('modalTaskSpent').value),
+                    po: document.getElementById('modalTaskPO').value,
                     evidence: document.getElementById('modalTaskEvidence').value,
                     obstacle: document.getElementById('modalTaskObstacle').value,
                     lastUpdated: timeStamp,
@@ -1517,17 +1248,15 @@
                     taskToSave.severity = document.getElementById('modalTaskSeverity').value;
                     taskToSave.status = chosenStatus;
                     taskToSave.progress = Number(document.getElementById('modalTaskProgress').value);
-                    taskToSave.estimatedCost = Number(document.getElementById('modalTaskEstimatedCost').value);
-                    taskToSave.quotationCost = Number(document.getElementById('modalTaskQuotationCost').value);
-                    taskToSave.approvedCost = Number(document.getElementById('modalTaskApprovedCost').value);
-                    taskToSave.spent = Number(document.getElementById('modalTaskSpent').value);
                     taskToSave.partsElec = document.getElementById('modalTaskPartsElectrical').value;
                     taskToSave.partsMech = document.getElementById('modalTaskPartsMechanical').value;
                     taskToSave.partsCool = document.getElementById('modalTaskPartsCooling').value;
                     taskToSave.supplier = document.getElementById('modalTaskSupplier').value;
                     taskToSave.supplyStatus = document.getElementById('modalTaskSupplyStatus').value;
-                    taskToSave.po = document.getElementById('modalTaskPO').value;
+                    taskToSave.contractor = document.getElementById('modalTaskContractor').value;
                     taskToSave.budgetYear = budgetYearVal;
+                    taskToSave.spent = Number(document.getElementById('modalTaskSpent').value);
+                    taskToSave.po = document.getElementById('modalTaskPO').value;
                     taskToSave.evidence = document.getElementById('modalTaskEvidence').value;
                     taskToSave.obstacle = document.getElementById('modalTaskObstacle').value;
                     taskToSave.lastUpdated = timeStamp;
