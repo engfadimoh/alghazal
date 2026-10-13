@@ -10,34 +10,29 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Cairo', sans-serif; }
-        .tab-active { 
-            border-bottom: 3px solid #059669; 
-            color: #059669; 
-            font-weight: 800; 
-            background: linear-gradient(to top, rgba(5, 150, 105, 0.08), transparent);
-        }
+        .tab-active { border-bottom: 3px solid #16a34a; color: #16a34a; font-weight: 700; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
-        ::-webkit-scrollbar-thumb { background: #a7f3d0; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
     </style>
 </head>
-<body class="bg-gradient-to-br from-slate-50 via-emerald-50/20 to-amber-50/20 text-slate-800 min-h-screen flex flex-col selection:bg-emerald-200">
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
     <!-- Login Modal -->
     <div id="loginOverlay" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-6 text-right border-2 border-emerald-100">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-6 text-right border border-slate-100">
             <div class="text-center space-y-2">
-                <img src="logo1.png" alt="شعار شركة ومصنع الغزال" class="h-24 mx-auto object-contain drop-shadow-md" onerror="this.style.display='none'; document.getElementById('loginAltLogo').style.display='inline-flex';">
-                <div id="loginAltLogo" class="hidden bg-emerald-600 text-amber-300 w-16 h-16 rounded-2xl items-center justify-center font-black text-2xl mx-auto shadow-lg border-2 border-amber-400">غ</div>
+                <img src="logo1.png" alt="شعار شركة ومصنع الغزال" class="h-20 mx-auto object-contain" onerror="this.style.display='none'; document.getElementById('loginAltLogo').style.display='inline-flex';">
+                <div id="loginAltLogo" class="hidden bg-emerald-600 text-white w-16 h-16 rounded-2xl items-center justify-center font-black text-2xl mx-auto shadow-lg">غ</div>
                 <h2 class="text-xl font-extrabold text-slate-900">مصنع الغزال للمنتجات الغذائية</h2>
-                <p class="text-xs text-emerald-800 font-semibold bg-emerald-50 py-1 px-3 rounded-full inline-block">منظومة متابعة النقاط الحرجة وموازنة 2027</p>
+                <p class="text-xs text-slate-500">تسجيل الدخول لمنظومة متابعة النقاط الحرجة وموازنة 2027</p>
             </div>
 
             <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4 text-xs">
                 <div>
-                    <label class="block font-semibold text-slate-700 mb-1">اختر الحساب / القسم للدخول</label>
+                    <label class="block font-semibold text-slate-700 mb-1">اختر الحساب / القسم</label>
                     <select id="loginRole" class="w-full border border-slate-300 rounded-xl p-2.5 bg-slate-50 outline-none focus:ring-2 focus:ring-emerald-500 font-bold">
                         <option value="admin">م. فادي محمود (المصمم / Super Admin)</option>
                         <option value="ceo">المدير التنفيذي (CEO)</option>
@@ -57,7 +52,7 @@
                     <p id="loginError" class="text-red-600 text-[11px] mt-1 hidden">كلمة المرور غير صحيحة، يرجى المحاولة مجدداً.</p>
                 </div>
 
-                <button type="submit" class="w-full py-3 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-2">
+                <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-md transition flex items-center justify-center gap-2">
                     <i data-lucide="log-in" class="w-4 h-4"></i> دخول للمنظومة
                 </button>
             </form>
@@ -65,37 +60,38 @@
     </div>
 
     <!-- Top Navigation Bar -->
-    <header class="bg-white/95 backdrop-blur-sm border-b border-emerald-100 sticky top-0 z-40 shadow-sm">
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
             <div class="flex items-center gap-3">
-                <img src="logo1.png" alt="شعار شركة الغزال" class="h-12 object-contain" onerror="this.style.display='none'; document.getElementById('headerAltLogo').style.display='flex';">
-                <div id="headerAltLogo" class="hidden bg-emerald-600 text-amber-300 w-10 h-10 rounded-xl items-center justify-center font-black text-xl shadow border border-amber-400">غ</div>
+                <img src="logo1.png" alt="شعار شركة الغزال" class="h-11 object-contain" onerror="this.style.display='none'; document.getElementById('headerAltLogo').style.display='flex';">
+                <div id="headerAltLogo" class="hidden bg-emerald-600 text-white w-10 h-10 rounded-lg items-center justify-center font-black text-xl shadow">غ</div>
                 <div>
                     <h1 class="font-bold text-sm sm:text-base text-slate-900 leading-tight">شركة ومصنع الغزال للمنتجات الغذائية</h1>
                     <div class="flex items-center gap-2">
                         <p class="text-[11px] text-slate-500">منظومة معالجة النقاط الحرجة وموازنة 2027</p>
-                        <span id="syncBadge" class="bg-emerald-100/80 text-emerald-800 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1 border border-emerald-200">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span> مزامنة سحابية نشطة
+                        <span id="syncBadge" class="bg-emerald-100 text-emerald-700 text-[10px] px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> مزامنة سحابية نشطة
                         </span>
                     </div>
                 </div>
             </div>
 
+            <!-- Active User Profile & Actions -->
             <div class="flex items-center gap-2 sm:gap-3">
-                <div class="flex items-center gap-2 bg-emerald-50/70 px-3 py-1.5 rounded-xl border border-emerald-200/60">
-                    <i data-lucide="shield-check" class="w-4 h-4 text-emerald-700"></i>
+                <div class="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
                     <div class="text-right">
                         <div id="userDisplayName" class="text-xs font-bold text-slate-800 leading-none">م. فادي محمود</div>
-                        <div id="userRoleBadge" class="text-[10px] text-emerald-700 font-semibold leading-none mt-0.5">Super Admin</div>
+                        <div id="userRoleBadge" class="text-[10px] text-slate-500 leading-none mt-0.5">Super Admin</div>
                     </div>
                 </div>
 
-                <button id="btnAddNewTask" onclick="openNewTaskModal()" class="bg-gradient-to-r from-emerald-600 to-teal-700 hover:from-emerald-700 hover:to-teal-800 text-white text-xs font-bold px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition shadow-md shadow-emerald-700/20">
-                    <i data-lucide="plus-circle" class="w-4 h-4 text-amber-300"></i>
-                    <span>إضافة مهمة جديدة</span>
+                <button id="btnAddNewTask" onclick="openNewTaskModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3 py-2 rounded-xl flex items-center gap-1.5 transition shadow">
+                    <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">إضافة مهمة جديدة</span>
                 </button>
 
-                <button onclick="handleLogout()" title="تسجيل الخروج" class="p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl transition border border-rose-100">
+                <button onclick="handleLogout()" title="تسجيل الخروج" class="p-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl transition">
                     <i data-lucide="log-out" class="w-4 h-4"></i>
                 </button>
             </div>
@@ -103,7 +99,7 @@
     </header>
 
     <!-- Main Navigation Tabs -->
-    <nav class="bg-white border-b border-emerald-100">
+    <nav class="bg-white border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 flex gap-6 overflow-x-auto text-sm">
             <button onclick="switchTab('dashboard')" id="tabBtn-dashboard" class="py-3 px-2 flex items-center gap-2 tab-active transition">
                 <i data-lucide="layout-dashboard" class="w-4 h-4"></i> لوحة المؤشرات الشاملة
@@ -129,13 +125,13 @@
         <!-- TAB 1: DASHBOARD -->
         <section id="view-dashboard" class="space-y-6">
 
-            <!-- 1. مؤشرات الأداء المالية والتكاليف (صفرية بانتظار الإدخال) -->
+            <!-- 1. مؤشرات الأداء المالية والتكاليف -->
             <div>
-                <h3 class="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <i data-lucide="coins" class="w-4 h-4 text-emerald-600"></i> المؤشرات المالية والمصروفات وعروض الأسعار
                 </h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="bg-white p-4 rounded-2xl border border-rose-100 shadow-sm relative overflow-hidden">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
                         <div class="flex justify-between items-start">
                             <div>
                                 <p class="text-xs text-slate-500 font-semibold">المصروف الفعلي حتى الآن</p>
@@ -143,10 +139,10 @@
                             </div>
                             <div class="p-2.5 bg-rose-50 rounded-xl text-rose-600"><i data-lucide="credit-card" class="w-5 h-5"></i></div>
                         </div>
-                        <p class="text-[11px] text-slate-400 mt-2">بانتظار توثيق سندات الصرف</p>
+                        <p class="text-[11px] text-slate-400 mt-2">مبالغ مسددة ومصروفة فعلياً</p>
                     </div>
 
-                    <div class="bg-white p-4 rounded-2xl border border-blue-100 shadow-sm relative overflow-hidden">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
                         <div class="flex justify-between items-start">
                             <div>
                                 <p class="text-xs text-slate-500 font-semibold">قيمة عروض الأسعار المسجلة</p>
@@ -154,10 +150,10 @@
                             </div>
                             <div class="p-2.5 bg-blue-50 rounded-xl text-blue-600"><i data-lucide="file-spreadsheet" class="w-5 h-5"></i></div>
                         </div>
-                        <p class="text-[11px] text-slate-400 mt-2">بانتظار استدراج واعتماد العروض</p>
+                        <p class="text-[11px] text-slate-400 mt-2">عروض واردة قيد المقارنة أو التعميد</p>
                     </div>
 
-                    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm relative overflow-hidden">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
                         <div class="flex justify-between items-start">
                             <div>
                                 <p class="text-xs text-slate-500 font-semibold">التكلفة الإجمالية المتوقعة</p>
@@ -165,16 +161,16 @@
                             </div>
                             <div class="p-2.5 bg-slate-100 rounded-xl text-slate-700"><i data-lucide="calculator" class="w-5 h-5"></i></div>
                         </div>
-                        <p class="text-[11px] text-slate-400 mt-2">تحدد بعد الحصر الفعلي للمواقع</p>
+                        <p class="text-[11px] text-slate-400 mt-2">التقدير المالي الأولي للبنود</p>
                     </div>
 
-                    <div class="bg-white p-4 rounded-2xl border border-emerald-100 shadow-sm relative overflow-hidden">
+                    <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
                         <div class="flex justify-between items-start">
                             <div>
                                 <p class="text-xs text-slate-500 font-semibold">مخصصات موازنة 2027</p>
-                                <h3 id="statBudget2027Value" class="text-2xl font-black text-emerald-800 mt-1">0 ₪</h3>
+                                <h3 id="statBudget2027Value" class="text-2xl font-black text-cyan-700 mt-1">0 ₪</h3>
                             </div>
-                            <div class="p-2.5 bg-emerald-50 rounded-xl text-emerald-700"><i data-lucide="calendar-clock" class="w-5 h-5"></i></div>
+                            <div class="p-2.5 bg-cyan-50 rounded-xl text-cyan-700"><i data-lucide="calendar-clock" class="w-5 h-5"></i></div>
                         </div>
                         <p class="text-[11px] text-slate-400 mt-2"><span id="statBudget2027Count">0</span> بنود مرحلة كاستثمار رأسمالي</p>
                     </div>
@@ -183,37 +179,37 @@
 
             <!-- 2. مؤشرات طلبات الشراء ومسارها -->
             <div>
-                <h3 class="text-xs font-bold text-emerald-800 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                     <i data-lucide="shopping-cart" class="w-4 h-4 text-emerald-600"></i> مؤشرات طلبات الشراء وأين وصلت في الإجراءات
                 </h3>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                    <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-sm">
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
                         <p class="text-[11px] text-slate-500 font-medium">إجمالي طلبات الشراء</p>
                         <h4 id="statPRTotal" class="text-xl font-bold text-slate-900 mt-0.5">0</h4>
                         <span class="text-[10px] text-slate-400">تتطلب مشتريات</span>
                     </div>
-                    <div class="bg-white p-3.5 rounded-2xl border border-amber-100 shadow-sm">
-                        <p class="text-[11px] text-amber-700 font-medium">قيد استدراج العروض</p>
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
+                        <p class="text-[11px] text-amber-600 font-medium">قيد استدراج العروض</p>
                         <h4 id="statPRInQuotation" class="text-xl font-bold text-amber-600 mt-0.5">0</h4>
                         <span class="text-[10px] text-slate-400">مقارنة فنية ومالية</span>
                     </div>
-                    <div class="bg-white p-3.5 rounded-2xl border border-indigo-100 shadow-sm">
-                        <p class="text-[11px] text-indigo-700 font-medium">تم اعتماد المورد</p>
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
+                        <p class="text-[11px] text-indigo-600 font-medium">تم اعتماد المورد</p>
                         <h4 id="statPRAwarded" class="text-xl font-bold text-indigo-600 mt-0.5">0</h4>
                         <span class="text-[10px] text-slate-400">تم إصدار التعميد</span>
                     </div>
-                    <div class="bg-white p-3.5 rounded-2xl border border-blue-100 shadow-sm">
-                        <p class="text-[11px] text-blue-700 font-medium">بانتظار الشحن</p>
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
+                        <p class="text-[11px] text-blue-600 font-medium">بانتظار الشحن</p>
                         <h4 id="statPRShipping" class="text-xl font-bold text-blue-600 mt-0.5">0</h4>
                         <span class="text-[10px] text-slate-400">متابعة التوريد</span>
                     </div>
-                    <div class="bg-white p-3.5 rounded-2xl border border-emerald-100 shadow-sm">
-                        <p class="text-[11px] text-emerald-700 font-medium">تم التوريد للمصنع</p>
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
+                        <p class="text-[11px] text-emerald-600 font-medium">تم التوريد للمصنع</p>
                         <h4 id="statPRDelivered" class="text-xl font-bold text-emerald-600 mt-0.5">0</h4>
                         <span class="text-[10px] text-slate-400">جاهز للتركيب</span>
                     </div>
-                    <div class="bg-white p-3.5 rounded-2xl border border-teal-100 shadow-sm">
-                        <p class="text-[11px] text-teal-700 font-medium">عمل داخلي / تنظيم</p>
+                    <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
+                        <p class="text-[11px] text-teal-600 font-medium">عمل داخلي / تنظيم</p>
                         <h4 id="statInternalOnly" class="text-xl font-bold text-teal-600 mt-0.5">0</h4>
                         <span class="text-[10px] text-slate-400">بدون طلب شراء</span>
                     </div>
@@ -222,28 +218,28 @@
 
             <!-- 3. مؤشرات حالة البنود العامة -->
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm">
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
                     <p class="text-xs text-slate-500 font-medium">إجمالي البنود الحرجة</p>
                     <h3 id="statTotalTasks" class="text-2xl font-bold text-slate-800 mt-1">34</h3>
                     <p class="text-[11px] text-slate-400 mt-1">خطة مدير المصنع</p>
                 </div>
-                <div class="bg-white p-4 rounded-2xl border border-amber-100 shadow-sm">
-                    <p class="text-xs text-amber-700 font-medium">تم احتواء الخطر</p>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <p class="text-xs text-amber-600 font-medium">تم احتواء الخطر</p>
                     <h3 id="statContainedTasks" class="text-2xl font-bold text-amber-600 mt-1">0</h3>
                     <p class="text-[11px] text-slate-400 mt-1">إجراء عاجل</p>
                 </div>
-                <div class="bg-white p-4 rounded-2xl border border-blue-100 shadow-sm">
-                    <p class="text-xs text-blue-700 font-medium">جارٍ التنفيذ الميداني</p>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <p class="text-xs text-blue-600 font-medium">جارٍ التنفيذ الميداني</p>
                     <h3 id="statInProgressTasks" class="text-2xl font-bold text-blue-600 mt-1">0</h3>
                     <p class="text-[11px] text-slate-400 mt-1">أعمال ميدانية</p>
                 </div>
-                <div class="bg-white p-4 rounded-2xl border border-purple-100 shadow-sm">
-                    <p class="text-xs text-purple-700 font-medium">بانتظار تحقق الجودة</p>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <p class="text-xs text-purple-600 font-medium">بانتظار تحقق الجودة</p>
                     <h3 id="statPendingQATasks" class="text-2xl font-bold text-purple-600 mt-1">0</h3>
                     <p class="text-[11px] text-slate-400 mt-1">فحص ومعايير قبول</p>
                 </div>
-                <div class="bg-white p-4 rounded-2xl border border-emerald-100 shadow-sm">
-                    <p class="text-xs text-emerald-700 font-medium">مغلقة بنجاح</p>
+                <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                    <p class="text-xs text-emerald-600 font-medium">مغلقة بنجاح</p>
                     <h3 id="statClosedTasks" class="text-2xl font-bold text-emerald-600 mt-1">0</h3>
                     <p class="text-[11px] text-slate-400 mt-1">محققة بالدليل</p>
                 </div>
@@ -251,7 +247,7 @@
 
             <!-- Charts Section -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-5 rounded-2xl border border-emerald-100 shadow-sm">
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
                     <h4 class="font-bold text-slate-800 text-sm mb-4 flex items-center gap-2">
                         <i data-lucide="bar-chart-4" class="w-4 h-4 text-emerald-600"></i> المقارنة المالية: المتوقع مقابل العروض مقابل المصروف
                     </h4>
@@ -259,7 +255,7 @@
                         <canvas id="financeComparisonChart"></canvas>
                     </div>
                 </div>
-                <div class="bg-white p-5 rounded-2xl border border-emerald-100 shadow-sm">
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
                     <h4 class="font-bold text-slate-800 text-sm mb-4 flex items-center gap-2">
                         <i data-lucide="pie-chart" class="w-4 h-4 text-emerald-600"></i> توزيع المهام حسب حالة المتابعة
                     </h4>
@@ -272,24 +268,24 @@
 
         <!-- TAB 2: TASKS REGISTRY -->
         <section id="view-tasks" class="hidden space-y-4">
-            <div class="bg-white p-4 rounded-2xl border border-emerald-100 shadow-sm flex flex-wrap gap-3 items-center justify-between">
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap gap-3 items-center justify-between">
                 <div class="flex flex-wrap items-center gap-2 text-xs">
-                    <input type="text" id="taskSearchInput" oninput="renderTasksTable()" placeholder="ابحث باسم البند، المورد، القطع، الإجراء..." class="border border-slate-300 rounded-xl px-3 py-1.5 w-60 focus:ring-2 focus:ring-emerald-500 outline-none">
-                    <select id="filterDept" onchange="renderTasksTable()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-white outline-none">
+                    <input type="text" id="taskSearchInput" oninput="renderTasksTable()" placeholder="ابحث باسم البند، المورد، القطع، الإجراء..." class="border border-slate-300 rounded-lg px-3 py-1.5 w-60 focus:ring-1 focus:ring-emerald-500 outline-none">
+                    <select id="filterDept" onchange="renderTasksTable()" class="border border-slate-300 rounded-lg px-2.5 py-1.5 bg-white outline-none">
                         <option value="all">كافة الأقسام</option>
                         <option value="الصيانة">الصيانة</option>
                         <option value="الإنتاج">الإنتاج</option>
                         <option value="المستودعات">المستودعات</option>
                         <option value="الجودة">الجودة</option>
                     </select>
-                    <select id="filterExecutionType" onchange="renderTasksTable()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-white outline-none font-semibold">
+                    <select id="filterExecutionType" onchange="renderTasksTable()" class="border border-slate-300 rounded-lg px-2.5 py-1.5 bg-white outline-none font-semibold">
                         <option value="all">كافة أنواع التنفيذ</option>
                         <option value="تنظيم إداري وتوثيق أوراق">تنظيم إداري وتوثيق أوراق</option>
                         <option value="عمالة وتنظيم تشغيلي داخلي">عمالة وتنظيم تشغيلي داخلي</option>
                         <option value="صيانة وتنفيذ فني داخلي">صيانة وتنفيذ فني داخلي</option>
                         <option value="توريد وتركيب خارجي / مقاول">توريد وتركيب خارجي / مقاول</option>
                     </select>
-                    <select id="filterStatus" onchange="renderTasksTable()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-white outline-none">
+                    <select id="filterStatus" onchange="renderTasksTable()" class="border border-slate-300 rounded-lg px-2.5 py-1.5 bg-white outline-none">
                         <option value="all">كافة الحالات</option>
                         <option value="مفتوح">مفتوح</option>
                         <option value="تم احتواء الخطر">تم احتواء الخطر</option>
@@ -298,7 +294,7 @@
                         <option value="عالقة لموازنة 2027">عالقة لموازنة 2027</option>
                         <option value="مغلق">مغلق</option>
                     </select>
-                    <select id="filterBudgetYear" onchange="renderTasksTable()" class="border border-slate-300 rounded-xl px-2.5 py-1.5 bg-white outline-none">
+                    <select id="filterBudgetYear" onchange="renderTasksTable()" class="border border-slate-300 rounded-lg px-2.5 py-1.5 bg-white outline-none">
                         <option value="all">كافة الموازنات</option>
                         <option value="2026">تشغيلي فوري (2026)</option>
                         <option value="2027">ضمن موازنة 2027</option>
@@ -306,14 +302,14 @@
                 </div>
                 <div class="text-xs text-slate-500">
                     العدد المعروض: <span id="tasksCountDisplay" class="font-bold text-slate-800">34</span> بنداً
-                    <span class="text-emerald-700 mr-2 font-bold">(انقر على أي سطر لعرض كامل التفاصيل أو زر التعديل)</span>
+                    <span class="text-emerald-600 mr-2 font-medium">(انقر على أي سطر لعرض كامل التفاصيل)</span>
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl border border-emerald-100 shadow-sm overflow-hidden">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-right text-xs">
-                        <thead class="bg-emerald-50/70 text-emerald-950 font-bold border-b border-emerald-100">
+                        <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
                             <tr>
                                 <th class="p-3 w-12 text-center">#</th>
                                 <th class="p-3">البند والنقطة الحرجة</th>
@@ -333,9 +329,9 @@
             </div>
         </section>
 
-        <!-- TAB 3: PROCUREMENT DEPARTMENT -->
+        <!-- TAB 3: PROCUREMENT DEPARTMENT (قسم المشتريات ومسار الطلبات) -->
         <section id="view-procurement" class="hidden space-y-4">
-            <div class="bg-white p-5 rounded-2xl border border-emerald-100 shadow-sm flex flex-col md:flex-row justify-between md:items-center gap-4">
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between md:items-center gap-4">
                 <div>
                     <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
                         <i data-lucide="shopping-bag" class="w-5 h-5 text-emerald-600"></i> منظومة قسم المشتريات: تتبع طلبات الشراء ومسار التوريد
@@ -343,16 +339,16 @@
                     <p class="text-xs text-slate-500 mt-1">متابعة طلبات الشراء (PR)، عروض الأسعار المسجلة، أسماء الموردين، والقطع المطلوبة</p>
                 </div>
                 <div class="flex items-center gap-3">
-                    <div class="bg-blue-50 text-blue-800 px-3 py-2 rounded-xl border border-blue-200 text-xs font-semibold">
+                    <div class="bg-blue-50 text-blue-800 px-3 py-2 rounded-lg border border-blue-200 text-xs font-semibold">
                         إجمالي عروض الأسعار: <span id="procurementQuotesTotal">0</span> ₪
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl border border-emerald-100 shadow-sm overflow-hidden">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-right text-xs">
-                        <thead class="bg-emerald-50/70 text-emerald-950 font-bold border-b border-emerald-100">
+                        <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
                             <tr>
                                 <th class="p-3">رقم البند</th>
                                 <th class="p-3">المهمة والاحتياج</th>
@@ -372,9 +368,9 @@
             </div>
         </section>
 
-        <!-- TAB 4: FINANCE DEPARTMENT -->
+        <!-- TAB 4: FINANCE DEPARTMENT (قسم المالية والمصروفات وموازنة 2027) -->
         <section id="view-finance" class="hidden space-y-4">
-            <div class="bg-white p-5 rounded-2xl border border-emerald-100 shadow-sm flex flex-col md:flex-row justify-between md:items-center gap-4">
+            <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between md:items-center gap-4">
                 <div>
                     <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
                         <i data-lucide="wallet" class="w-5 h-5 text-rose-600"></i> منظومة قسم المالية: التدقيق المالي والمصروفات وموازنة 2027
@@ -382,19 +378,19 @@
                     <p class="text-xs text-slate-500 mt-1">وضوح تام في المصاريف المدفوعة، التكاليف المتوقعة، وفروقات عروض الأسعار</p>
                 </div>
                 <div class="flex flex-wrap items-center gap-3">
-                    <div class="bg-rose-50 text-rose-800 px-3.5 py-2 rounded-xl border border-rose-200 text-xs font-bold">
+                    <div class="bg-rose-50 text-rose-800 px-3.5 py-2 rounded-lg border border-rose-200 text-xs font-bold">
                         المدفوع فعلياً: <span id="financeSpentTotal">0</span> ₪
                     </div>
-                    <div class="bg-slate-100 text-slate-800 px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-bold">
+                    <div class="bg-slate-100 text-slate-800 px-3.5 py-2 rounded-lg border border-slate-300 text-xs font-bold">
                         التكلفة المتوقعة: <span id="financeEstimatedTotal">0</span> ₪
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl border border-emerald-100 shadow-sm overflow-hidden">
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-right text-xs">
-                        <thead class="bg-emerald-50/70 text-emerald-950 font-bold border-b border-emerald-100">
+                        <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
                             <tr>
                                 <th class="p-3">رقم البند</th>
                                 <th class="p-3">المهمة / المشروع</th>
@@ -417,13 +413,13 @@
 
         <!-- TAB 5: WEEKLY REPORT -->
         <section id="view-weekly-report" class="hidden space-y-6">
-            <div class="bg-white p-6 sm:p-8 rounded-3xl border-2 border-emerald-100 shadow-sm max-w-4xl mx-auto space-y-6 print:border-none print:shadow-none">
+            <div class="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm max-w-4xl mx-auto space-y-6 print:border-none print:shadow-none">
                 <div class="flex justify-between items-center border-b pb-4">
                     <div class="flex items-center gap-3">
-                        <img src="logo1.png" alt="شعار الغزال" class="h-16 object-contain" onerror="this.style.display='none';">
+                        <img src="logo1.png" alt="شعار الغزال" class="h-14 object-contain" onerror="this.style.display='none';">
                         <div>
-                            <h2 class="text-base sm:text-lg font-black text-slate-900">تقرير المتابعة الأسبوعي - معالجة النقاط الحرجة</h2>
-                            <p class="text-xs text-emerald-800 font-semibold">شركة ومصنع الغزال للمنتجات الغذائية | خطة مدير المصنع وموازنة 2027</p>
+                            <h2 class="text-base sm:text-lg font-extrabold text-slate-900">تقرير المتابعة الأسبوعي - معالجة النقاط الحرجة</h2>
+                            <p class="text-xs text-slate-500">شركة ومصنع الغزال للمنتجات الغذائية | خطة مدير المصنع وموازنة 2027</p>
                         </div>
                     </div>
                     <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white text-xs px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition">
@@ -431,35 +427,35 @@
                     </button>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 bg-emerald-50/40 p-4 rounded-2xl border border-emerald-100 text-center">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 bg-slate-50 p-4 rounded-xl border border-slate-200 text-center">
                     <div>
                         <span class="text-[11px] text-slate-500 block">إجمالي المصروف الفعلي</span>
-                        <strong id="repSpentVal" class="text-rose-600 font-black text-lg">0 ₪</strong>
+                        <strong id="repSpentVal" class="text-rose-600 font-extrabold text-lg">0 ₪</strong>
                     </div>
                     <div>
                         <span class="text-[11px] text-slate-500 block">إجمالي عروض الأسعار</span>
-                        <strong id="repQuotesVal" class="text-blue-600 font-black text-lg">0 ₪</strong>
+                        <strong id="repQuotesVal" class="text-blue-600 font-extrabold text-lg">0 ₪</strong>
                     </div>
                     <div>
                         <span class="text-[11px] text-slate-500 block">طلبات الشراء النشطة</span>
-                        <strong id="repPRCount" class="text-slate-800 font-black text-lg">0 طلب</strong>
+                        <strong id="repPRCount" class="text-slate-800 font-extrabold text-lg">0 طلب</strong>
                     </div>
                     <div>
                         <span class="text-[11px] text-slate-500 block">مشاريع موازنة 2027</span>
-                        <strong id="reportBudgetCount" class="text-emerald-800 font-black text-lg">0 بند</strong>
+                        <strong id="reportBudgetCount" class="text-cyan-700 font-extrabold text-lg">0 بند</strong>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-3 text-center">
-                    <div class="bg-white p-3 rounded-2xl border border-slate-200">
+                    <div class="bg-white p-3 rounded-xl border border-slate-200">
                         <p class="text-[11px] text-slate-500 font-semibold">نسبة الإغلاق الكلية</p>
                         <h4 id="reportCloseRate" class="text-lg font-extrabold text-emerald-600 mt-1">0%</h4>
                     </div>
-                    <div class="bg-white p-3 rounded-2xl border border-slate-200">
+                    <div class="bg-white p-3 rounded-xl border border-slate-200">
                         <p class="text-[11px] text-slate-500 font-semibold">بنود تنظيم وعمالة داخلية</p>
                         <h4 id="reportInternalCount" class="text-lg font-extrabold text-teal-600 mt-1">0</h4>
                     </div>
-                    <div class="bg-white p-3 rounded-2xl border border-slate-200">
+                    <div class="bg-white p-3 rounded-xl border border-slate-200">
                         <p class="text-[11px] text-slate-500 font-semibold">تم احتواء الخطر</p>
                         <h4 id="reportContainedCount" class="text-lg font-extrabold text-amber-600 mt-1">0</h4>
                     </div>
@@ -469,9 +465,9 @@
                     <h4 class="font-bold text-sm text-slate-800 flex items-center gap-2">
                         <i data-lucide="history" class="w-4 h-4 text-emerald-600"></i> سجل التعديلات ونسب الإنجاز الأخيرة (Audit Log)
                     </h4>
-                    <div class="border border-slate-200 rounded-2xl overflow-hidden">
+                    <div class="border border-slate-200 rounded-xl overflow-hidden">
                         <table class="w-full text-right text-xs">
-                            <thead class="bg-emerald-50/60 text-slate-800 font-bold">
+                            <thead class="bg-slate-100 text-slate-700 font-bold">
                                 <tr>
                                     <th class="p-2.5">رقم البند</th>
                                     <th class="p-2.5">اسم المهمة</th>
@@ -493,7 +489,7 @@
                     <h4 class="font-bold text-sm text-slate-800 flex items-center gap-2">
                         <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-600"></i> بنود تتطلب قرارات عاجلة وتصعيداً من مدير المصنع
                     </h4>
-                    <div id="escalationList" class="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 text-xs text-amber-900 space-y-2">
+                    <div id="escalationList" class="bg-amber-50 border border-amber-200 rounded-xl p-3.5 text-xs text-amber-900 space-y-2">
                         <!-- Auto-filled -->
                     </div>
                 </div>
@@ -509,11 +505,11 @@
 
     <!-- Modal 1: عرض كامل تفاصيل المهمة (View Task Details Modal) -->
     <div id="viewDetailsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-7 space-y-5 text-right border-2 border-emerald-100">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-7 space-y-5 text-right border border-slate-200">
             <div class="flex justify-between items-start border-b pb-4">
                 <div>
                     <div class="flex items-center gap-2 mb-1">
-                        <span id="viewTaskNumber" class="bg-emerald-900 text-white text-xs px-2.5 py-0.5 rounded-lg font-bold">بند #</span>
+                        <span id="viewTaskNumber" class="bg-slate-800 text-white text-xs px-2.5 py-0.5 rounded-lg font-bold">بند #</span>
                         <span id="viewTaskSeverityBadge" class="text-xs px-2.5 py-0.5 rounded-lg font-bold"></span>
                         <span id="viewTaskExecutionBadge" class="text-xs px-2.5 py-0.5 rounded-lg font-bold"></span>
                         <span id="viewTaskDeptBadge" class="bg-slate-100 text-slate-700 text-xs px-2.5 py-0.5 rounded-lg font-bold"></span>
@@ -525,7 +521,7 @@
                 </button>
             </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-3.5 rounded-2xl border border-slate-200 text-xs">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs">
                 <div>
                     <span class="text-slate-400 block text-[10px]">نسبة الإنجاز:</span>
                     <span id="viewTaskProgress" class="font-extrabold text-emerald-600 text-base"></span>
@@ -544,7 +540,8 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-emerald-50/40 p-3 rounded-2xl text-xs border border-emerald-100">
+            <!-- ملخص التكاليف المالية للبند -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-100/70 p-3 rounded-xl text-xs border border-slate-200">
                 <div>
                     <span class="text-slate-500 block text-[10px]">التكلفة التقديرية:</span>
                     <span id="viewTaskEstimated" class="font-bold text-slate-800">0 ₪</span>
@@ -568,41 +565,41 @@
                     <h4 class="font-bold text-slate-700 mb-1 flex items-center gap-1.5">
                         <i data-lucide="alert-circle" class="w-4 h-4 text-amber-600"></i> المشكلة المرصودة في خطة مدير المصنع:
                     </h4>
-                    <p id="viewTaskProblem" class="bg-amber-50/60 p-3 rounded-2xl border border-amber-200/60 text-slate-800 leading-relaxed"></p>
+                    <p id="viewTaskProblem" class="bg-amber-50/60 p-3 rounded-xl border border-amber-200/60 text-slate-800 leading-relaxed"></p>
                 </div>
 
-                <div class="bg-emerald-50/50 p-3.5 rounded-2xl border border-emerald-200/60 space-y-2">
+                <div class="bg-emerald-50/50 p-3.5 rounded-xl border border-emerald-200/60 space-y-2">
                     <h4 class="font-bold text-emerald-900 flex items-center gap-1.5">
                         <i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i> الإجراءات المتخذة ومرحلة الوصول ميدانياً:
                     </h4>
                     <p id="viewTaskActionSteps" class="text-slate-800 leading-relaxed font-medium"></p>
                 </div>
 
-                <div id="viewInternalContainer" class="bg-teal-50/70 p-3.5 rounded-2xl border border-teal-200 space-y-1.5">
+                <div id="viewInternalContainer" class="bg-teal-50/70 p-3.5 rounded-xl border border-teal-200 space-y-1.5">
                     <h4 class="font-bold text-teal-900 flex items-center gap-1.5">
                         <i data-lucide="file-check-2" class="w-4 h-4 text-teal-600"></i> متطلبات العمل الداخلي (ترتيب أوراق ونماذج / عمالة وتنظيم):
                     </h4>
                     <p id="viewTaskInternalNotes" class="text-teal-950 leading-relaxed font-medium"></p>
                 </div>
 
-                <div id="viewPartsContainer" class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
+                <div id="viewPartsContainer" class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3">
                     <h4 class="font-bold text-slate-900 flex items-center gap-1.5 text-xs">
                         <i data-lucide="wrench" class="w-4 h-4 text-emerald-600"></i> القطع والمستلزمات اللازمة للتنفيذ والتركيب (إن وجدت):
                     </h4>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-                        <div class="bg-amber-50/70 p-3 rounded-xl border border-amber-200">
+                        <div class="bg-amber-50/70 p-3 rounded-lg border border-amber-200">
                             <span class="font-bold text-amber-900 block mb-1 flex items-center gap-1">
                                 <i data-lucide="zap" class="w-3.5 h-3.5 text-amber-600"></i> قطع كهرباء وتحكم:
                             </span>
                             <p id="viewTaskPartsElectrical" class="text-slate-700 text-[11px]"></p>
                         </div>
-                        <div class="bg-blue-50/70 p-3 rounded-xl border border-blue-200">
+                        <div class="bg-blue-50/70 p-3 rounded-lg border border-blue-200">
                             <span class="font-bold text-blue-900 block mb-1 flex items-center gap-1">
                                 <i data-lucide="settings" class="w-3.5 h-3.5 text-blue-600"></i> قطع ميكانيك وهيدروليك:
                             </span>
                             <p id="viewTaskPartsMechanical" class="text-slate-700 text-[11px]"></p>
                         </div>
-                        <div class="bg-cyan-50/70 p-3 rounded-xl border border-cyan-200">
+                        <div class="bg-cyan-50/70 p-3 rounded-lg border border-cyan-200">
                             <span class="font-bold text-cyan-900 block mb-1 flex items-center gap-1">
                                 <i data-lucide="snowflake" class="w-3.5 h-3.5 text-cyan-600"></i> قطع ومعدات تبريد:
                             </span>
@@ -612,7 +609,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 space-y-1.5">
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1.5">
                         <h4 class="font-bold text-slate-800 flex items-center gap-1.5">
                             <i data-lucide="truck" class="w-4 h-4 text-blue-600"></i> المشتريات والتوريد:
                         </h4>
@@ -621,7 +618,7 @@
                         <div><strong class="text-slate-500">وضع التوريد:</strong> <span id="viewTaskSupplyStatusDetailed"></span></div>
                     </div>
 
-                    <div class="bg-purple-50/50 p-3.5 rounded-2xl border border-purple-200/60 space-y-1.5">
+                    <div class="bg-purple-50/50 p-3.5 rounded-xl border border-purple-200/60 space-y-1.5">
                         <h4 class="font-bold text-purple-900 flex items-center gap-1.5">
                             <i data-lucide="check-circle" class="w-4 h-4 text-purple-600"></i> دليل الجودة والعوائق:
                         </h4>
@@ -647,7 +644,7 @@
 
     <!-- Modal 2: تعديل وإضافة المهمة (Edit / Add Task Modal) -->
     <div id="taskModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl shadow-xl max-w-3xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-7 space-y-4 text-right border-2 border-emerald-100">
+        <div class="bg-white rounded-2xl shadow-xl max-w-3xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-7 space-y-4 text-right">
             <div class="flex justify-between items-center border-b pb-3">
                 <h3 id="modalTitle" class="font-bold text-base text-slate-800">تعديل بيانات المهمة</h3>
                 <button onclick="closeTaskModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -658,11 +655,11 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">اسم المهمة / البند</label>
-                        <input type="text" id="modalTaskTitle" required class="w-full border rounded-xl p-2.5 focus:ring-2 focus:ring-emerald-500 outline-none">
+                        <input type="text" id="modalTaskTitle" required class="w-full border rounded-xl p-2.5 focus:ring-1 focus:ring-emerald-500 outline-none">
                     </div>
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">القسم القائد</label>
-                        <select id="modalTaskDept" class="w-full border rounded-xl p-2.5 outline-none font-bold">
+                        <select id="modalTaskDept" class="w-full border rounded-xl p-2.5 outline-none">
                             <option value="الصيانة">الصيانة</option>
                             <option value="الإنتاج">الإنتاج</option>
                             <option value="المستودعات">المستودعات</option>
@@ -671,9 +668,9 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-50 p-3 rounded-2xl border border-slate-200">
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
                     <label class="block font-bold text-slate-800 mb-1">طبيعة التنفيذ ومسار العمل</label>
-                    <select id="modalTaskExecutionType" onchange="toggleExecutionFields(this.value)" class="w-full border border-slate-300 rounded-xl p-2.5 outline-none font-bold bg-white focus:ring-2 focus:ring-emerald-500">
+                    <select id="modalTaskExecutionType" onchange="toggleExecutionFields(this.value)" class="w-full border border-slate-300 rounded-xl p-2.5 outline-none font-bold bg-white focus:ring-1 focus:ring-emerald-500">
                         <option value="تنظيم إداري وتوثيق أوراق">📄 تنظيم إداري وتوثيق أوراق ونماذج (جودة / إنتاج - بدون تكلفة شراء)</option>
                         <option value="عمالة وتنظيم تشغيلي داخلي">👥 عمالة وتنظيم تشغيلي داخلي (فرز، ترتيب، تنظيف، فصل مسارات - بدون شراء)</option>
                         <option value="صيانة وتنفيذ فني داخلي">🔧 صيانة وتنفيذ فني داخلي (ورشة المصنع بأيدي الفنيين)</option>
@@ -681,19 +678,19 @@
                     </select>
                 </div>
 
-                <div id="internalWorkSection" class="bg-teal-50/60 p-3 rounded-2xl border border-teal-200">
+                <div id="internalWorkSection" class="bg-teal-50/60 p-3 rounded-xl border border-teal-200">
                     <label class="block font-bold text-teal-900 mb-1">تفاصيل العمل الداخلي (الأوراق، النماذج، خطة العمالة والتنظيم)</label>
                     <textarea id="modalTaskInternalNotes" rows="2" placeholder="اكتب النماذج المعتمدة، السجلات، الإجراءات الورقية، أو العمالة الداخلية المخصصة..." class="w-full border border-teal-300 rounded-xl p-2 outline-none bg-white"></textarea>
                 </div>
 
                 <div>
                     <label class="block font-semibold text-slate-700 mb-1">المشكلة المرصودة ومواصفاتها</label>
-                    <textarea id="modalTaskProblem" rows="2" class="w-full border rounded-xl p-2.5 focus:ring-2 focus:ring-emerald-500 outline-none"></textarea>
+                    <textarea id="modalTaskProblem" rows="2" class="w-full border rounded-xl p-2.5 focus:ring-1 focus:ring-emerald-500 outline-none"></textarea>
                 </div>
 
-                <div class="bg-emerald-50/40 p-3 rounded-2xl border border-emerald-200/60">
+                <div class="bg-emerald-50/40 p-3 rounded-xl border border-emerald-200/60">
                     <label class="block font-bold text-emerald-900 mb-1">الإجراءات المتخذة ميدانياً وأين وصلت المهمة بالتفصيل</label>
-                    <textarea id="modalTaskActionSteps" rows="2" placeholder="اكتب بالتفصيل: أين وصل الإجراء؟ ما الذي تم تنفيذه حتى الآن؟ وما هي الخطوة القادمة؟" class="w-full border border-emerald-300 rounded-xl p-2.5 focus:ring-2 focus:ring-emerald-500 outline-none bg-white"></textarea>
+                    <textarea id="modalTaskActionSteps" rows="2" placeholder="اكتب بالتفصيل: أين وصل الإجراء؟ ما الذي تم تنفيذه حتى الآن؟ وما هي الخطوة القادمة؟" class="w-full border border-emerald-300 rounded-xl p-2.5 focus:ring-1 focus:ring-emerald-500 outline-none bg-white"></textarea>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
@@ -722,8 +719,8 @@
                     </div>
                 </div>
 
-                <!-- قسم التفاصيل المالية -->
-                <div class="p-3.5 bg-slate-100 rounded-2xl border border-slate-200 space-y-3">
+                <!-- قسم التفاصيل المالية (Finance & Costs) -->
+                <div class="p-3.5 bg-slate-100 rounded-xl border border-slate-200 space-y-3">
                     <h4 class="font-bold text-slate-800 text-[11px] flex items-center gap-1.5">
                         <i data-lucide="calculator" class="w-3.5 h-3.5 text-emerald-600"></i> البيانات المالية والتكاليف (بالشيقل ₪):
                     </h4>
@@ -748,7 +745,7 @@
                 </div>
 
                 <!-- قسم القطع والمشتريات -->
-                <div id="purchasingSection" class="p-3.5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                <div id="purchasingSection" class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
                     <h4 class="font-bold text-slate-800 text-[11px] flex items-center gap-1.5">
                         <i data-lucide="wrench" class="w-3.5 h-3.5 text-emerald-600"></i> تحديد القطع اللازمة للتركيب والتنفيذ بالاسم (إن وجدت):
                     </h4>
@@ -810,7 +807,7 @@
 
                 <div class="flex justify-end gap-2 pt-3 border-t">
                     <button type="button" onclick="closeTaskModal()" class="px-4 py-2 border rounded-xl hover:bg-slate-100 transition">إلغاء</button>
-                    <button type="submit" class="px-5 py-2 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white rounded-xl font-bold transition shadow-md shadow-emerald-700/20">حفظ التغييرات سحابياً</button>
+                    <button type="submit" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition">حفظ التغييرات سحابياً</button>
                 </div>
             </form>
         </div>
@@ -821,17 +818,16 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getFirestore, collection, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-        // إتاحة كافة الصلاحيات والإضافة والتعديل لجميع الحسابات
         const ACCOUNTS = {
-            admin: { name: "م. فادي محمود", roleName: "Super Admin", pass: "fadi@2026" },
-            ceo: { name: "المدير التنفيذي", roleName: "CEO", pass: "ceo@ghazal" },
-            plant_manager: { name: "مدير المصنع", roleName: "Plant Manager", pass: "plant@ghazal" },
-            qa: { name: "قسم الجودة", roleName: "Quality Assurance", pass: "qa@ghazal" },
-            maintenance: { name: "قسم الصيانة", roleName: "Maintenance Dept", pass: "maint@ghazal" },
-            production: { name: "قسم الإنتاج", roleName: "Production Dept", pass: "prod@ghazal" },
-            warehouse: { name: "قسم المستودعات", roleName: "Warehouse Dept", pass: "wh@ghazal" },
-            procurement: { name: "قسم المشتريات", roleName: "Procurement Dept", pass: "proc@ghazal" },
-            finance: { name: "قسم المالية", roleName: "Finance Dept", pass: "fin@ghazal" }
+            admin: { name: "م. فادي محمود", roleName: "Super Admin", pass: "fadi@2026", canEditAll: true, canClose: true, canAdd: true },
+            ceo: { name: "المدير التنفيذي", roleName: "CEO", pass: "ceo@ghazal", canEditAll: false, canClose: true, canAdd: false },
+            plant_manager: { name: "مدير المصنع", roleName: "Plant Manager", pass: "plant@ghazal", canEditAll: true, canClose: true, canAdd: true },
+            qa: { name: "قسم الجودة", roleName: "Quality Assurance", pass: "qa@ghazal", allowedDept: "الجودة", canClose: true, canAdd: true },
+            maintenance: { name: "قسم الصيانة", roleName: "Maintenance Dept", pass: "maint@ghazal", allowedDept: "الصيانة", canClose: false, canAdd: false },
+            production: { name: "قسم الإنتاج", roleName: "Production Dept", pass: "prod@ghazal", allowedDept: "الإنتاج", canClose: false, canAdd: false },
+            warehouse: { name: "قسم المستودعات", roleName: "Warehouse Dept", pass: "wh@ghazal", allowedDept: "المستودعات", canClose: false, canAdd: false },
+            procurement: { name: "قسم المشتريات", roleName: "Procurement Dept", pass: "proc@ghazal", canProcurement: true, canClose: false, canAdd: false },
+            finance: { name: "قسم المالية", roleName: "Finance Dept", pass: "fin@ghazal", canFinance: true, canClose: false, canAdd: false }
         };
 
         let currentUserKey = localStorage.getItem('alghazal_logged_user') || null;
@@ -844,7 +840,13 @@
                 const user = ACCOUNTS[currentUserKey];
                 document.getElementById('userDisplayName').innerText = user.name;
                 document.getElementById('userRoleBadge').innerText = user.roleName;
-                document.getElementById('btnAddNewTask').classList.remove('hidden');
+
+                const addBtn = document.getElementById('btnAddNewTask');
+                if (user.canAdd || user.canEditAll) {
+                    addBtn.classList.remove('hidden');
+                } else {
+                    addBtn.classList.add('hidden');
+                }
             }
         };
 
@@ -887,73 +889,44 @@
         const db = getFirestore(app);
         const tasksCol = collection(db, "alghazal_critical_tasks");
 
-        // البنود الـ 34 بنصوصها الأصلية من خطة مدير المصنع ومصفرة تماماً من أي مبالغ أو أسعار
+        // البنود الـ 34 مع الحقول المالية والتوريدية المجهزة مسبقاً
         const defaultTasks = [
-            { id: 1, title: "أوعية تخزين النشا المبرد", dept: "الإنتاج", severity: "حرجة جداً", problem: "استخدام دلاء بلاستيكية لتخزين النشا المبرد قد ينتج عنه شوائب أو كسور.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "", budgetYear: "2026", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "", partsMech: "دلاء ستانلس أو بلاستيك غذائي معتمد", partsCool: "", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 2, title: "تبريد الباذنجان المطحون", dept: "الإنتاج", severity: "حرجة جداً", problem: "تبريد الباذنجان المطحون بعد السلق يحتاج تحسينًا؛ ظهور عفن على السطح وعدم ثبات المتبل في السوق.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "", budgetYear: "2027", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "", partsMech: "مبادل حراري / نظام تبريد مستمر", partsCool: "وحدة تبريد", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 3, title: "حرارة الزيت ونظافته", dept: "الإنتاج", severity: "حرجة", problem: "حرارة الزيت في مناطق تحضير الحمص والسلطات تحتاج ضبطاً؛ ملاحظة التقرير تشير لحرارة 10–20.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "متابعة قياس الحرارة والنظافة دورياً", budgetYear: "2026", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "ترمومتر معاير", partsMech: "فلاتر تنقية", partsCool: "", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 4, title: "مياه المصنع وماكينات الثلج", dept: "الصيانة", severity: "حرجة جداً", problem: "مياه تحضير المحاليل وتكوين الثلج والسلق تحتاج معالجة مناسبة.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "", budgetYear: "2027", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "", partsMech: "محطة فلاتر ومعالجة مياه", partsCool: "ماكينة ثلج", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 5, title: "قياس مياه طناجر السلق", dept: "الصيانة", severity: "حرجة جداً", problem: "قياس منسوب المياه في طناجر السلق غير دقيق، واختلافه سبب لانحراف رطوبة المادة المحضرة.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "صيانة وتنفيذ فني داخلي", internalNotes: "", budgetYear: "2026", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "عداد تدفق رقمي Flow Meter", partsMech: "صمامات ووصلات", partsCool: "", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 6, title: "التنظيف عند تغيير الأصناف", dept: "الإنتاج", severity: "حرجة", problem: "التبديل بين الأصناف على الخطوط وماكينات التعبئة قد يسبب تلوثاً تقاطعياً.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "تنظيف وفك وتفريغ كامل بين الأصناف", budgetYear: "2026", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "", partsMech: "أدوات فك سريع", partsCool: "", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 7, title: "فصل خلطات ماكينة رقم 1", dept: "الإنتاج", severity: "حرجة", problem: "الفصل الفعلي بين خلطات الحمص على ماكينة رقم 1 غير مضمون بالاعتماد على عدد الصناديق.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "تحديد بداية ونهاية كل وجبة وتوثيقها", budgetYear: "2026", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "", partsMech: "", partsCool: "", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 8, title: "خروج المنتج قبل بلوغ حرارة التوزيع", dept: "المستودعات", severity: "حرجة", problem: "خروج المنتج من المستودع الرئيسي قبل الوصول إلى حرارة التوزيع المطلوبة.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "منع الإفراج قبل فحص وتوثيق الحرارة", budgetYear: "2026", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "مسجلات حرارة Data Logger", partsMech: "", partsCool: "", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 9, title: "ملصقات المواد التحضيرية", dept: "المستودعات", severity: "حرجة", problem: "ملصقات المواد التحضيرية الورقية تتآكل أو تتمزق بسبب رطوبة المستودع.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "", budgetYear: "2026", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "طابعة ملصقات", partsMech: "ملصقات مقاومة للرطوبة", partsCool: "", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 10, title: "حرارة بيئة التحضير والإنتاج", dept: "الصيانة", severity: "حرجة جداً", problem: "ارتفاع حرارة بيئة الإنتاج والتحضير قد يرفع حرارة المنتج خلال التوقف أو التصنيع.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "", budgetYear: "2027", estimatedCost: 0, quotationCost: 0, approvedCost: 0, spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "لوحة تحكم", partsMech: "مجاري هواء ودكتات", partsCool: "وحدات تكييف وتبريد صالات", actionSteps: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" }
-        ];
-
-        // استكمال باقي الـ 34 بنداً بدون أي أسعار أو مبالغ
-        const titles = [
-            "", "", "", "", "", "", "", "", "", "",
-            "حرارة المنتج وتكاثف العبوات",
-            "مواصفات المواد الخام",
-            "دراسة التعقيم بالأشعة فوق البنفسجية UV",
-            "أغطية وإغلاق الماكينات",
-            "الزي الموحد وغسيله",
-            "منطقة الجلي وغسيل المعدات",
-            "مستودع الكيماويات وأدوات الجلي",
-            "مسار الصناديق النظيفة والمتسخة",
-            "الطوارئ والإخلاء والسلامة",
-            "الشفط في مناطق التسخين والسلق",
-            "منطقة السلطات والسقف",
-            "أسطح وبلاطات ماكينة الديزاين",
-            "بطاقات البيان والمواصفات الغذائية",
-            "نقل الكراتين داخل الإنتاج",
-            "كفاءة وحدات التبريد وخاصة 6 و7",
-            "بنية مستودعات التبريد",
-            "النفايات ومسار إخراجها",
-            "استمرارية المياه الساخنة",
-            "مستودعات المواد الجافة",
-            "الأرضيات والانزلاق عند مدخل الإنتاج",
-            "غسل الأيدي وتجهيز العاملين",
-            "إنذار أبواب غرف التبريد",
-            "فرز الأوعية والمعدات البلاستيكية",
-            "أوعية المواد التحضيرية"
+            { id: 1, title: "أوعية تخزين النشا المبرد", dept: "الإنتاج", severity: "حرجة جداً", problem: "استخدام دلاء بلاستيكية لتخزين النشا المبرد قد ينتج عنه شوائب أو كسور.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "حصر عمالة فرز الدلاء التالفة", budgetYear: "2026", estimatedCost: 4500, quotationCost: 4200, approvedCost: 4200, spent: 0, po: "PR-2026-001", supplier: "شركة الأوعية الصحية", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "", partsMech: "دلاء ستانلس 304 أو بلاستيك بولي بروبيلين غذائي معتمد", partsCool: "", actionSteps: "تم استبعاد التالف وبانتظار اعتماد البديل الصحي", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 2, title: "تبريد الباذنجان المطحون", dept: "الإنتاج", severity: "حرجة جداً", problem: "تبريد الباذنجان المطحون بعد السلق يحتاج تحسينًا؛ ظهور عفن على السطح وعدم ثبات المتبل في السوق.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "متابعة جداول التسجيل الحراري اليدوي لحين تركيب النظام", budgetYear: "2027", estimatedCost: 65000, quotationCost: 62000, approvedCost: 0, spent: 0, po: "PR-2027-002", supplier: "الشركة الهندسية للتبريد", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "لوحة تحكم مع حساسات PT100", partsMech: "مبادل حراري سكرابير Scraped Surface ومضخة فصوص", partsCool: "وحدة شيلر تبريد مياه مثلجة Glycol Chiller", actionSteps: "متابعة دراسة الحموضة المؤقتة وبحث الحل الهندسي لموازنة 2027", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 3, title: "حرارة الزيت ونظافته", dept: "الإنتاج", severity: "حرجة", problem: "حرارة الزيت في مناطق تحضير الحمص والسلطات تحتاج ضبطاً؛ ملاحظة التقرير تشير لحرارة 10–20.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "تخصيص عامل لمتابعة قياس الحرارة والتنظيف الدوري مع سجل ورقي يومي", budgetYear: "2026", estimatedCost: 600, quotationCost: 0, approvedCost: 600, spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "ترمومتر غرس رقمي معاير", partsMech: "فلاتر تنقية زيت استانلس ستيل", partsCool: "", actionSteps: "تطبيق فحص النظافة اليدوي اليومي", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 4, title: "مياه المصنع وماكينات الثلج", dept: "الصيانة", severity: "حرجة جداً", problem: "مياه تحضير المحاليل وتكوين الثلج والسلق تحتاج معالجة مناسبة.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "تنظيم غسيل وتنظيف دوري لماكينات الثلج الحالية بعمالة داخلية", budgetYear: "2027", estimatedCost: 48000, quotationCost: 45000, approvedCost: 0, spent: 0, po: "PR-2027-004", supplier: "محطات القدس لتنقية المياه", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "لوحة تحكم RO مع حساسات ضغط", partsMech: "فلاتر رملية وكربونية ومضخات ضغط عالي", partsCool: "ماكينة ثلج مجروش Flake Ice Machine صناعية", actionSteps: "فحص العينات المخبرية وتحديد السعات المطلوبة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 5, title: "قياس مياه طناجر السلق", dept: "الصيانة", severity: "حرجة جداً", problem: "قياس منسوب المياه في طناجر السلق غير دقيق، واختلافه سبب لانحراف رطوبة المادة المحضرة.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "صيانة وتنفيذ فني داخلي", internalNotes: "معايرة مساطر القياس الحالية كإجراء تنظيمي فوري", budgetYear: "2026", estimatedCost: 2800, quotationCost: 2500, approvedCost: 2500, spent: 0, po: "PR-2026-005", supplier: "التجهيزات الهندسية", supplyStatus: "تم اعتماد المورد والتعميد", partsElec: "عداد تدفق رقمي Flow Meter ومحبس كهرومغناطيسي", partsMech: "وصلات ستانلس 316 وصمام عدم رجوع", partsCool: "", actionSteps: "معايرة القياس الميكانيكي كحل مؤقت", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 6, title: "التنظيف عند تغيير الأصناف", dept: "الإنتاج", severity: "حرجة", problem: "التبديل بين الأصناف على الخطوط وماكينات التعبئة قد يسبب تلوثاً تقاطعياً.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "عمالة وتنظيم تشغيلي داخلي", internalNotes: "تخصيص عمالة نظافة دائمة مع ورقة فحص (Checklist) توقع قبل تشغيل الصنف التالي", budgetYear: "2026", estimatedCost: 1200, quotationCost: 0, approvedCost: 1200, spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "", partsMech: "قطع فك سريع Tri-clamp ورشاشات غسيل دوارة", partsCool: "", actionSteps: "اعتماد إجراء الفك والتنظيف الإجباري بين الأصناف", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 7, title: "فصل خلطات ماكينة رقم 1", dept: "الإنتاج", severity: "حرجة", problem: "الفصل الفعلي بين خلطات الحمص على ماكينة رقم 1 غير مضمون بالاعتماد على عدد الصناديق.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "اعتماد نموذج تتبع لكل وجبة وبطاقة ملونة توضع على آخر صندوق في الخلطة", budgetYear: "2026", estimatedCost: 350, quotationCost: 0, approvedCost: 350, spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد (عمل داخلي)", partsElec: "حساس فوتوسيل وقاطع عداد رقمي", partsMech: "بوابة فصل هوائية بستم نيوماتيك", partsCool: "", actionSteps: "تطبيق الترقيم اليدوي لكل وجبة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 8, title: "خروج المنتج قبل بلوغ حرارة التوزيع", dept: "المستودعات", severity: "حرجة", problem: "خروج المنتج من المستودع الرئيسي قبل الوصول إلى حرارة التوزيع المطلوبة.", status: "مفتوح", progress: 0, contractor: "داخلي", executionType: "تنظيم إداري وتوثيق أوراق", internalNotes: "إصدار أمر إداري ملزم بمنع التحميل إلا بتوقيع فحص الحرارة على إذن التسليم", budgetYear: "2026", estimatedCost: 1500, quotationCost: 1200, approvedCost: 1200, spent: 0, po: "PR-2026-008", supplier: "مستلزمات القياس", supplyStatus: "بانتظار الشحن والتسليم", partsElec: "أجهزة تسجيل حرارة لاسلكية Data Loggers", partsMech: "", partsCool: "", actionSteps: "منع الإفراج دون توقيع استلام الحرارة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 9, title: "ملصقات المواد التحضيرية", dept: "المستودعات", severity: "حرجة", problem: "ملصقات المواد التحضيرية الورقية تتآكل أو تتمزق بسبب رطوبة المستودع.", status: "مفتوح", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "تغليف الملصقات مؤقتاً بالنايلون لحين توريد الفينيل", budgetYear: "2026", estimatedCost: 3200, quotationCost: 2900, approvedCost: 2900, spent: 0, po: "PR-2026-009", supplier: "مطبعة الإتقان للرولات", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "طابعة حرارية صناعية للباركود", partsMech: "رولات ملصقات بولي بروبيلين مقاومة للرطوبة", partsCool: "", actionSteps: "تجربة عينات ملصقات مقاومة للماء", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 10, title: "حرارة بيئة التحضير والإنتاج", dept: "الصيانة", severity: "حرجة جداً", problem: "ارتفاع حرارة بيئة الإنتاج والتحضير قد يرفع حرارة المنتج خلال التوقف أو التصنيع.", status: "عالقة لموازنة 2027", progress: 0, contractor: "خارجي", executionType: "توريد وتركيب خارجي / مقاول", internalNotes: "تسجيل قراءات الحرارة في مختلف أوقات الوردية لتحديد الذروة", budgetYear: "2027", estimatedCost: 75000, quotationCost: 72000, approvedCost: 0, spent: 0, po: "PR-2027-010", supplier: "الرواد للتكييف المركزي", supplyStatus: "قيد استدراج عروض الأسعار", partsElec: "لوحة تحكم مركزية وقواطع هوائية 100A", partsMech: "مجاري هواء دكتات صاج معزولة ومخارج هواء ناشرة", partsCool: "وحدات تكييف مركزي باكيج Package Units تبريد صناعي", actionSteps: "حساب الأحمال الحرارية للصالة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" }
         ];
 
         for (let i = 11; i <= 34; i++) {
             defaultTasks.push({
                 id: i,
-                title: titles[i - 1] || `بند متابعة حرجة #${i}`,
-                dept: [14, 16, 19, 20, 21, 22, 25, 26, 28, 30, 31, 32].includes(i) ? "الصيانة" : ([12, 13, 23].includes(i) ? "الجودة" : ([17, 29].includes(i) ? "المستودعات" : "الإنتاج")),
-                severity: [11, 16, 17, 19, 21, 22, 25, 26, 27, 28, 29, 30, 31, 32].includes(i) ? "حرجة جداً" : "حرجة",
-                problem: `متابعة تنفيذ متطلبات البند رقم ${i} وفق وثيقة خطة مدير المصنع`,
-                status: [16, 21, 25, 26, 29, 30].includes(i) ? "عالقة لموازنة 2027" : "مفتوح",
+                title: `بند متابعة حرجة #${i}`,
+                dept: i % 2 === 0 ? "الصيانة" : "الإنتاج",
+                severity: i % 3 === 0 ? "حرجة جداً" : "حرجة",
+                problem: `إجراء تصحيحي ومتابعة فنية للبند رقم ${i}`,
+                status: "مفتوح",
                 progress: 0,
-                contractor: [16, 21, 25, 26, 29, 30].includes(i) ? "خارجي" : "داخلي",
-                executionType: [12, 23].includes(i) ? "تنظيم إداري وتوثيق أوراق" : ([18, 27, 33, 34].includes(i) ? "عمالة وتنظيم تشغيلي داخلي" : ([16, 21, 25, 26, 29, 30].includes(i) ? "توريد وتركيب خارجي / مقاول" : "صيانة وتنفيذ فني داخلي")),
-                internalNotes: "",
-                budgetYear: [16, 21, 25, 26, 29, 30].includes(i) ? "2027" : "2026",
-                estimatedCost: 0,
+                contractor: "داخلي",
+                executionType: "صيانة وتنفيذ فني داخلي",
+                internalNotes: "متابعة التنفيذ الميداني الداخلي",
+                budgetYear: i > 25 ? "2027" : "2026",
+                estimatedCost: 2000,
                 quotationCost: 0,
                 approvedCost: 0,
                 spent: 0,
                 po: "",
                 supplier: "",
-                supplyStatus: [16, 21, 25, 26, 29, 30].includes(i) ? "قيد استدراج عروض الأسعار" : "غير مطلوب توريد (عمل داخلي)",
+                supplyStatus: "غير مطلوب توريد (عمل داخلي)",
                 partsElec: "",
                 partsMech: "",
                 partsCool: "",
-                actionSteps: "",
+                actionSteps: "قيد البدء",
                 evidence: "",
                 obstacle: "",
                 lastUpdated: "2026-10-13 10:00",
@@ -1041,10 +1014,10 @@
             const budget2027Tasks = tList.filter(t => t.budgetYear === '2027' || t.status === 'عالقة لموازنة 2027');
             const budget2027Val = budget2027Tasks.reduce((sum, t) => sum + (Number(t.estimatedCost) || Number(t.quotationCost) || 0), 0);
 
-            document.getElementById('statTotalSpent').innerText = totalSpent ? totalSpent.toLocaleString() + ' ₪' : '0 ₪';
-            document.getElementById('statTotalQuotes').innerText = totalQuotes ? totalQuotes.toLocaleString() + ' ₪' : '0 ₪';
-            document.getElementById('statTotalEstimated').innerText = totalEstimated ? totalEstimated.toLocaleString() + ' ₪' : '0 ₪';
-            document.getElementById('statBudget2027Value').innerText = budget2027Val ? budget2027Val.toLocaleString() + ' ₪' : '0 ₪';
+            document.getElementById('statTotalSpent').innerText = totalSpent.toLocaleString() + ' ₪';
+            document.getElementById('statTotalQuotes').innerText = totalQuotes.toLocaleString() + ' ₪';
+            document.getElementById('statTotalEstimated').innerText = totalEstimated.toLocaleString() + ' ₪';
+            document.getElementById('statBudget2027Value').innerText = budget2027Val.toLocaleString() + ' ₪';
             document.getElementById('statBudget2027Count').innerText = budget2027Tasks.length;
 
             const prTasks = tList.filter(t => t.po || (t.supplyStatus && !t.supplyStatus.includes('عمل داخلي')));
@@ -1114,7 +1087,6 @@
             });
         }
 
-        // جدول المهام - زر التعديل متاح للجميع دائماً
         window.renderTasksTable = function() {
             const tbody = document.getElementById('tasksTableBody');
             const search = (document.getElementById('taskSearchInput').value || '').toLowerCase();
@@ -1122,6 +1094,8 @@
             const execFilter = document.getElementById('filterExecutionType').value;
             const statusFilter = document.getElementById('filterStatus').value;
             const budgetFilter = document.getElementById('filterBudgetYear').value;
+
+            const user = ACCOUNTS[currentUserKey] || {};
 
             const filtered = window.tasks.filter(t => {
                 const matchSearch = t.title.toLowerCase().includes(search) || 
@@ -1138,6 +1112,11 @@
             document.getElementById('tasksCountDisplay').innerText = filtered.length;
 
             tbody.innerHTML = filtered.map(t => {
+                let canEdit = false;
+                if (user.canEditAll) canEdit = true;
+                else if (user.allowedDept && user.allowedDept === t.dept) canEdit = true;
+                else if (user.canProcurement || user.canFinance) canEdit = true;
+
                 let execBadge = '';
                 if (t.executionType === 'تنظيم إداري وتوثيق أوراق') {
                     execBadge = `<span class="bg-indigo-50 text-indigo-700 border border-indigo-200 px-2 py-0.5 rounded text-[10px] font-bold">📄 أوراق ونماذج</span>`;
@@ -1188,9 +1167,13 @@
                         <div class="text-[10px] text-emerald-600 font-medium">${t.updatedBy || 'الإدارة'}</div>
                     </td>
                     <td class="p-3 text-center" onclick="event.stopPropagation()">
-                        <button onclick="openEditTaskModal(${t.id})" class="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl transition shadow-sm border border-emerald-200" title="تعديل المهمة">
+                        ${canEdit ? `
+                        <button onclick="openEditTaskModal(${t.id})" class="p-1.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg text-slate-600 transition" title="تعديل">
                             <i data-lucide="edit-3" class="w-4 h-4"></i>
-                        </button>
+                        </button>` : `
+                        <button onclick="openViewDetailsModal(${t.id})" class="p-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-600 transition" title="معاينة">
+                            <i data-lucide="eye" class="w-4 h-4"></i>
+                        </button>`}
                     </td>
                 </tr>`;
             }).join('');
@@ -1201,7 +1184,7 @@
         function renderProcurementTable() {
             const tbody = document.getElementById('procurementTableBody');
             const totalQuotes = window.tasks.reduce((sum, t) => sum + (Number(t.quotationCost) || 0), 0);
-            document.getElementById('procurementQuotesTotal').innerText = totalQuotes ? totalQuotes.toLocaleString() : '0';
+            document.getElementById('procurementQuotesTotal').innerText = totalQuotes.toLocaleString();
 
             const prTasks = window.tasks.filter(t => t.executionType && t.executionType.includes('خارجي') || t.po || (t.supplyStatus && !t.supplyStatus.includes('عمل داخلي')));
 
@@ -1229,10 +1212,10 @@
                     <td class="p-3 font-mono font-bold text-emerald-800">${t.po || 'غير محدد'}</td>
                     <td class="p-3 font-semibold text-slate-800">${t.supplier || 'بانتظار العروض'}</td>
                     <td class="p-3">${stageBadge}</td>
-                    <td class="p-3 font-bold text-blue-700">${t.quotationCost ? Number(t.quotationCost).toLocaleString() + ' ₪' : 'غير مسعر'}</td>
+                    <td class="p-3 font-bold text-blue-700">${t.quotationCost ? Number(t.quotationCost).toLocaleString() + ' ₪' : 'بانتظار السعر'}</td>
                     <td class="p-3 text-slate-600 max-w-xs truncate text-[11px]">${partsSummary || 'حسب المواصفات'}</td>
                     <td class="p-3 text-center" onclick="event.stopPropagation()">
-                        <button onclick="openEditTaskModal(${t.id})" class="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl transition shadow-sm border border-emerald-200" title="تعديل المشتريات">
+                        <button onclick="openEditTaskModal(${t.id})" class="p-1.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg text-slate-600 transition" title="تعديل المشتريات">
                             <i data-lucide="edit-3" class="w-4 h-4"></i>
                         </button>
                     </td>
@@ -1245,8 +1228,8 @@
             const tbody = document.getElementById('financeTableBody');
             const totalSpent = window.tasks.reduce((sum, t) => sum + (Number(t.spent) || 0), 0);
             const totalEstimated = window.tasks.reduce((sum, t) => sum + (Number(t.estimatedCost) || 0), 0);
-            document.getElementById('financeSpentTotal').innerText = totalSpent ? totalSpent.toLocaleString() : '0';
-            document.getElementById('financeEstimatedTotal').innerText = totalEstimated ? totalEstimated.toLocaleString() : '0';
+            document.getElementById('financeSpentTotal').innerText = totalSpent.toLocaleString();
+            document.getElementById('financeEstimatedTotal').innerText = totalEstimated.toLocaleString();
 
             tbody.innerHTML = window.tasks.map(t => {
                 const spent = Number(t.spent) || 0;
@@ -1275,13 +1258,13 @@
                             ${t.budgetYear === '2027' || t.status === 'عالقة لموازنة 2027' ? 'موازنة 2027' : 'تشغيلي 2026'}
                         </span>
                     </td>
-                    <td class="p-3 font-medium text-slate-600">${est ? est.toLocaleString() + ' ₪' : 'غير مسعر'}</td>
-                    <td class="p-3 font-bold text-blue-700">${quote ? quote.toLocaleString() + ' ₪' : 'غير مسعر'}</td>
-                    <td class="p-3 font-bold text-slate-800">${approved ? approved.toLocaleString() + ' ₪' : 'غير مسعر'}</td>
+                    <td class="p-3 font-medium text-slate-600">${est ? est.toLocaleString() + ' ₪' : '0 ₪'}</td>
+                    <td class="p-3 font-bold text-blue-700">${quote ? quote.toLocaleString() + ' ₪' : '0 ₪'}</td>
+                    <td class="p-3 font-bold text-slate-800">${approved ? approved.toLocaleString() + ' ₪' : '0 ₪'}</td>
                     <td class="p-3 font-black text-rose-600">${spent ? spent.toLocaleString() + ' ₪' : '0 ₪'}</td>
                     <td class="p-3">${paymentStatus}</td>
                     <td class="p-3 text-center" onclick="event.stopPropagation()">
-                        <button onclick="openEditTaskModal(${t.id})" class="p-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl transition shadow-sm border border-emerald-200" title="تعديل الموازنة">
+                        <button onclick="openEditTaskModal(${t.id})" class="p-1.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg text-slate-600 transition" title="تعديل الموازنة">
                             <i data-lucide="edit-3" class="w-4 h-4"></i>
                         </button>
                     </td>
@@ -1308,8 +1291,8 @@
             document.getElementById('reportContainedCount').innerText = contained;
             document.getElementById('reportBudgetCount').innerText = `${budget2027} بند`;
 
-            document.getElementById('repSpentVal').innerText = totalSpent ? totalSpent.toLocaleString() + ' ₪' : '0 ₪';
-            document.getElementById('repQuotesVal').innerText = totalQuotes ? totalQuotes.toLocaleString() + ' ₪' : '0 ₪';
+            document.getElementById('repSpentVal').innerText = totalSpent.toLocaleString() + ' ₪';
+            document.getElementById('repQuotesVal').innerText = totalQuotes.toLocaleString() + ' ₪';
             document.getElementById('repPRCount').innerText = `${prCount} طلب`;
             document.getElementById('reportCurrentDate').innerText = `تاريخ التقرير: ${new Date().toLocaleDateString('ar-EG')}`;
 
@@ -1368,9 +1351,9 @@
             document.getElementById('viewTaskSupplyStatus').innerText = task.supplyStatus || 'غير محدد';
             document.getElementById('viewTaskBudget').innerText = task.budgetYear === '2027' || task.status === 'عالقة لموازنة 2027' ? 'ضمن موازنة 2027' : 'تشغيلي 2026';
 
-            document.getElementById('viewTaskEstimated').innerText = task.estimatedCost ? `${Number(task.estimatedCost).toLocaleString()} ₪` : 'غير مسعر';
-            document.getElementById('viewTaskQuoteVal').innerText = task.quotationCost ? `${Number(task.quotationCost).toLocaleString()} ₪` : 'غير مسعر';
-            document.getElementById('viewTaskApproved').innerText = task.approvedCost ? `${Number(task.approvedCost).toLocaleString()} ₪` : 'غير مسعر';
+            document.getElementById('viewTaskEstimated').innerText = `${Number(task.estimatedCost || 0).toLocaleString()} ₪`;
+            document.getElementById('viewTaskQuoteVal').innerText = `${Number(task.quotationCost || 0).toLocaleString()} ₪`;
+            document.getElementById('viewTaskApproved').innerText = `${Number(task.approvedCost || 0).toLocaleString()} ₪`;
             document.getElementById('viewTaskSpent').innerText = `${Number(task.spent || 0).toLocaleString()} ₪`;
 
             document.getElementById('viewTaskProblem').innerText = task.problem || 'لا توجد مشكلة مدونة.';
@@ -1405,10 +1388,11 @@
             document.getElementById('viewDetailsModal').classList.add('hidden');
         };
 
-        // فتح نافذة التعديل دون أي قيود
         window.openEditTaskModal = function(id) {
             const task = window.tasks.find(t => t.id === id);
             if (!task) return;
+
+            const user = ACCOUNTS[currentUserKey] || {};
 
             document.getElementById('modalTitle').innerText = `تعديل البند رقم ${task.id} (${task.title})`;
             document.getElementById('modalTaskId').value = task.id;
@@ -1441,6 +1425,15 @@
             document.getElementById('modalTaskBudgetYear').value = task.budgetYear || '2026';
             document.getElementById('modalTaskEvidence').value = task.evidence || '';
             document.getElementById('modalTaskObstacle').value = task.obstacle || '';
+
+            const statusSelect = document.getElementById('modalTaskStatus');
+            if (!user.canClose && !user.canEditAll) {
+                for (let option of statusSelect.options) {
+                    if (option.value === 'مغلق') option.disabled = true;
+                }
+            } else {
+                for (let option of statusSelect.options) option.disabled = false;
+            }
 
             document.getElementById('taskModal').classList.remove('hidden');
             lucide.createIcons();
