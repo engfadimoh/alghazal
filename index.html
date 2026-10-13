@@ -20,7 +20,7 @@
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
 
-    <!-- Login Modal (يظهر إذا لم يسجل المستخدم الدخول) -->
+    <!-- Login Modal -->
     <div id="loginOverlay" class="fixed inset-0 bg-slate-900/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 space-y-6 text-right border border-slate-100">
             <div class="text-center space-y-2">
@@ -178,7 +178,7 @@
         <section id="view-tasks" class="hidden space-y-4">
             <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-wrap gap-3 items-center justify-between">
                 <div class="flex flex-wrap items-center gap-2 text-xs">
-                    <input type="text" id="taskSearchInput" oninput="renderTasksTable()" placeholder="ابحث باسم البند أو المشكلة..." class="border border-slate-300 rounded-lg px-3 py-1.5 w-60 focus:ring-1 focus:ring-emerald-500 outline-none">
+                    <input type="text" id="taskSearchInput" oninput="renderTasksTable()" placeholder="ابحث باسم البند، المورد، أو المشكلة..." class="border border-slate-300 rounded-lg px-3 py-1.5 w-60 focus:ring-1 focus:ring-emerald-500 outline-none">
                     <select id="filterDept" onchange="renderTasksTable()" class="border border-slate-300 rounded-lg px-2.5 py-1.5 bg-white outline-none">
                         <option value="all">كافة الأقسام</option>
                         <option value="الصيانة">الصيانة</option>
@@ -202,6 +202,7 @@
                 </div>
                 <div class="text-xs text-slate-500">
                     العدد المعروض: <span id="tasksCountDisplay" class="font-bold text-slate-800">34</span> بنداً
+                    <span class="text-emerald-600 mr-2 font-medium">(انقر على أي سطر لعرض كامل التفاصيل)</span>
                 </div>
             </div>
 
@@ -213,10 +214,10 @@
                                 <th class="p-3 w-12 text-center">#</th>
                                 <th class="p-3">البند والنقطة الحرجة</th>
                                 <th class="p-3">الحساسية</th>
-                                <th class="p-3">القائد / التنفيذ</th>
+                                <th class="p-3">القائد / التوريد</th>
                                 <th class="p-3">نسبة الإنجاز</th>
                                 <th class="p-3">الحالة والإجراء</th>
-                                <th class="p-3">آخر تحديث وتاريخه</th>
+                                <th class="p-3">آخر تحديث</th>
                                 <th class="p-3 text-center">إجراءات</th>
                             </tr>
                         </thead>
@@ -232,8 +233,8 @@
         <section id="view-procurement" class="hidden space-y-6">
             <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between md:items-center gap-4">
                 <div>
-                    <h3 class="text-base font-bold text-slate-800">سجل طلبات الشراء والمشاريع الرأسمالية (موازنة 2027)</h3>
-                    <p class="text-xs text-slate-500 mt-1">تتبع عروض الأسعار، والمقاولين المنفذين، والاعتمادات المالية المخصصة</p>
+                    <h3 class="text-base font-bold text-slate-800">سجل طلبات الشراء، الموردين ومشاريع موازنة 2027</h3>
+                    <p class="text-xs text-slate-500 mt-1">تتبع عروض الأسعار، والموردين المنفذين، والقطع اللازمة، والاعتمادات المالية المخصصة</p>
                 </div>
                 <div class="flex items-center gap-3">
                     <div class="bg-emerald-50 text-emerald-800 px-3 py-2 rounded-lg border border-emerald-200 text-xs font-semibold">
@@ -249,11 +250,10 @@
                             <tr>
                                 <th class="p-3">رقم البند</th>
                                 <th class="p-3">وصف الاحتياج / المشروع</th>
+                                <th class="p-3">اسم المورد المعتمد</th>
+                                <th class="p-3">وضع التوريد</th>
+                                <th class="p-3">القطع اللازمة للتركيب</th>
                                 <th class="p-3">التبويب المالي</th>
-                                <th class="p-3">جهة التنفيذ</th>
-                                <th class="p-3">عروض الأسعار والمورد</th>
-                                <th class="p-3">التكلفة التقديرية</th>
-                                <th class="p-3">المعتمد</th>
                                 <th class="p-3">المصروف فعلياً</th>
                             </tr>
                         </thead>
@@ -313,7 +313,8 @@
                                     <th class="p-2.5">رقم البند</th>
                                     <th class="p-2.5">اسم المهمة</th>
                                     <th class="p-2.5">نسبة الإنجاز الحالية</th>
-                                    <th class="p-2.5">توقيت وتاريخ التعديل</th>
+                                    <th class="p-2.5">أين وصل الإجراء</th>
+                                    <th class="p-2.5">توقيت التعديل</th>
                                     <th class="p-2.5">المُعدل</th>
                                 </tr>
                             </thead>
@@ -343,9 +344,105 @@
 
     </main>
 
-    <!-- Task Edit/Add Modal -->
+    <!-- Modal 1: عرض كامل تفاصيل المهمة (View Task Details Modal) -->
+    <div id="viewDetailsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-7 space-y-5 text-right border border-slate-200">
+            <div class="flex justify-between items-start border-b pb-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span id="viewTaskNumber" class="bg-slate-800 text-white text-xs px-2.5 py-0.5 rounded-lg font-bold">بند #</span>
+                        <span id="viewTaskSeverityBadge" class="text-xs px-2.5 py-0.5 rounded-lg font-bold"></span>
+                        <span id="viewTaskDeptBadge" class="bg-slate-100 text-slate-700 text-xs px-2.5 py-0.5 rounded-lg font-bold"></span>
+                    </div>
+                    <h3 id="viewTaskTitle" class="text-lg font-extrabold text-slate-900"></h3>
+                </div>
+                <button onclick="closeViewDetailsModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+
+            <!-- بطاقات ملخصة للوضع الراهن -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200 text-xs">
+                <div>
+                    <span class="text-slate-400 block text-[10px]">نسبة الإنجاز:</span>
+                    <span id="viewTaskProgress" class="font-extrabold text-emerald-600 text-base"></span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block text-[10px]">المرحلة الحالية:</span>
+                    <span id="viewTaskStatus" class="font-bold text-slate-800"></span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block text-[10px]">وضع التوريد:</span>
+                    <span id="viewTaskSupplyStatus" class="font-bold text-blue-700"></span>
+                </div>
+                <div>
+                    <span class="text-slate-400 block text-[10px]">التبويب المالي:</span>
+                    <span id="viewTaskBudget" class="font-bold text-slate-800"></span>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <div>
+                    <h4 class="font-bold text-slate-700 mb-1 flex items-center gap-1.5">
+                        <i data-lucide="alert-circle" class="w-4 h-4 text-amber-600"></i> المشكلة المرصودة في خطة مدير المصنع:
+                    </h4>
+                    <p id="viewTaskProblem" class="bg-amber-50/60 p-3 rounded-xl border border-amber-200/60 text-slate-800 leading-relaxed"></p>
+                </div>
+
+                <div class="bg-emerald-50/50 p-3.5 rounded-xl border border-emerald-200/60 space-y-2">
+                    <h4 class="font-bold text-emerald-900 flex items-center gap-1.5">
+                        <i data-lucide="activity" class="w-4 h-4 text-emerald-600"></i> الإجراءات المتخذة ومرحلة الوصول ميدانياً:
+                    </h4>
+                    <p id="viewTaskActionSteps" class="text-slate-800 leading-relaxed font-medium"></p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1.5">
+                        <h4 class="font-bold text-slate-800 flex items-center gap-1.5">
+                            <i data-lucide="truck" class="w-4 h-4 text-blue-600"></i> بيانات المورد وطلب الشراء:
+                        </h4>
+                        <div><strong class="text-slate-500">اسم المورد:</strong> <span id="viewTaskSupplier"></span></div>
+                        <div><strong class="text-slate-500">رقم طلب الشراء / العرض:</strong> <span id="viewTaskPO"></span></div>
+                        <div><strong class="text-slate-500">المبلغ المصروف:</strong> <span id="viewTaskSpent" class="font-bold text-emerald-700"></span></div>
+                    </div>
+
+                    <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 space-y-1.5">
+                        <h4 class="font-bold text-slate-800 flex items-center gap-1.5">
+                            <i data-lucide="wrench" class="w-4 h-4 text-slate-700"></i> القطع اللازمة للتركيب والتشغيل:
+                        </h4>
+                        <p id="viewTaskParts" class="text-slate-700 leading-relaxed"></p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-purple-50/50 p-3 rounded-xl border border-purple-200/60">
+                        <strong class="text-purple-900 block mb-1">دليل إغلاق الجودة المعتمد:</strong>
+                        <span id="viewTaskEvidence" class="text-slate-700"></span>
+                    </div>
+                    <div class="bg-rose-50/50 p-3 rounded-xl border border-rose-200/60">
+                        <strong class="text-rose-900 block mb-1">العوائق والتصعيد الإداري:</strong>
+                        <span id="viewTaskObstacle" class="text-rose-800"></span>
+                    </div>
+                </div>
+
+                <div class="pt-2 text-[11px] text-slate-400 border-t flex justify-between">
+                    <span>آخر تعديل: <strong id="viewTaskLastUpdated" class="text-slate-600"></strong></span>
+                    <span>تم التعديل بواسطة: <strong id="viewTaskUpdatedBy" class="text-slate-600"></strong></span>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2 border-t">
+                <button onclick="closeViewDetailsModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl transition text-xs font-semibold">إغلاق</button>
+                <button id="viewBtnOpenEdit" onclick="" class="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl transition text-xs font-bold flex items-center gap-1.5">
+                    <i data-lucide="edit" class="w-3.5 h-3.5"></i> تعديل هذه المهمة
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: تعديل وإضافة المهمة (Edit / Add Task Modal) -->
     <div id="taskModal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 space-y-4 text-right">
+        <div class="bg-white rounded-2xl shadow-xl max-w-3xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-7 space-y-4 text-right">
             <div class="flex justify-between items-center border-b pb-3">
                 <h3 id="modalTitle" class="font-bold text-base text-slate-800">تعديل بيانات المهمة</h3>
                 <button onclick="closeTaskModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="w-5 h-5"></i></button>
@@ -355,11 +452,11 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-medium text-slate-700 mb-1">اسم المهمة / البند</label>
+                        <label class="block font-semibold text-slate-700 mb-1">اسم المهمة / البند</label>
                         <input type="text" id="modalTaskTitle" required class="w-full border rounded-xl p-2.5 focus:ring-1 focus:ring-emerald-500 outline-none">
                     </div>
                     <div>
-                        <label class="block font-medium text-slate-700 mb-1">القسم القائد</label>
+                        <label class="block font-semibold text-slate-700 mb-1">القسم القائد</label>
                         <select id="modalTaskDept" class="w-full border rounded-xl p-2.5 outline-none">
                             <option value="الصيانة">الصيانة</option>
                             <option value="الإنتاج">الإنتاج</option>
@@ -370,13 +467,19 @@
                 </div>
 
                 <div>
-                    <label class="block font-medium text-slate-700 mb-1">المشكلة المرصودة ومواصفاتها</label>
+                    <label class="block font-semibold text-slate-700 mb-1">المشكلة المرصودة ومواصفاتها</label>
                     <textarea id="modalTaskProblem" rows="2" class="w-full border rounded-xl p-2.5 focus:ring-1 focus:ring-emerald-500 outline-none"></textarea>
+                </div>
+
+                <!-- حقل الإجراءات المتخذة وأين وصلت -->
+                <div class="bg-emerald-50/40 p-3 rounded-xl border border-emerald-200/60">
+                    <label class="block font-bold text-emerald-900 mb-1">الإجراءات المتخذة ميدانياً وأين وصلت المهمة بالتفصيل</label>
+                    <textarea id="modalTaskActionSteps" rows="2" placeholder="اكتب بالتفصيل: أين وصل الإجراء؟ ما الذي تم تنفيذه حتى الآن؟ وما هي الخطوة القادمة؟" class="w-full border border-emerald-300 rounded-xl p-2.5 focus:ring-1 focus:ring-emerald-500 outline-none bg-white"></textarea>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div>
-                        <label class="block font-medium text-slate-700 mb-1">درجة الحساسية</label>
+                        <label class="block font-semibold text-slate-700 mb-1">درجة الحساسية</label>
                         <select id="modalTaskSeverity" class="w-full border rounded-xl p-2.5 outline-none">
                             <option value="حرجة جداً">حرجة جداً</option>
                             <option value="حرجة">حرجة</option>
@@ -384,8 +487,8 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block font-medium text-slate-700 mb-1">حالة المتابعة</label>
-                        <select id="modalTaskStatus" class="w-full border rounded-xl p-2.5 outline-none">
+                        <label class="block font-semibold text-slate-700 mb-1">حالة المتابعة</label>
+                        <select id="modalTaskStatus" class="w-full border rounded-xl p-2.5 outline-none font-bold">
                             <option value="مفتوح">مفتوح</option>
                             <option value="تم احتواء الخطر">تم احتواء الخطر</option>
                             <option value="جارٍ التنفيذ">جارٍ التنفيذ</option>
@@ -394,45 +497,72 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block font-medium text-slate-700 mb-1">نسبة الإنجاز (%)</label>
-                        <input type="number" id="modalTaskProgress" min="0" max="100" class="w-full border rounded-xl p-2.5 outline-none font-bold">
+                        <label class="block font-semibold text-slate-700 mb-1">نسبة الإنجاز (%)</label>
+                        <input type="number" id="modalTaskProgress" min="0" max="100" class="w-full border rounded-xl p-2.5 outline-none font-bold text-emerald-700">
+                    </div>
+                </div>
+
+                <!-- قسم بيانات التوريد والمورد والقطع اللازمة -->
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-3">
+                    <h4 class="font-bold text-slate-800 text-[11px] flex items-center gap-1.5">
+                        <i data-lucide="package" class="w-3.5 h-3.5 text-blue-600"></i> بيانات المورد والتوريد والقطع المطلوبة
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block font-medium text-slate-700 mb-1">اسم المورد / المقاول المعتمد</label>
+                            <input type="text" id="modalTaskSupplier" placeholder="مثال: شركة القدس للتبريد / فني معتمد" class="w-full border rounded-xl p-2 outline-none bg-white">
+                        </div>
+                        <div>
+                            <label class="block font-medium text-slate-700 mb-1">وضع التوريد</label>
+                            <select id="modalTaskSupplyStatus" class="w-full border rounded-xl p-2 outline-none bg-white">
+                                <option value="غير مطلوب توريد">غير مطلوب توريد (عمل داخلي)</option>
+                                <option value="قيد استدراج عروض الأسعار">قيد استدراج عروض الأسعار</option>
+                                <option value="تم اعتماد المورد والتعميد">تم اعتماد المورد والتعميد</option>
+                                <option value="بانتظار الشحن والتسليم">بانتظار الشحن والتسليم</option>
+                                <option value="تم التوريد للمصنع وجاهز للتركيب">تم التوريد للمصنع وجاهز للتركيب</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block font-medium text-slate-700 mb-1">القطع والمستلزمات اللازمة للتركيب</label>
+                        <textarea id="modalTaskParts" rows="2" placeholder="مثال: مضخة إيطالية 2 حصان، قواطع شنايدر 25 أمبير، مواسير ستانلس 316..." class="w-full border rounded-xl p-2 outline-none bg-white"></textarea>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                     <div>
-                        <label class="block font-medium text-slate-700 mb-1">جهة التنفيذ</label>
+                        <label class="block font-semibold text-slate-700 mb-1">جهة التنفيذ</label>
                         <select id="modalTaskContractor" class="w-full border rounded-xl p-2.5 outline-none">
                             <option value="داخلي">داخلي (فريق المصنع)</option>
                             <option value="خارجي">خارجي (مورد / مقاول)</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block font-medium text-slate-700 mb-1">التبويب المالي</label>
+                        <label class="block font-semibold text-slate-700 mb-1">التبويب المالي</label>
                         <select id="modalTaskBudgetYear" class="w-full border rounded-xl p-2.5 outline-none">
                             <option value="2026">تشغيلي فوري (2026)</option>
                             <option value="2027">ضمن موازنة 2027</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block font-medium text-slate-700 mb-1">التكلفة المصروفة (₪)</label>
+                        <label class="block font-semibold text-slate-700 mb-1">التكلفة المصروفة (₪)</label>
                         <input type="number" id="modalTaskSpent" min="0" class="w-full border rounded-xl p-2.5 outline-none">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-medium text-slate-700 mb-1">رقم طلب الشراء / عروض الأسعار</label>
-                        <input type="text" id="modalTaskPO" placeholder="مثال: PR-2026-042 / شركة الشريف" class="w-full border rounded-xl p-2.5 outline-none">
+                        <label class="block font-semibold text-slate-700 mb-1">رقم طلب الشراء / عروض الأسعار</label>
+                        <input type="text" id="modalTaskPO" placeholder="مثال: PR-2026-042" class="w-full border rounded-xl p-2.5 outline-none">
                     </div>
                     <div>
-                        <label class="block font-medium text-slate-700 mb-1">دليل إغلاق الجودة</label>
+                        <label class="block font-semibold text-slate-700 mb-1">دليل إغلاق الجودة</label>
                         <input type="text" id="modalTaskEvidence" placeholder="سجل فحص، قراءة حرارة، صورة استلام" class="w-full border rounded-xl p-2.5 outline-none">
                     </div>
                 </div>
 
                 <div>
-                    <label class="block font-medium text-slate-700 mb-1">الملاحظات والعوائق للتصعيد</label>
+                    <label class="block font-semibold text-slate-700 mb-1">الملاحظات والعوائق للتصعيد</label>
                     <input type="text" id="modalTaskObstacle" placeholder="هل يوجد عائق يحتاج قراراً من مدير المصنع؟" class="w-full border rounded-xl p-2.5 outline-none">
                 </div>
 
@@ -444,12 +574,11 @@
         </div>
     </div>
 
-    <!-- Firebase SDK & Logic -->
+    <!-- Firebase SDK & Modular App Logic -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getFirestore, collection, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-        // حسابات الدخول وكلمات المرور والصلاحيات
         const ACCOUNTS = {
             admin: { name: "م. فادي محمود", roleName: "Super Admin", pass: "fadi@2026", canEditAll: true, canClose: true, canAdd: true },
             ceo: { name: "المدير التنفيذي", roleName: "CEO", pass: "ceo@ghazal", canEditAll: false, canClose: true, canAdd: false },
@@ -464,7 +593,6 @@
 
         let currentUserKey = localStorage.getItem('alghazal_logged_user') || null;
 
-        // التحقق من حالة تسجيل الدخول
         window.checkAuth = function() {
             if (!currentUserKey || !ACCOUNTS[currentUserKey]) {
                 document.getElementById('loginOverlay').classList.remove('hidden');
@@ -474,7 +602,6 @@
                 document.getElementById('userDisplayName').innerText = user.name;
                 document.getElementById('userRoleBadge').innerText = user.roleName;
 
-                // إخفاء زر إضافة مهمة إذا لم يكن يملك الصلاحية
                 const addBtn = document.getElementById('btnAddNewTask');
                 if (user.canAdd || user.canEditAll) {
                     addBtn.classList.remove('hidden');
@@ -508,7 +635,6 @@
             checkAuth();
         };
 
-        // Firebase Setup
         const firebaseConfig = {
             apiKey: "AIzaSyCQYoeSNHdvhxA5jSyKsEaszOR0g1gIEeM",
             authDomain: "fadiaziza-d8fcd.firebaseapp.com",
@@ -524,42 +650,42 @@
         const db = getFirestore(app);
         const tasksCol = collection(db, "alghazal_critical_tasks");
 
-        // البنود الـ 34
+        // البنود الـ 34 مع الحقول الجديدة المجهزة مسبقاً
         const defaultTasks = [
-            { id: 1, title: "أوعية تخزين النشا المبرد", dept: "الإنتاج", severity: "حرجة جداً", problem: "استخدام دلاء بلاستيكية لتخزين النشا المبرد قد ينتج عنه شوائب أو كسور.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 2, title: "تبريد الباذنجان المطحون", dept: "الإنتاج", severity: "حرجة جداً", problem: "تبريد الباذنجان المطحون بعد السلق يحتاج تحسينًا؛ ظهور عفن على السطح وعدم ثبات المتبل في السوق.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 3, title: "حرارة الزيت ونظافته", dept: "الإنتاج", severity: "حرجة", problem: "حرارة الزيت في مناطق تحضير الحمص والسلطات تحتاج ضبطاً؛ ملاحظة التقرير تشير لحرارة 10–20.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 4, title: "مياه المصنع وماكينات الثلج", dept: "الصيانة", severity: "حرجة جداً", problem: "مياه تحضير المحاليل وتكوين الثلج والسلق تحتاج معالجة مناسبة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 5, title: "قياس مياه طناجر السلق", dept: "الصيانة", severity: "حرجة جداً", problem: "قياس منسوب المياه في طناجر السلق غير دقيق، واختلافه سبب لانحراف رطوبة المادة المحضرة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 6, title: "التنظيف عند تغيير الأصناف", dept: "الإنتاج", severity: "حرجة", problem: "التبديل بين الأصناف على الخطوط وماكينات التعبئة قد يسبب تلوثاً تقاطعياً.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 7, title: "فصل خلطات ماكينة رقم 1", dept: "الإنتاج", severity: "حرجة", problem: "الفصل الفعلي بين خلطات الحمص على ماكينة رقم 1 غير مضمون بالاعتماد على عدد الصناديق.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 8, title: "خروج المنتج قبل بلوغ حرارة التوزيع", dept: "المستودعات", severity: "حرجة", problem: "خروج المنتج من المستودع الرئيسي قبل الوصول إلى حرارة التوزيع المطلوبة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 9, title: "ملصقات المواد التحضيرية", dept: "المستودعات", severity: "حرجة", problem: "ملصقات المواد التحضيرية الورقية تتآكل أو تتمزق بسبب رطوبة المستودع.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 10, title: "حرارة بيئة التحضير والإنتاج", dept: "الصيانة", severity: "حرجة جداً", problem: "ارتفاع حرارة بيئة الإنتاج والتحضير قد يرفع حرارة المنتج خلال التوقف أو التصنيع.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 11, title: "حرارة المنتج وتكاثف العبوات", dept: "الإنتاج", severity: "حرجة جداً", problem: "دخول المنتج غرف التبريد بحرارة مرتفعة نسبيًا فيتكاثف البخار على الأسطح العلوية للعبوات.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 12, title: "مواصفات المواد الخام", dept: "الجودة", severity: "حرجة", problem: "غياب ملف موحد للمواصفات الفنية للمواد الخام يسبب اختلاف الخصائص وتكرار عدم المطابقة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 13, title: "دراسة التعقيم بالأشعة فوق البنفسجية UV", dept: "الجودة", severity: "حرجة", problem: "لم تُحسم الحاجة أو المواقع والفعالية لنظام UV المقترح.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 14, title: "أغطية وإغلاق الماكينات", dept: "الصيانة", severity: "حرجة", problem: "الماكينات مكشوفة نسبيًا؛ تتطلب أغطية وحماية دون إعاقة التشغيل والتنظيف.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 15, title: "الزي الموحد وغسيله", dept: "الإنتاج", severity: "حرجة", problem: "عدم وجود زي موحد مخصص ومتكامل للعاملين مع آلية غسيل وتجفيف وإدارة واضحة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 16, title: "منطقة الجلي وغسيل المعدات", dept: "الصيانة", severity: "حرجة جداً", problem: "منطقة الجلي تحتاج فصلاً وترتيباً ومساحة مناسبة لمنع التزاحم وضمان النظافة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 17, title: "مستودع الكيماويات وأدوات الجلي", dept: "المستودعات", severity: "حرجة جداً", problem: "الموقع الحالي وأرضياته وبنيته لا يضمنان تخزين المواد الكيميائية بأمان وملاءمة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 18, title: "مسار الصناديق النظيفة والمتسخة", dept: "الإنتاج", severity: "حرجة", problem: "تقاطع مسار الصناديق مع منطقة الجلي قد يزيد احتمال انتقال الملوثات.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 19, title: "الطوارئ والإخلاء والسلامة", dept: "الصيانة", severity: "حرجة جداً", problem: "خطط الإخلاء والطوارئ تحتاج تطبيقاً عملياً وتحديد مسؤوليات وتدريباً.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 20, title: "الشفط في مناطق التسخين والسلق", dept: "الصيانة", severity: "حرجة", problem: "ضعف الشفط والتهوية يرفع الحرارة والرطوبة وتكاثف الأبخرة واحتمال العفن.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 21, title: "منطقة السلطات والسقف", dept: "الصيانة", severity: "حرجة جداً", problem: "منطقة السلطات تحتاج توسعة وصيانة للسقف لتناسب ظروف التشغيل والنظافة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 22, title: "أسطح وبلاطات ماكينة الديزاين", dept: "الصيانة", severity: "حرجة جداً", problem: "تآكل أو تلف بلاطات وأسطح ماكينة الديزاين قد يؤدي إلى سقوط شوائب على المنتج.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 23, title: "بطاقات البيان والمواصفات الغذائية", dept: "الجودة", severity: "حرجة", problem: "ملف بطاقات البيان والمواصفات بحاجة لمراجعة وتوحيد بالاستناد لنتائج موثوقة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 24, title: "نقل الكراتين داخل الإنتاج", dept: "الإنتاج", severity: "متوسطة", problem: "استخدام صناديق تداول المواد لحمل وجر الكراتين بدل وسيلة نقل مخصصة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 25, title: "كفاءة وحدات التبريد وخاصة 6 و7", dept: "الصيانة", severity: "حرجة جداً", problem: "وحدات التبريد تحتاج تقييماً وصيانة شاملين، خصوصاً ثلاجتي 6 و7.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 26, title: "بنية مستودعات التبريد", dept: "الصيانة", severity: "حرجة جداً", problem: "أسقف وجدران وأبواب مستودعات التبريد بها تلف وتساقط شوائب واحتمال تسريب.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 27, title: "النفايات ومسار إخراجها", dept: "الإنتاج", severity: "حرجة جداً", problem: "مسار إخراج المخلفات قد يمر عبر مناطق الإنتاج أو المدخل الرئيسي.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 28, title: "استمرارية المياه الساخنة", dept: "الصيانة", severity: "حرجة جداً", problem: "المياه الساخنة لا تتوفر باستمرار مما يعيق أعمال التنظيف والغسيل.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 29, title: "مستودعات المواد الجافة", dept: "المستودعات", severity: "حرجة جداً", problem: "المستودعات لا توفر تهوية وإغلاقاً وضبطاً ملائماً للحرارة والرطوبة للمواد الجافة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 30, title: "الأرضيات والانزلاق عند مدخل الإنتاج", dept: "الصيانة", severity: "حرجة جداً", problem: "مناطق الإنتاج والممرات قد تصبح زلقة بالمياه والزيوت وبعض الأرضيات متآكلة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 31, title: "غسل الأيدي وتجهيز العاملين", dept: "الصيانة", severity: "حرجة جداً", problem: "جاهزية وحدة غسل وتعقيم الأيدي تحتاج صيانة وتعزيز تجهيز العاملين قبل الدخول.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 32, title: "إنذار أبواب غرف التبريد", dept: "الصيانة", severity: "حرجة جداً", problem: "لا يوجد إنذار ينبه عند بقاء أبواب غرف ومستودعات التبريد مفتوحة لفترات طويلة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 33, title: "فرز الأوعية والمعدات البلاستيكية", dept: "الإنتاج", severity: "حرجة", problem: "بعض الأوعية والمعدات البلاستيكية متشققة وتطلق شوائب ويصعب تنظيفها.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
-            { id: 34, title: "أوعية المواد التحضيرية", dept: "الإنتاج", severity: "متوسطة", problem: "تُستخدم عبوات المنتج النهائي 3 كغم لتعبئة وتخزين مواد تحضيرية مما يهدر العبوات.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" }
+            { id: 1, title: "أوعية تخزين النشا المبرد", dept: "الإنتاج", severity: "حرجة جداً", problem: "استخدام دلاء بلاستيكية لتخزين النشا المبرد قد ينتج عنه شوائب أو كسور.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "دلاء ستانلس أو بلاستيك غذائي معتمد بغطاء محكم", actionSteps: "تم حصر الكميات التالفة وبانتظار اعتماد البديل الصحي", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 2, title: "تبريد الباذنجان المطحون", dept: "الإنتاج", severity: "حرجة جداً", problem: "تبريد الباذنجان المطحون بعد السلق يحتاج تحسينًا؛ ظهور عفن على السطح وعدم ثبات المتبل في السوق.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "مبادل حراري / نظام تبريد مستمر", actionSteps: "متابعة دراسة الحموضة المؤقتة وبحث الحل الهندسي", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 3, title: "حرارة الزيت ونظافته", dept: "الإنتاج", severity: "حرجة", problem: "حرارة الزيت في مناطق تحضير الحمص والسلطات تحتاج ضبطاً؛ ملاحظة التقرير تشير لحرارة 10–20.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد", parts: "ترمومتر معاير + فلاتر تنقية", actionSteps: "تطبيق فحص النظافة اليدوي اليومي", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 4, title: "مياه المصنع وماكينات الثلج", dept: "الصيانة", severity: "حرجة جداً", problem: "مياه تحضير المحاليل وتكوين الثلج والسلق تحتاج معالجة مناسبة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "فلاتر تنقية كربونية ومحطة تحلية UV", actionSteps: "فحص العينات المخبرية وتحديد السعات", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 5, title: "قياس مياه طناجر السلق", dept: "الصيانة", severity: "حرجة جداً", problem: "قياس منسوب المياه في طناجر السلق غير دقيق، واختلافه سبب لانحراف رطوبة المادة المحضرة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "عدادات تدفق Flow Meter رقمية", actionSteps: "معايرة القياس الميكانيكي كحل مؤقت", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 6, title: "التنظيف عند تغيير الأصناف", dept: "الإنتاج", severity: "حرجة", problem: "التبديل بين الأصناف على الخطوط وماكينات التعبئة قد يسبب تلوثاً تقاطعياً.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد", parts: "أدوات فك سريع ومضخات غسيل CIP", actionSteps: "اعتماد إجراء الفك والتنظيف الإجباري بين الأصناف", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 7, title: "فصل خلطات ماكينة رقم 1", dept: "الإنتاج", severity: "حرجة", problem: "الفصل الفعلي بين خلطات الحمص على ماكينة رقم 1 غير مضمون بالاعتماد على عدد الصناديق.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد", parts: "حساسات تحديد نهاية الدفعة", actionSteps: "تطبيق الترقيم اليدوي لكل وجبة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 8, title: "خروج المنتج قبل بلوغ حرارة التوزيع", dept: "المستودعات", severity: "حرجة", problem: "خروج المنتج من المستودع الرئيسي قبل الوصول إلى حرارة التوزيع المطلوبة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد", parts: "مسجلات حرارة Data Logger", actionSteps: "منع الإفراج دون توقيع استلام الحرارة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 9, title: "ملصقات المواد التحضيرية", dept: "المستودعات", severity: "حرجة", problem: "ملصقات المواد التحضيرية الورقية تتآكل أو تتمزق بسبب رطوبة المستودع.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "رولات ملصقات فينيل مقاومة للرطوبة", actionSteps: "تجربة عينات ملصقات مقاومة للماء", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 10, title: "حرارة بيئة التحضير والإنتاج", dept: "الصيانة", severity: "حرجة جداً", problem: "ارتفاع حرارة بيئة الإنتاج والتحضير قد يرفع حرارة المنتج خلال التوقف أو التصنيع.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "وحدات تكييف وتبريد صالات مركزية", actionSteps: "حساب الأحمال الحرارية للمنطقة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 11, title: "حرارة المنتج وتكاثف العبوات", dept: "الإنتاج", severity: "حرجة جداً", problem: "دخول المنتج غرف التبريد بحرارة مرتفعة نسبيًا فيتكاثف البخار على الأسطح العلوية للعبوات.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد", parts: "مراوح تبريد أولي وسير تبريد", actionSteps: "تسجيل الحرارة قبل الإغلاق ومراقبة الرطوبة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 12, title: "مواصفات المواد الخام", dept: "الجودة", severity: "حرجة", problem: "غياب ملف موحد للمواصفات الفنية للمواد الخام يسبب اختلاف الخصائص وتكرار عدم المطابقة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد", parts: "ملفات ونماذج أرشفة فنية", actionSteps: "إعداد مواصفات المواد الأعلى استخداماً", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 13, title: "دراسة التعقيم بالأشعة فوق البنفسجية UV", dept: "الجودة", severity: "حرجة", problem: "لم تُحسم الحاجة أو المواقع والفعالية لنظام UV المقترح.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "أجهزة UV صناعية مخصصة للغذاء", actionSteps: "إعداد تقييم الجدوى والسلامة قبل اتخاذ القرار", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 14, title: "أغطية وإغلاق الماكينات", dept: "الصيانة", severity: "حرجة", problem: "الماكينات مكشوفة نسبيًا؛ تتطلب أغطية وحماية دون إعاقة التشغيل والتنظيف.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "ألواح بلكسي غلاس ومفصلات ستانلس", actionSteps: "رفع قياسات الماكينات وتصميم الأغطية", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 15, title: "الزي الموحد وغسيله", dept: "الإنتاج", severity: "حرجة", problem: "عدم وجود زي موحد مخصص ومتكامل للعاملين مع آلية غسيل وتجفيف وإدارة واضحة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "بدلات عمل + غسالة ومجفف صناعي", actionSteps: "حصر مقاسات العمال وإعداد عروض التوريد", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 16, title: "منطقة الجلي وغسيل المعدات", dept: "الصيانة", severity: "حرجة جداً", problem: "منطقة الجلي تحتاج فصلاً وترتيباً ومساحة مناسبة لمنع التزاحم وضمان النظافة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "أحواض ستانلس مزدوجة وشفاطات", actionSteps: "تنظيم المسار المؤقت وإعداد مخطط التوسعة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 17, title: "مستودع الكيماويات وأدوات الجلي", dept: "المستودعات", severity: "حرجة جداً", problem: "الموقع الحالي وأرضياته وبنيته لا يضمنان تخزين المواد الكيميائية بأمان وملاءمة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد", parts: "رفوف معزولة وأحواض انسكاب", actionSteps: "فصل المواد الكيميائية فورياً عن الأدوات", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 18, title: "مسار الصناديق النظيفة والمتسخة", dept: "الإنتاج", severity: "حرجة", problem: "تقاطع مسار الصناديق مع منطقة الجلي قد يزيد احتمال انتقال الملوثات.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد", parts: "قواطع مادية / مسارات أرضية", actionSteps: "تنظيم الفصل الزمني المؤقت لحركة الصناديق", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 19, title: "الطوارئ والإخلاء والسلامة", dept: "الصيانة", severity: "حرجة جداً", problem: "خطط الإخلاء والطوارئ تحتاج تطبيقاً عملياً وتحديد مسؤوليات وتدريباً.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "إضاءة طوارئ، مخارج، طفايات حريق", actionSteps: "فحص أجهزة الإنذار وإزالة عوائق المخارج", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 20, title: "الشفط في مناطق التسخين والسلق", dept: "الصيانة", severity: "حرجة", problem: "ضعف الشفط والتهوية يرفع الحرارة والرطوبة وتكاثف الأبخرة واحتمال العفن.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "مراوح شفط طرد مركزي ودكتات", actionSteps: "صيانة الشفاطات القائمة وقياس شدة السحب", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 21, title: "منطقة السلطات والسقف", dept: "الصيانة", severity: "حرجة جداً", problem: "منطقة السلطات تحتاج توسعة وصيانة للسقف لتناسب ظروف التشغيل والنظافة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "أسقف ساندوتش بانل مقاومة للبكتيريا", actionSteps: "عزل أماكن التساقط المؤقتة ومتابعة خطة التوسعة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 22, title: "أسطح وبلاطات ماكينة الديزاين", dept: "الصيانة", severity: "حرجة جداً", problem: "تآكل أو تلف بلاطات وأسطح ماكينة الديزاين قد يؤدي إلى سقوط شوائب على المنتج.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "بلاطات ستانلس أو بولي إيثيلين غذائي", actionSteps: "حصر الأجزاء المتآكلة واستبعاد التالف منها", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 23, title: "بطاقات البيان والمواصفات الغذائية", dept: "الجودة", severity: "حرجة", problem: "ملف بطاقات البيان والمواصفات بحاجة لمراجعة وتوحيد بالاستناد لنتائج موثوقة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد", parts: "مطبوعات وبطاقات محدثة", actionSteps: "مطابقة البطاقات الحالية مع نتائج المختبر", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 24, title: "نقل الكراتين داخل الإنتاج", dept: "الإنتاج", severity: "متوسطة", problem: "استخدام صناديق تداول المواد لحمل وجر الكراتين بدل وسيلة نقل مخصصة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "تروليات وعربات نقل كراتين ستانلس", actionSteps: "وقف جر الصناديق على الأرض فوراً", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 25, title: "كفاءة وحدات التبريد وخاصة 6 و7", dept: "الصيانة", severity: "حرجة جداً", problem: "وحدات التبريد تحتاج تقييماً وصيانة شاملين، خصوصاً ثلاجتي 6 و7.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "ضواغط كمبروسور جديدة ومبخرات", actionSteps: "إجراء صيانة عاجلة للضواغط ومراقبة درجات الحرارة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 26, title: "بنية مستودعات التبريد", dept: "الصيانة", severity: "حرجة جداً", problem: "أسقف وجدران وأبواب مستودعات التبريد بها تلف وتساقط شوائب واحتمال تسريب.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "عوازل وبانيلات وأبواب تبريد محكمة", actionSteps: "عزل أماكن الصدأ والتسريب مؤقتاً", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 27, title: "النفايات ومسار إخراجها", dept: "الإنتاج", severity: "حرجة جداً", problem: "مسار إخراج المخلفات قد يمر عبر مناطق الإنتاج أو المدخل الرئيسي.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد", parts: "حاويات محكمة ذاتية الإغلاق", actionSteps: "تحديد مواعيد إخراج النفايات خارج أوقات التشغيل", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 28, title: "استمرارية المياه الساخنة", dept: "الصيانة", severity: "حرجة جداً", problem: "المياه الساخنة لا تتوفر باستمرار مما يعيق أعمال التنظيف والغسيل.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "سخانات صناعية وشبكة توزيع معزولة", actionSteps: "صيانة خطوط المياه الساخنة المتاحة", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 29, title: "مستودعات المواد الجافة", dept: "المستودعات", severity: "حرجة جداً", problem: "المستودعات لا توفر تهوية وإغلاقاً وضبطاً ملائماً للحرارة والرطوبة للمواد الجافة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "وحدات تكييف وسحب رطوبة", actionSteps: "تنظيم الرص على طبالي وإصلاح الفتحات", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 30, title: "الأرضيات والانزلاق عند مدخل الإنتاج", dept: "الصيانة", severity: "حرجة جداً", problem: "مناطق الإنتاج والممرات قد تصبح زلقة بالمياه والزيوت وبعض الأرضيات متآكلة.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2027", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "إيبوكسي مانع للانزلاق ومجاري تصريف", actionSteps: "معالجة مصادر التسريب ووضع مفارش مانعة للانزلاق", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 31, title: "غسل الأيدي وتجهيز العاملين", dept: "الصيانة", severity: "حرجة جداً", problem: "جاهزية وحدة غسل وتعقيم الأيدي تحتاج صيانة وتعزيز تجهيز العاملين قبل الدخول.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "حساسات صابون وتعقيم ومجففات هواء", actionSteps: "صيانة وحدة غسل اليدين فورياً ومتابعة توفر المعقمات", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 32, title: "إنذار أبواب غرف التبريد", dept: "الصيانة", severity: "حرجة جداً", problem: "لا يوجد إنذار ينبه عند بقاء أبواب غرف ومستودعات التبريد مفتوحة لفترات طويلة.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "مفاتيح ميكروسويتش وتايمر وسارينة إنذار", actionSteps: "ضبط توقيتات إغلاق الأبواب وتركيب حساس تجريبي", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 33, title: "فرز الأوعية والمعدات البلاستيكية", dept: "الإنتاج", severity: "حرجة", problem: "بعض الأوعية والمعدات البلاستيكية متشققة وتطلق شوائب ويصعب تنظيفها.", status: "مفتوح", progress: 0, contractor: "داخلي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "غير مطلوب توريد", parts: "حاويات وبراميل غذائية بديلة", actionSteps: "فرز البراميل واستبعاد المشروخ منها", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" },
+            { id: 34, title: "أوعية المواد التحضيرية", dept: "الإنتاج", severity: "متوسطة", problem: "تُستخدم عبوات المنتج النهائي 3 كغم لتعبئة وتخزين مواد تحضيرية مما يهدر العبوات.", status: "مفتوح", progress: 0, contractor: "خارجي", budgetYear: "2026", spent: 0, po: "", supplier: "", supplyStatus: "قيد استدراج عروض الأسعار", parts: "أوعية بولي إيثيلين متعددة الاستخدام مع غطاء", actionSteps: "حصر الكميات اللازمة لمنع استخدام عبوات البيع النهائي", evidence: "", obstacle: "", lastUpdated: "2026-10-13 10:00", updatedBy: "النظام" }
         ];
 
         window.tasks = [];
@@ -682,7 +808,9 @@
             const user = ACCOUNTS[currentUserKey] || {};
 
             const filtered = window.tasks.filter(t => {
-                const matchSearch = t.title.toLowerCase().includes(search) || t.problem.toLowerCase().includes(search);
+                const matchSearch = t.title.toLowerCase().includes(search) || 
+                                     t.problem.toLowerCase().includes(search) || 
+                                     (t.supplier && t.supplier.toLowerCase().includes(search));
                 const matchDept = deptFilter === 'all' || t.dept === deptFilter;
                 const matchStatus = statusFilter === 'all' || t.status === statusFilter;
                 const matchBudget = budgetFilter === 'all' || t.budgetYear === budgetFilter;
@@ -692,18 +820,17 @@
             document.getElementById('tasksCountDisplay').innerText = filtered.length;
 
             tbody.innerHTML = filtered.map(t => {
-                // فحص صلاحية تعديل هذا البند للحساب النشط
                 let canEdit = false;
                 if (user.canEditAll) canEdit = true;
                 else if (user.allowedDept && user.allowedDept === t.dept) canEdit = true;
                 else if (user.canProcurement || user.canFinance) canEdit = true;
 
                 return `
-                <tr class="hover:bg-slate-50 transition border-b">
+                <tr class="hover:bg-emerald-50/50 cursor-pointer transition border-b" onclick="openViewDetailsModal(${t.id})">
                     <td class="p-3 text-center font-bold text-slate-700">${t.id}</td>
                     <td class="p-3">
                         <div class="font-bold text-slate-900">${t.title}</div>
-                        <div class="text-[11px] text-slate-500 line-clamp-1">${t.problem}</div>
+                        <div class="text-[11px] text-slate-500 line-clamp-1">${t.actionSteps || t.problem}</div>
                     </td>
                     <td class="p-3">
                         <span class="px-2 py-0.5 rounded text-[10px] font-semibold ${
@@ -713,7 +840,7 @@
                     </td>
                     <td class="p-3">
                         <div class="font-semibold text-slate-800">${t.dept}</div>
-                        <div class="text-[10px] text-slate-400">تنفيذ ${t.contractor}</div>
+                        <div class="text-[10px] text-blue-700 font-medium">${t.supplier ? 'المورد: ' + t.supplier : (t.supplyStatus || 'داخلي')}</div>
                     </td>
                     <td class="p-3 w-32">
                         <div class="flex items-center justify-between text-[11px] font-bold mb-1">
@@ -733,14 +860,16 @@
                     </td>
                     <td class="p-3">
                         <div class="font-semibold text-slate-700 text-[11px]">${t.lastUpdated || 'منذ الانطلاق'}</div>
-                        <div class="text-[10px] text-emerald-600 font-medium">بواسطة: ${t.updatedBy || 'الإدارة'}</div>
+                        <div class="text-[10px] text-emerald-600 font-medium">${t.updatedBy || 'الإدارة'}</div>
                     </td>
-                    <td class="p-3 text-center">
+                    <td class="p-3 text-center" onclick="event.stopPropagation()">
                         ${canEdit ? `
                         <button onclick="openEditTaskModal(${t.id})" class="p-1.5 bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 rounded-lg text-slate-600 transition" title="تعديل">
                             <i data-lucide="edit-3" class="w-4 h-4"></i>
                         </button>` : `
-                        <span class="text-[10px] text-slate-400 italic">للمعاينة</span>`}
+                        <button onclick="openViewDetailsModal(${t.id})" class="p-1.5 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-600 transition" title="معاينة">
+                            <i data-lucide="eye" class="w-4 h-4"></i>
+                        </button>`}
                     </td>
                 </tr>`;
             }).join('');
@@ -754,21 +883,24 @@
             document.getElementById('totalSpentDisplay').innerText = totalSpent.toLocaleString();
 
             tbody.innerHTML = window.tasks.map(t => `
-                <tr class="hover:bg-slate-50 transition border-b">
+                <tr class="hover:bg-slate-50 transition border-b cursor-pointer" onclick="openViewDetailsModal(${t.id})">
                     <td class="p-3 font-bold text-slate-700">بند ${t.id}</td>
                     <td class="p-3">
                         <div class="font-semibold text-slate-900">${t.title}</div>
                         <div class="text-[10px] text-slate-400">القسم: ${t.dept}</div>
                     </td>
+                    <td class="p-3 font-semibold text-slate-800">${t.supplier || 'بانتظار التحديد'}</td>
+                    <td class="p-3">
+                        <span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-800 border border-blue-200">
+                            ${t.supplyStatus || 'غير مطلوب توريد'}
+                        </span>
+                    </td>
+                    <td class="p-3 text-slate-600 max-w-xs truncate">${t.parts || 'غير محدد'}</td>
                     <td class="p-3">
                         <span class="px-2 py-0.5 rounded text-[10px] font-bold ${t.budgetYear === '2027' ? 'bg-blue-100 text-blue-800' : 'bg-slate-100 text-slate-700'}">
                             ${t.budgetYear === '2027' ? 'رأسمالي (2027)' : 'فوري (2026)'}
                         </span>
                     </td>
-                    <td class="p-3 font-medium">${t.contractor}</td>
-                    <td class="p-3 font-medium text-slate-600">${t.po || 'بانتظار العروض'}</td>
-                    <td class="p-3 text-slate-500">حسب الدراسة</td>
-                    <td class="p-3 text-slate-500">اعتماد الإدارة</td>
                     <td class="p-3 font-bold text-emerald-700">${t.spent ? t.spent + ' ₪' : '0 ₪'}</td>
                 </tr>
             `).join('');
@@ -789,20 +921,19 @@
             document.getElementById('reportBudgetCount').innerText = budget2027;
             document.getElementById('reportCurrentDate').innerText = `تاريخ التقرير: ${new Date().toLocaleDateString('ar-EG')}`;
 
-            // سجل آخر التعديلات
-            const updatedTasks = [...tList].filter(t => t.lastUpdated).sort((a,b) => (b.lastUpdated || '').localeCompare(a.lastUpdated || '')).slice(0, 8);
+            const updatedTasks = [...tList].filter(t => t.lastUpdated).sort((a,b) => (b.lastUpdated || '').localeCompare(a.lastUpdated || '')).slice(0, 10);
             const reportLogBody = document.getElementById('reportUpdatesLogBody');
             reportLogBody.innerHTML = updatedTasks.map(t => `
                 <tr class="hover:bg-slate-50">
                     <td class="p-2.5 font-bold text-slate-800">بند ${t.id}</td>
                     <td class="p-2.5">${t.title}</td>
                     <td class="p-2.5 font-bold text-emerald-600">${t.progress}%</td>
-                    <td class="p-2.5 text-slate-600">${t.lastUpdated}</td>
-                    <td class="p-2.5 text-slate-700 font-medium">${t.updatedBy || 'مجهول'}</td>
+                    <td class="p-2.5 text-slate-700 font-medium max-w-xs truncate">${t.actionSteps || 'قيد المتابعة'}</td>
+                    <td class="p-2.5 text-slate-500">${t.lastUpdated}</td>
+                    <td class="p-2.5 text-slate-700 font-semibold">${t.updatedBy || 'مجهول'}</td>
                 </tr>
             `).join('');
 
-            // العوائق
             const escalations = tList.filter(t => t.obstacle || (t.severity === 'حرجة جداً' && t.status === 'مفتوح'));
             const escList = document.getElementById('escalationList');
 
@@ -818,6 +949,55 @@
             }
         }
 
+        // --- دوال عرض التفاصيل الشاملة للمهمة (View Modal) ---
+        window.openViewDetailsModal = function(id) {
+            const task = window.tasks.find(t => t.id === id);
+            if (!task) return;
+
+            document.getElementById('viewTaskNumber').innerText = `بند رقم #${task.id}`;
+            document.getElementById('viewTaskTitle').innerText = task.title;
+            document.getElementById('viewTaskDeptBadge').innerText = `القسم القائد: ${task.dept}`;
+
+            const sevBadge = document.getElementById('viewTaskSeverityBadge');
+            sevBadge.innerText = task.severity;
+            sevBadge.className = `text-xs px-2.5 py-0.5 rounded-lg font-bold ${
+                task.severity === 'حرجة جداً' ? 'bg-red-100 text-red-700' :
+                task.severity === 'حرجة' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-700'
+            }`;
+
+            document.getElementById('viewTaskProgress').innerText = `${task.progress}%`;
+            document.getElementById('viewTaskStatus').innerText = task.status;
+            document.getElementById('viewTaskSupplyStatus').innerText = task.supplyStatus || 'غير محدد';
+            document.getElementById('viewTaskBudget').innerText = task.budgetYear === '2027' ? 'موازنة 2027' : 'تشغيلي 2026';
+
+            document.getElementById('viewTaskProblem').innerText = task.problem || 'لا توجد مشكلة مدونة.';
+            document.getElementById('viewTaskActionSteps').innerText = task.actionSteps || 'لم يتم تدوين خطوات الإجراء الميداني بعد.';
+
+            document.getElementById('viewTaskSupplier').innerText = task.supplier || 'لم يحدد مورد بعد';
+            document.getElementById('viewTaskPO').innerText = task.po || 'لا يوجد طلب شراء';
+            document.getElementById('viewTaskSpent').innerText = `${task.spent || 0} ₪`;
+
+            document.getElementById('viewTaskParts').innerText = task.parts || 'لم تسجل أي قطع لازمة.';
+            document.getElementById('viewTaskEvidence').innerText = task.evidence || 'بانتظار استكمال الإجراء ورفع دليل الجودة.';
+            document.getElementById('viewTaskObstacle').innerText = task.obstacle || 'لا توجد معوقات أو تصعيدات مسجلة.';
+
+            document.getElementById('viewTaskLastUpdated').innerText = task.lastUpdated || 'منذ الانطلاق';
+            document.getElementById('viewTaskUpdatedBy').innerText = task.updatedBy || 'الإدارة';
+
+            document.getElementById('viewBtnOpenEdit').onclick = function() {
+                closeViewDetailsModal();
+                openEditTaskModal(task.id);
+            };
+
+            document.getElementById('viewDetailsModal').classList.remove('hidden');
+            lucide.createIcons();
+        };
+
+        window.closeViewDetailsModal = function() {
+            document.getElementById('viewDetailsModal').classList.add('hidden');
+        };
+
+        // --- دوال تعديل وإضافة المهمة (Edit Modal) ---
         window.openEditTaskModal = function(id) {
             const task = window.tasks.find(t => t.id === id);
             if (!task) return;
@@ -829,9 +1009,15 @@
             document.getElementById('modalTaskTitle').value = task.title;
             document.getElementById('modalTaskDept').value = task.dept;
             document.getElementById('modalTaskProblem').value = task.problem;
+            document.getElementById('modalTaskActionSteps').value = task.actionSteps || '';
             document.getElementById('modalTaskSeverity').value = task.severity;
             document.getElementById('modalTaskStatus').value = task.status;
             document.getElementById('modalTaskProgress').value = task.progress;
+
+            document.getElementById('modalTaskSupplier').value = task.supplier || '';
+            document.getElementById('modalTaskSupplyStatus').value = task.supplyStatus || 'غير مطلوب توريد';
+            document.getElementById('modalTaskParts').value = task.parts || '';
+
             document.getElementById('modalTaskContractor').value = task.contractor;
             document.getElementById('modalTaskBudgetYear').value = task.budgetYear;
             document.getElementById('modalTaskSpent').value = task.spent;
@@ -839,10 +1025,8 @@
             document.getElementById('modalTaskEvidence').value = task.evidence;
             document.getElementById('modalTaskObstacle').value = task.obstacle;
 
-            // ضبط قيود الحقول حسب الصلاحيات
             const statusSelect = document.getElementById('modalTaskStatus');
             if (!user.canClose && !user.canEditAll) {
-                // الأقسام الفنية لا تغلق المهمة بنفسها إلا بموافقة الجودة
                 for (let option of statusSelect.options) {
                     if (option.value === 'مغلق') option.disabled = true;
                 }
@@ -851,6 +1035,7 @@
             }
 
             document.getElementById('taskModal').classList.remove('hidden');
+            lucide.createIcons();
         };
 
         window.openNewTaskModal = function() {
@@ -859,7 +1044,9 @@
             document.getElementById('taskForm').reset();
             document.getElementById('modalTaskProgress').value = 0;
             document.getElementById('modalTaskSpent').value = 0;
+            document.getElementById('modalTaskSupplyStatus').value = "غير مطلوب توريد";
             document.getElementById('taskModal').classList.remove('hidden');
+            lucide.createIcons();
         };
 
         window.closeTaskModal = function() {
@@ -871,7 +1058,6 @@
             const idVal = document.getElementById('modalTaskId').value;
             const user = ACCOUNTS[currentUserKey] || { name: "مستخدم غير معرف" };
 
-            // وقت وتاريخ التعديل الآن
             const now = new Date();
             const timeStamp = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
 
@@ -883,9 +1069,13 @@
                     title: document.getElementById('modalTaskTitle').value,
                     dept: document.getElementById('modalTaskDept').value,
                     problem: document.getElementById('modalTaskProblem').value,
+                    actionSteps: document.getElementById('modalTaskActionSteps').value,
                     severity: document.getElementById('modalTaskSeverity').value,
                     status: document.getElementById('modalTaskStatus').value,
                     progress: Number(document.getElementById('modalTaskProgress').value),
+                    supplier: document.getElementById('modalTaskSupplier').value,
+                    supplyStatus: document.getElementById('modalTaskSupplyStatus').value,
+                    parts: document.getElementById('modalTaskParts').value,
                     contractor: document.getElementById('modalTaskContractor').value,
                     budgetYear: document.getElementById('modalTaskBudgetYear').value,
                     spent: Number(document.getElementById('modalTaskSpent').value),
@@ -903,9 +1093,13 @@
                     taskToSave.title = document.getElementById('modalTaskTitle').value;
                     taskToSave.dept = document.getElementById('modalTaskDept').value;
                     taskToSave.problem = document.getElementById('modalTaskProblem').value;
+                    taskToSave.actionSteps = document.getElementById('modalTaskActionSteps').value;
                     taskToSave.severity = document.getElementById('modalTaskSeverity').value;
                     taskToSave.status = document.getElementById('modalTaskStatus').value;
                     taskToSave.progress = Number(document.getElementById('modalTaskProgress').value);
+                    taskToSave.supplier = document.getElementById('modalTaskSupplier').value;
+                    taskToSave.supplyStatus = document.getElementById('modalTaskSupplyStatus').value;
+                    taskToSave.parts = document.getElementById('modalTaskParts').value;
                     taskToSave.contractor = document.getElementById('modalTaskContractor').value;
                     taskToSave.budgetYear = document.getElementById('modalTaskBudgetYear').value;
                     taskToSave.spent = Number(document.getElementById('modalTaskSpent').value);
