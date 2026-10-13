@@ -86,6 +86,7 @@
                     </div>
                 </div>
 
+                <!-- زر الإضافة متاح لجميع الأقسام -->
                 <button id="btnAddNewTask" onclick="openNewTaskModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3 py-2 rounded-xl flex items-center gap-1.5 transition shadow">
                     <i data-lucide="plus-circle" class="w-4 h-4"></i>
                     <span class="hidden sm:inline">إضافة مهمة جديدة</span>
@@ -185,6 +186,8 @@
                         <option value="الإنتاج">الإنتاج</option>
                         <option value="المستودعات">المستودعات</option>
                         <option value="الجودة">الجودة</option>
+                        <option value="المشتريات">المشتريات</option>
+                        <option value="المالية">المالية</option>
                     </select>
                     <select id="filterExecutionType" onchange="renderTasksTable()" class="border border-slate-300 rounded-lg px-2.5 py-1.5 bg-white outline-none font-semibold">
                         <option value="all">كافة أنواع التنفيذ</option>
@@ -478,11 +481,13 @@
                     </div>
                     <div>
                         <label class="block font-semibold text-slate-700 mb-1">القسم القائد</label>
-                        <select id="modalTaskDept" class="w-full border rounded-xl p-2.5 outline-none">
+                        <select id="modalTaskDept" class="w-full border rounded-xl p-2.5 outline-none font-bold">
                             <option value="الصيانة">الصيانة</option>
                             <option value="الإنتاج">الإنتاج</option>
                             <option value="المستودعات">المستودعات</option>
                             <option value="الجودة">الجودة</option>
+                            <option value="المشتريات">المشتريات</option>
+                            <option value="المالية">المالية</option>
                         </select>
                     </div>
                 </div>
@@ -625,7 +630,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
         import { getFirestore, collection, doc, setDoc, onSnapshot, writeBatch } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-        // دوال تشفير وأمان المدخلات
         async function sha256(message) {
             const msgBuffer = new TextEncoder().encode(message);
             const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
@@ -643,17 +647,17 @@
                 .replace(/'/g, "&#039;");
         }
 
-        // تم استبدال الكلمات الصريحة بـ SHA-256 Hashes
+        // تم تفعيل canAdd: true لكافة الحسابات
         const ACCOUNTS = {
             admin: { name: "م. فادي محمود", roleName: "Super Admin", passHash: "0d9c49ca18731f82e171b302c46f1ca8f70fa24bc01b44ec2f0b7c7b6408223d", canEditAll: true, canClose: true, canAdd: true }, // fadi@2026
-            ceo: { name: "المدير التنفيذي", roleName: "CEO", passHash: "a9bfdc4b6118aaeb5dfc0bb361a9ba4f47700df286e73775b8e96bf7bf7f8776", canEditAll: false, canClose: true, canAdd: false }, // ceo@ghazal
+            ceo: { name: "المدير التنفيذي", roleName: "CEO", passHash: "a9bfdc4b6118aaeb5dfc0bb361a9ba4f47700df286e73775b8e96bf7bf7f8776", canEditAll: false, canClose: true, canAdd: true }, // ceo@ghazal
             plant_manager: { name: "مدير المصنع", roleName: "Plant Manager", passHash: "d83a48e75cfdcdafc2ef006760431b99a67fe99742eb51897ebf0ae09ebf1725", canEditAll: true, canClose: true, canAdd: true }, // plant@ghazal
             qa: { name: "قسم الجودة", roleName: "Quality Assurance", passHash: "921869e96e9447385ae8166c4bf92a5d625eb95cf76df08149e665ba0e998789", allowedDept: "الجودة", canClose: true, canAdd: true }, // qa@ghazal
-            maintenance: { name: "قسم الصيانة", roleName: "Maintenance Dept", passHash: "076c8cba76ae1a7bdfd04d80a373fc34ff2d2503a4eb08b8b0e77d2424b423fa", allowedDept: "الصيانة", canClose: false, canAdd: false }, // maint@ghazal
-            production: { name: "قسم الإنتاج", roleName: "Production Dept", passHash: "46f2510b6fe9b50b9a8972e0bf49dc72eb3a84fa878fa4fb3bcefd67694f4ce3", allowedDept: "الإنتاج", canClose: false, canAdd: false }, // prod@ghazal
-            warehouse: { name: "قسم المستودعات", roleName: "Warehouse Dept", passHash: "a9f4340d02d08a54c46fbe87bbdb040e69888997ef31e2ec29dc996efcbafe16", allowedDept: "المستودعات", canClose: false, canAdd: false }, // wh@ghazal
-            procurement: { name: "قسم المشتريات", roleName: "Procurement Dept", passHash: "8528c117bce037db542c16f0da9976dbfa9ff6ea1ae4d80ea4cb3c0bbfec2c06", canProcurement: true, canClose: false, canAdd: false }, // proc@ghazal
-            finance: { name: "قسم المالية", roleName: "Finance Dept", passHash: "fc2534a49db4448e895822be8e3bfa6f064c185a87ba8d3023fc63d3fb66810a", canFinance: true, canClose: false, canAdd: false } // fin@ghazal
+            maintenance: { name: "قسم الصيانة", roleName: "Maintenance Dept", passHash: "076c8cba76ae1a7bdfd04d80a373fc34ff2d2503a4eb08b8b0e77d2424b423fa", allowedDept: "الصيانة", canClose: false, canAdd: true }, // maint@ghazal
+            production: { name: "قسم الإنتاج", roleName: "Production Dept", passHash: "46f2510b6fe9b50b9a8972e0bf49dc72eb3a84fa878fa4fb3bcefd67694f4ce3", allowedDept: "الإنتاج", canClose: false, canAdd: true }, // prod@ghazal
+            warehouse: { name: "قسم المستودعات", roleName: "Warehouse Dept", passHash: "a9f4340d02d08a54c46fbe87bbdb040e69888997ef31e2ec29dc996efcbafe16", allowedDept: "المستودعات", canClose: false, canAdd: true }, // wh@ghazal
+            procurement: { name: "قسم المشتريات", roleName: "Procurement Dept", passHash: "8528c117bce037db542c16f0da9976dbfa9ff6ea1ae4d80ea4cb3c0bbfec2c06", allowedDept: "المشتريات", canProcurement: true, canClose: false, canAdd: true }, // proc@ghazal
+            finance: { name: "قسم المالية", roleName: "Finance Dept", passHash: "fc2534a49db4448e895822be8e3bfa6f064c185a87ba8d3023fc63d3fb66810a", allowedDept: "المالية", canFinance: true, canClose: false, canAdd: true } // fin@ghazal
         };
 
         let currentUserKey = localStorage.getItem('alghazal_logged_user') || null;
@@ -667,12 +671,9 @@
                 document.getElementById('userDisplayName').innerText = user.name;
                 document.getElementById('userRoleBadge').innerText = user.roleName;
 
+                // زر الإضافة متاح للجميع بمجرد تسجيل الدخول
                 const addBtn = document.getElementById('btnAddNewTask');
-                if (user.canAdd || user.canEditAll) {
-                    addBtn.classList.remove('hidden');
-                } else {
-                    addBtn.classList.add('hidden');
-                }
+                addBtn.classList.remove('hidden');
             }
         };
 
@@ -776,7 +777,6 @@
             }
         };
 
-        // المزامنة باستخدام writeBatch للأداء
         onSnapshot(tasksCol, async (snapshot) => {
             if (!snapshot.empty) {
                 window.tasks = [];
@@ -1177,9 +1177,18 @@
         };
 
         window.openNewTaskModal = function() {
+            const user = ACCOUNTS[currentUserKey] || {};
             document.getElementById('modalTitle').innerText = "إضافة مهمة / بند جديد";
             document.getElementById('modalTaskId').value = "new";
             document.getElementById('taskForm').reset();
+            
+            // تحديد القسم تلقائياً بناءً على حساب المستخدم المسجل
+            if (user.allowedDept) {
+                document.getElementById('modalTaskDept').value = user.allowedDept;
+            } else {
+                document.getElementById('modalTaskDept').value = "الصيانة";
+            }
+
             document.getElementById('modalTaskProgress').value = 0;
             document.getElementById('modalTaskSpent').value = 0;
             document.getElementById('modalTaskExecutionType').value = "عمالة وتنظيم تشغيلي داخلي";
